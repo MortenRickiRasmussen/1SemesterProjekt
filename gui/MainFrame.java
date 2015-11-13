@@ -10,8 +10,13 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import model.Billet;
+import model.Film;
+import model.Forestilling;
+import model.Sal;
 
 /**
  *
@@ -19,6 +24,10 @@ import java.util.logging.Logger;
  */
 public class MainFrame extends javax.swing.JFrame {
     private DBHandler db;
+    private ArrayList<Film> film;
+    private ArrayList<Sal> sale;
+    private ArrayList<Forestilling> forestillinger;
+    private ArrayList<Billet> billetter;
 
     /**
      * Creates new form MainFrame
@@ -37,6 +46,20 @@ public class MainFrame extends javax.swing.JFrame {
         forsidePanel.setVisible(true);
         valgAfPladsPanel.setVisible(false);
         filmUdvalgsPanel.setVisible(false);
+        
+        film = new ArrayList<>();
+        sale = new ArrayList<>();
+        forestillinger = new ArrayList<>();
+        billetter = new ArrayList<>();
+        
+        try {
+            db.loadArrayLists(sale, film, forestillinger, billetter);
+        } catch (SQLException ex) {
+            Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
     }
 
     /**
@@ -71,7 +94,8 @@ public class MainFrame extends javax.swing.JFrame {
         jLabel20 = new javax.swing.JLabel();
         jButton2 = new javax.swing.JButton();
         filmUdvalgsPanel = new javax.swing.JPanel();
-        jScrollPane1 = new javax.swing.JScrollPane();
+        filmudValgsScroll = new javax.swing.JScrollPane();
+        filmudValgsPanel = new javax.swing.JPanel();
         jComboBox1 = new javax.swing.JComboBox();
         jLabel18 = new javax.swing.JLabel();
         jLabel19 = new javax.swing.JLabel();
@@ -278,7 +302,10 @@ public class MainFrame extends javax.swing.JFrame {
 
         filmUdvalgsPanel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
-        jScrollPane1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        filmudValgsScroll.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+
+        filmudValgsPanel.setLayout(new javax.swing.BoxLayout(filmudValgsPanel, javax.swing.BoxLayout.Y_AXIS));
+        filmudValgsScroll.setViewportView(filmudValgsPanel);
 
         jLabel18.setText("Vælg dato:");
 
@@ -288,7 +315,7 @@ public class MainFrame extends javax.swing.JFrame {
         filmUdvalgsPanel.setLayout(filmUdvalgsPanelLayout);
         filmUdvalgsPanelLayout.setHorizontalGroup(
             filmUdvalgsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1)
+            .addComponent(filmudValgsScroll)
             .addGroup(filmUdvalgsPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel18)
@@ -312,7 +339,7 @@ public class MainFrame extends javax.swing.JFrame {
                         .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jLabel18)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 484, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(filmudValgsScroll, javax.swing.GroupLayout.PREFERRED_SIZE, 484, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         valgAfPladsPanel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
@@ -381,7 +408,7 @@ public class MainFrame extends javax.swing.JFrame {
                             .addComponent(jLabel6)
                             .addComponent(jLabel5)
                             .addComponent(jLabel7))))
-                .addContainerGap(144, Short.MAX_VALUE))
+                .addContainerGap(151, Short.MAX_VALUE))
         );
         footerAdresseLayout.setVerticalGroup(
             footerAdresseLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -466,7 +493,7 @@ public class MainFrame extends javax.swing.JFrame {
                     .addComponent(facebookLabel)
                     .addComponent(jLabel3)
                     .addComponent(jLabel13))
-                .addContainerGap(58, Short.MAX_VALUE))
+                .addContainerGap(71, Short.MAX_VALUE))
         );
         footerSocialLayout.setVerticalGroup(
             footerSocialLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -592,7 +619,15 @@ public class MainFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_dbPortFieldKeyTyped
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
+        filmUdvalgsPanel.setVisible(true);
+        forsidePanel.setVisible(false);
+        valgAfPladsPanel.setVisible(false);
+        
+        for (Forestilling forestilling1 : forestillinger) {
+            FilmUdvalgPanel forestilling = new FilmUdvalgPanel(forestilling1, valgAfPladsPanel);
+            forestilling.setVisible(true);
+            filmudValgsPanel.add(forestilling);
+        }
     }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
@@ -640,6 +675,8 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JTextField dbPortField;
     private javax.swing.JLabel facebookLabel;
     private javax.swing.JPanel filmUdvalgsPanel;
+    private javax.swing.JPanel filmudValgsPanel;
+    private javax.swing.JScrollPane filmudValgsScroll;
     private javax.swing.JPanel footerAdmin;
     private javax.swing.JPanel footerAdresse;
     private javax.swing.JPanel footerOmOs;
@@ -675,7 +712,6 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JLayeredPane jLayeredPane1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JButton tilFosidenButton;
     private javax.swing.JPanel valgAfPladsPanel;
