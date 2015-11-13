@@ -1,8 +1,11 @@
 package handler;
 
 import java.io.BufferedReader;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 
 /**
@@ -39,6 +42,18 @@ public class FileHandler {
         }
         bf.close();
         return numberOfLines;
+    }
+    
+    public void updateDBFile(String usr, String pwd, String url, String schema) throws FileNotFoundException, UnsupportedEncodingException{
+        PrintWriter writer = new PrintWriter("/rescources/DatabaseIndstillinger.txt");
+        writer.println("//USERNAME");
+        writer.println(usr);
+        writer.println("//PASSWORD");
+        writer.println(pwd);
+        writer.println("//URL");
+        writer.println(url);
+        writer.println("//SCHEMA");
+        writer.println(schema);
     }
 
 }
