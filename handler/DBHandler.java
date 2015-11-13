@@ -11,12 +11,19 @@ import model.*;
 public class DBHandler {
 
     private final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
-    private String database_usr = "mortyhdd_1SemPro";
-    private String database_pwd = "kya94cjw";
-    private String database_url = "jdbc:mysql://mortyhd.dk:3306";
-    private String schema = "/1SemesterProjekt";
+    private String database_usr;
+    private String database_pwd;
+    private String database_url;
+    private String schema;
     private Connection conn;
     private Statement stmt;
+    
+    public DBHandler(){
+        database_usr = "mortyhdd_1SemPro";
+        database_pwd = "kya94cjw";
+        database_url = "mortyhd.dk:3306";
+        schema = "1SemesterProjekt";
+    }
     
     public void updateDBConn(String usr, String pw, String url, String schema) throws SQLException, ClassNotFoundException {
         database_usr = usr;
