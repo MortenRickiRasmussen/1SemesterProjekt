@@ -1,6 +1,7 @@
 package handler;
 
 import java.sql.*;
+import java.util.ArrayList;
 import model.*;
 
 /**
@@ -35,24 +36,19 @@ public class DBHandler {
         return rs;
     }
     
-    public static Forestilling retriveForestillinger(String mySQLStatement ) throws ClassNotFoundException, SQLException {
-        
-        ResultSet rs = databaseRetrive(mySQLStatement);
-        
+    public static Forestilling retriveForestillinger(ResultSet rs) throws ClassNotFoundException, SQLException {
+                
         int id = rs.getInt("id");
         Date dato = rs.getDate("dato");
         String tidspunkt = rs.getString("tidspunkt");
         int film_id = rs.getInt("film_id");
-        int sal_id = rs.getInt("sal_id");
         
-        Forestilling forestilling = new Forestilling(id, dato, tidspunkt, film_id, sal_id);        
+        Forestilling forestilling = new Forestilling(id, dato, tidspunkt, film_id);        
         
         return forestilling;
     }
     
-    public static Film retriveFilm(String mySQLStatement) throws SQLException, ClassNotFoundException {
-        
-        ResultSet rs = databaseRetrive(mySQLStatement);
+    public static Film retriveFilm(ResultSet rs) throws SQLException, ClassNotFoundException {
         
         int id = rs.getInt("id");
         String titel = rs.getString("titel");
@@ -63,10 +59,8 @@ public class DBHandler {
         return film;
     }
     
-    public static Sal retriveSal(String mySQLStatement) throws SQLException, ClassNotFoundException{
-        
-        ResultSet rs = databaseRetrive(mySQLStatement);
-        
+    public static Sal retriveSal(ResultSet rs) throws SQLException, ClassNotFoundException{
+
         int id = rs.getInt("id");
         String navn = rs.getString("navn");
         int rækker = rs.getInt("rækker");
@@ -77,9 +71,7 @@ public class DBHandler {
         return sal;
     } 
     
-    public static Billet retriveBilleter(String mySQLStatement) throws ClassNotFoundException, SQLException {
-        
-        ResultSet rs = databaseRetrive(mySQLStatement);
+    public static Billet retriveBilleter(ResultSet rs) throws ClassNotFoundException, SQLException {
         
         int id = rs.getInt("id");
         int forestillings_id = rs.getInt("forestillings_id");
@@ -89,5 +81,40 @@ public class DBHandler {
         Billet billet = new Billet(id, forestillings_id, række, sædde);
         
         return billet;        
+    }
+    
+    public static void loadArrayLists(ArrayList sale, ArrayList film, ArrayList forestillinger, ArrayList billetter) throws SQLException, ClassNotFoundException {
+        sale.clear();
+        film.clear();
+        forestillinger.clear();
+        billetter.clear();
+        
+        String  mySQLStatement = "SELECT * FROM sale";
+        ResultSet rs = databaseRetrive(mySQLStatement);
+        while(rs.next()) {
+            sale.add(retriveSal(rs));
+        }
+        
+        mySQLStatement = "SELECT * FROM film";    
+        rs = databaseRetrive(mySQLStatement);
+        while (rs.next()) {
+            film.add(retriveFilm(rs));
+        }
+        
+        mySQLStatement = "SELECT * FROM forestillinger";
+        rs = databaseRetrive(mySQLStatement);
+        while (rs.next()) {
+            forestillinger.add(retriveForestillinger(rs));
+        }
+        
+        mySQLStatement = "SELECT * FROM billeter";
+        rs = databaseRetrive(mySQLStatement);
+        while (rs.next()) {
+            billetter.add(retriveBilleter(rs));
+        }
+        
+        rs.close();
+        close();
+        
     }
 }
