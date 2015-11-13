@@ -9,7 +9,7 @@ import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 
 /**
- *
+ * @author Jakob Ferdinandsen
  * @author Morten Ricki Rasmussen 
  */
 public class FileHandler {

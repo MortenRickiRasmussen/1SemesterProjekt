@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import model.*;
 
 /**
- *
+ * @author Jakob Ferdinandsen
  * @author Morten Ricki Rasmussen
  */
 public class DBHandler {
