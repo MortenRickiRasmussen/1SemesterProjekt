@@ -39,19 +39,27 @@ public class DBHandler {
         database_pwd = pw;
         database_url = url;
         this.schema = schema;
-        settingsFil.updateDBFile(database_usr, database_pwd, database_url, this.schema);
         reconnectToDB();
+        if (reconnectToDB() == true) {
+        settingsFil.updateDBFile(database_usr, database_pwd, database_url, this.schema);
+        }
     }
 
-    public void reconnectToDB() throws SQLException, ClassNotFoundException {
+    public boolean reconnectToDB() throws SQLException, ClassNotFoundException {
         close();
-        createConn();
+        boolean connected = createConn();
+        return connected;
     }
 
-    public void createConn() throws ClassNotFoundException, SQLException {
+    public boolean createConn() throws ClassNotFoundException, SQLException {
+        boolean connected = false;
         Class.forName(JDBC_DRIVER);
         conn = DriverManager.getConnection("jdbc:mysql://" + database_url + "/" + schema, database_usr, database_pwd);
         stmt = (Statement) conn.createStatement();
+        if(conn.isValid(1)) {
+            connected = true;
+        }
+        return connected;
     }
 
     public void close() throws SQLException {

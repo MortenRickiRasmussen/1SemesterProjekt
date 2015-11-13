@@ -14,19 +14,22 @@ import model.Forestilling;
  */
 public class FilmUdvalgPanel extends javax.swing.JPanel {
     private JPanel bestilBilleterPanel;
+    private JPanel filmUdvalgsPanel;
 
     /**
      * Creates new form Filmududvalg
      * @param forestilling
      * @param bestilBilleterPanel
+     * @param filmUdvalgsPanel
      */
-    public FilmUdvalgPanel(Forestilling forestilling, JPanel bestilBilleterPanel) {
+    public FilmUdvalgPanel(Forestilling forestilling, JPanel bestilBilleterPanel, JPanel forestillingsPanel) {
         initComponents();
         titelLabel.setText(forestilling.getFilmTitel());
         datoLabel.setText("" + forestilling.getDato());
         tidspunktLabel.setText(forestilling.getTidspunkt());
         salLabel.setText(forestilling.getSalNavn());
         this.bestilBilleterPanel = bestilBilleterPanel;
+        this.filmUdvalgsPanel = forestillingsPanel;
     }
 
     /**
@@ -122,6 +125,7 @@ public class FilmUdvalgPanel extends javax.swing.JPanel {
 
     private void bestilBilleterButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bestilBilleterButtonActionPerformed
         bestilBilleterPanel.setVisible(true);
+        filmUdvalgsPanel.setVisible(false);
     }//GEN-LAST:event_bestilBilleterButtonActionPerformed
 
 

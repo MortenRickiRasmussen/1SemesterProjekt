@@ -23,6 +23,7 @@ import model.Sal;
  * @author Morten Ricki Rasmussen
  */
 public class MainFrame extends javax.swing.JFrame {
+
     private DBHandler db;
     private ArrayList<Film> film;
     private ArrayList<Sal> sale;
@@ -32,6 +33,27 @@ public class MainFrame extends javax.swing.JFrame {
     /**
      * Creates new form MainFrame
      */
+    private void updateArrays() {
+
+        try {
+            db.loadArrayLists(sale, film, forestillinger, billetter);
+        } catch (SQLException | ClassNotFoundException ex) {
+            errorLabelHeader.setText("Uventet fejl");
+            errorLabel1.setText("Der er muligvis ikke forbindelse til databasen");
+            errorLabel2.setText("Check om der er forbindelse til internettet");
+            errorLabel3.setText(ex.getMessage());
+            errorDialog.pack();
+            errorDialog.setLocationRelativeTo(this);
+            errorDialog.setVisible(true);
+        }
+
+        filmCombo.removeAllItems();
+
+        for (Film film : film) {
+            filmCombo.addItem(film.getTitel());
+        }
+    }
+
     public MainFrame() {
         try {
             db = new DBHandler();
@@ -46,20 +68,14 @@ public class MainFrame extends javax.swing.JFrame {
         forsidePanel.setVisible(true);
         valgAfPladsPanel.setVisible(false);
         filmUdvalgsPanel.setVisible(false);
-        
+
         film = new ArrayList<>();
         sale = new ArrayList<>();
         forestillinger = new ArrayList<>();
         billetter = new ArrayList<>();
-        
-        try {
-            db.loadArrayLists(sale, film, forestillinger, billetter);
-        } catch (SQLException ex) {
-            Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
+
+        updateArrays();
+
     }
 
     /**
@@ -86,6 +102,12 @@ public class MainFrame extends javax.swing.JFrame {
         jLabel17 = new javax.swing.JLabel();
         dbPasswordField = new javax.swing.JPasswordField();
         jPanel2 = new javax.swing.JPanel();
+        errorDialog = new javax.swing.JDialog();
+        errorLabelHeader = new javax.swing.JLabel();
+        errorLabel1 = new javax.swing.JLabel();
+        errorLabel2 = new javax.swing.JLabel();
+        errorDialogButton = new javax.swing.JButton();
+        errorLabel3 = new javax.swing.JLabel();
         headerPanel = new javax.swing.JPanel();
         tilFosidenButton = new javax.swing.JButton();
         jLayeredPane1 = new javax.swing.JLayeredPane();
@@ -95,11 +117,11 @@ public class MainFrame extends javax.swing.JFrame {
         jButton2 = new javax.swing.JButton();
         filmUdvalgsPanel = new javax.swing.JPanel();
         filmudValgsScroll = new javax.swing.JScrollPane();
-        filmudValgsPanel = new javax.swing.JPanel();
+        forestillingsPanel = new javax.swing.JPanel();
         jComboBox1 = new javax.swing.JComboBox();
         jLabel18 = new javax.swing.JLabel();
         jLabel19 = new javax.swing.JLabel();
-        jComboBox2 = new javax.swing.JComboBox();
+        filmCombo = new javax.swing.JComboBox();
         valgAfPladsPanel = new javax.swing.JPanel();
         footerPanel = new javax.swing.JPanel();
         footerAdresse = new javax.swing.JPanel();
@@ -230,11 +252,69 @@ public class MainFrame extends javax.swing.JFrame {
             .addComponent(jTabbedPane1)
         );
 
+        errorLabelHeader.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        errorLabelHeader.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        errorLabelHeader.setText("Fejl!");
+
+        errorLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        errorLabel1.setText("FejlLabel1");
+
+        errorLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        errorLabel2.setText("FejlLabel2");
+
+        errorDialogButton.setText("Færdig");
+        errorDialogButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                errorDialogButtonActionPerformed(evt);
+            }
+        });
+
+        errorLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        errorLabel3.setText("FejlLabel3");
+
+        javax.swing.GroupLayout errorDialogLayout = new javax.swing.GroupLayout(errorDialog.getContentPane());
+        errorDialog.getContentPane().setLayout(errorDialogLayout);
+        errorDialogLayout.setHorizontalGroup(
+            errorDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, errorDialogLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(errorDialogButton)
+                .addGap(162, 162, 162))
+            .addGroup(errorDialogLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(errorDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(errorLabelHeader, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(errorLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(errorLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 380, Short.MAX_VALUE)
+                    .addComponent(errorLabel3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 380, Short.MAX_VALUE))
+                .addContainerGap())
+        );
+        errorDialogLayout.setVerticalGroup(
+            errorDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(errorDialogLayout.createSequentialGroup()
+                .addGap(21, 21, 21)
+                .addComponent(errorLabelHeader)
+                .addGap(18, 18, 18)
+                .addComponent(errorLabel1)
+                .addGap(18, 18, 18)
+                .addComponent(errorLabel2)
+                .addGap(18, 18, 18)
+                .addComponent(errorLabel3)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 31, Short.MAX_VALUE)
+                .addComponent(errorDialogButton)
+                .addContainerGap())
+        );
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMaximumSize(new java.awt.Dimension(950, 700));
         setMinimumSize(new java.awt.Dimension(950, 700));
 
         tilFosidenButton.setText("Til fosiden");
+        tilFosidenButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tilFosidenButtonActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout headerPanelLayout = new javax.swing.GroupLayout(headerPanel);
         headerPanel.setLayout(headerPanelLayout);
@@ -303,13 +383,37 @@ public class MainFrame extends javax.swing.JFrame {
         filmUdvalgsPanel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
         filmudValgsScroll.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        filmudValgsScroll.getVerticalScrollBar().setUnitIncrement(10);
 
-        filmudValgsPanel.setLayout(new javax.swing.BoxLayout(filmudValgsPanel, javax.swing.BoxLayout.Y_AXIS));
-        filmudValgsScroll.setViewportView(filmudValgsPanel);
+        forestillingsPanel.setLayout(new javax.swing.BoxLayout(forestillingsPanel, javax.swing.BoxLayout.Y_AXIS));
+        filmudValgsScroll.setViewportView(forestillingsPanel);
 
         jLabel18.setText("Vælg dato:");
 
         jLabel19.setText("Vælg film");
+
+        filmCombo.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "s" }));
+        filmCombo.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                filmComboMouseClicked(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                filmComboMouseExited(evt);
+            }
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                filmComboMouseReleased(evt);
+            }
+        });
+        filmCombo.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                filmComboItemStateChanged(evt);
+            }
+        });
+        filmCombo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                filmComboActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout filmUdvalgsPanelLayout = new javax.swing.GroupLayout(filmUdvalgsPanel);
         filmUdvalgsPanel.setLayout(filmUdvalgsPanelLayout);
@@ -324,7 +428,7 @@ public class MainFrame extends javax.swing.JFrame {
                 .addGap(57, 57, 57)
                 .addComponent(jLabel19)
                 .addGap(18, 18, 18)
-                .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(filmCombo, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(395, Short.MAX_VALUE))
         );
         filmUdvalgsPanelLayout.setVerticalGroup(
@@ -333,7 +437,7 @@ public class MainFrame extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(filmUdvalgsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(filmUdvalgsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(filmCombo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jLabel19))
                     .addGroup(filmUdvalgsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -595,20 +699,37 @@ public class MainFrame extends javax.swing.JFrame {
     private void dbIndstillingerButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dbIndstillingerButtonActionPerformed
         String pwd = "";
         for (int i = 0; i < dbPasswordField.getPassword().length; i++) {
-            pwd = pwd+dbPasswordField.getPassword()[i];
+            pwd = pwd + dbPasswordField.getPassword()[i];
         }
-        
+
         try {
-            db.updateDBConn(dbBrugernavnField.getText(), pwd, dbIPField.getText()+":"+dbPortField.getText(), dbDatabasenavnField.getText());
-        } catch (SQLException ex) {
-            Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (FileNotFoundException ex) {
-            Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (UnsupportedEncodingException ex) {
-            Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
+            db.updateDBConn(dbBrugernavnField.getText(), pwd, dbIPField.getText() + ":" + dbPortField.getText(), dbDatabasenavnField.getText());
+            errorLabelHeader.setText("Succes");
+            errorLabel1.setText("Du Gjorde Det!");
+            errorLabel2.setText("Der er nu forbindelse til en anden database");
+            errorLabel3.setText("");
+            errorDialog.pack();
+            errorDialog.setLocationRelativeTo(this);
+            errorDialog.setVisible(true);
+        } catch (SQLException | ClassNotFoundException | FileNotFoundException | UnsupportedEncodingException ex) {
+            errorLabelHeader.setText("Der skete en fejl");
+            errorLabel1.setText("Kontakt systemadministratoren og oplys følgende");
+            errorLabel2.setText(ex.getMessage());
+            errorLabel3.setText("");
+            errorDialog.pack();
+            errorDialog.setLocationRelativeTo(this);
+            errorDialog.setVisible(true);
         }
+
+        if ("Succes".equals(errorLabelHeader.getText())) {
+            dbBrugernavnField.setText("");
+            dbIPField.setText("");
+            dbDatabasenavnField.setText("");
+            dbPasswordField.setText("");
+            dbPortField.setText("");
+        }
+
+        updateArrays();
     }//GEN-LAST:event_dbIndstillingerButtonActionPerformed
 
     private void dbPortFieldKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_dbPortFieldKeyTyped
@@ -622,13 +743,61 @@ public class MainFrame extends javax.swing.JFrame {
         filmUdvalgsPanel.setVisible(true);
         forsidePanel.setVisible(false);
         valgAfPladsPanel.setVisible(false);
-        
+
+        forestillingsPanel.removeAll();
+
         for (Forestilling forestilling1 : forestillinger) {
-            FilmUdvalgPanel forestilling = new FilmUdvalgPanel(forestilling1, valgAfPladsPanel);
+            FilmUdvalgPanel forestilling = new FilmUdvalgPanel(forestilling1, valgAfPladsPanel, filmUdvalgsPanel);
             forestilling.setVisible(true);
-            filmudValgsPanel.add(forestilling);
+            forestillingsPanel.add(forestilling);
         }
+
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void tilFosidenButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tilFosidenButtonActionPerformed
+        forsidePanel.setVisible(true);
+        valgAfPladsPanel.setVisible(false);
+        filmUdvalgsPanel.setVisible(false);
+    }//GEN-LAST:event_tilFosidenButtonActionPerformed
+
+    private void errorDialogButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_errorDialogButtonActionPerformed
+        errorDialog.setVisible(false);
+        if (errorLabelHeader.getText() == "Succes") {
+            adminDialog.setVisible(false);
+        }
+    }//GEN-LAST:event_errorDialogButtonActionPerformed
+
+    private void filmComboActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_filmComboActionPerformed
+        forestillingsPanel.removeAll();
+
+        for (Forestilling forestilling1 : forestillinger) {
+            if (forestilling1.getFilmTitel() == filmCombo.getSelectedItem()) {
+                FilmUdvalgPanel forestilling = new FilmUdvalgPanel(forestilling1, valgAfPladsPanel, filmUdvalgsPanel);
+                forestilling.setVisible(true);
+                forestillingsPanel.add(forestilling);
+            }
+            
+        forestillingsPanel.revalidate();
+        forestillingsPanel.repaint();
+            
+        }
+    }//GEN-LAST:event_filmComboActionPerformed
+
+    private void filmComboMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_filmComboMouseReleased
+
+    }//GEN-LAST:event_filmComboMouseReleased
+
+    private void filmComboMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_filmComboMouseClicked
+
+    }//GEN-LAST:event_filmComboMouseClicked
+
+    private void filmComboMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_filmComboMouseExited
+  
+    }//GEN-LAST:event_filmComboMouseExited
+
+    private void filmComboItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_filmComboItemStateChanged
+
+    }//GEN-LAST:event_filmComboItemStateChanged
 
     /**
      * @param args the command line arguments
@@ -673,21 +842,27 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JButton dbIndstillingerButton;
     private javax.swing.JPasswordField dbPasswordField;
     private javax.swing.JTextField dbPortField;
+    private javax.swing.JDialog errorDialog;
+    private javax.swing.JButton errorDialogButton;
+    private javax.swing.JLabel errorLabel1;
+    private javax.swing.JLabel errorLabel2;
+    private javax.swing.JLabel errorLabel3;
+    private javax.swing.JLabel errorLabelHeader;
     private javax.swing.JLabel facebookLabel;
+    private javax.swing.JComboBox filmCombo;
     private javax.swing.JPanel filmUdvalgsPanel;
-    private javax.swing.JPanel filmudValgsPanel;
     private javax.swing.JScrollPane filmudValgsScroll;
     private javax.swing.JPanel footerAdmin;
     private javax.swing.JPanel footerAdresse;
     private javax.swing.JPanel footerOmOs;
     private javax.swing.JPanel footerPanel;
     private javax.swing.JPanel footerSocial;
+    private javax.swing.JPanel forestillingsPanel;
     private javax.swing.JPanel forsidePanel;
     private javax.swing.JPanel headerPanel;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JComboBox jComboBox1;
-    private javax.swing.JComboBox jComboBox2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;

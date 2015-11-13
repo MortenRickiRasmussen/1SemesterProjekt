@@ -27,5 +27,7 @@ public class Film {
         return spilleTid;
     }
     
-    
+    public String toString() {
+        return titel;
+    }
 }

@@ -60,5 +60,9 @@ public class Forestilling {
     public void setSal(String sal) {
         this.salNavn = sal;
     }
+    
+    public String toString() {
+        return filmTitel;
+    }
 
 }
