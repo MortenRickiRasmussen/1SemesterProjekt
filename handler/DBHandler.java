@@ -1,28 +1,44 @@
 package handler;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.sql.*;
 import java.util.ArrayList;
 import model.*;
 
 /**
- *
+ * @author Jakob Ferdinandsen
  * @author Morten Ricki Rasmussen
  */
 public class DBHandler {
 
     private final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
-    private String database_usr = "mortyhdd_1SemPro";
-    private String database_pwd = "kya94cjw";
-    private String database_url = "jdbc:mysql://mortyhd.dk:3306";
-    private String schema = "/1SemesterProjekt";
+    private String database_usr;
+    private String database_pwd;
+    private String database_url;
+    private String schema;
     private Connection conn;
     private Statement stmt;
+    private FileHandler settingsFil;
+    private ArrayList<String> dbSettings;
     
-    public void updateDBConn(String usr, String pw, String url, String schema) throws SQLException, ClassNotFoundException {
+    public DBHandler() throws IOException{
+        settingsFil = new FileHandler("/rescources/DatabaseIndstillinger.txt");
+        dbSettings = settingsFil.openFile();
+        database_usr = dbSettings.get(1);
+        database_pwd = dbSettings.get(3);
+        database_url = dbSettings.get(5);
+        schema = dbSettings.get(7);
+    }
+    
+    
+    public void updateDBConn(String usr, String pw, String url, String schema) throws SQLException, ClassNotFoundException, FileNotFoundException, UnsupportedEncodingException {
         database_usr = usr;
         database_pwd = pw;
         database_url = url;
         this.schema = schema;
+        settingsFil.updateDBFile(database_usr, database_pwd, database_url, this.schema);
         reconnectToDB();
     }
 
@@ -49,7 +65,7 @@ public class DBHandler {
         return rs;
     }
 
-    public Forestilling retriveForestillinger(ResultSet rs) throws ClassNotFoundException, SQLException {
+    public Forestilling retrieveForestillinger(ResultSet rs) throws ClassNotFoundException, SQLException {
 
         int id = rs.getInt("id");
         Date dato = rs.getDate("dato");
@@ -61,7 +77,7 @@ public class DBHandler {
         return forestilling;
     }
 
-    public Film retriveFilm(ResultSet rs) throws SQLException, ClassNotFoundException {
+    public Film retrieveFilm(ResultSet rs) throws SQLException, ClassNotFoundException {
 
         int id = rs.getInt("id");
         String titel = rs.getString("titel");
@@ -72,7 +88,7 @@ public class DBHandler {
         return film;
     }
 
-    public Sal retriveSal(ResultSet rs) throws SQLException, ClassNotFoundException {
+    public Sal retrieveSal(ResultSet rs) throws SQLException, ClassNotFoundException {
 
         int id = rs.getInt("id");
         String navn = rs.getString("navn");
@@ -84,7 +100,7 @@ public class DBHandler {
         return sal;
     }
 
-    public Billet retriveBilleter(ResultSet rs) throws ClassNotFoundException, SQLException {
+    public Billet retrieveBilleter(ResultSet rs) throws ClassNotFoundException, SQLException {
 
         int id = rs.getInt("id");
         int forestillings_id = rs.getInt("forestillings_id");
@@ -105,25 +121,25 @@ public class DBHandler {
         String mySQLStatement = "SELECT * FROM sale";
         ResultSet rs = databaseRetrive(mySQLStatement);
         while (rs.next()) {
-            sale.add(retriveSal(rs));
+            sale.add(retrieveSal(rs));
         }
 
         mySQLStatement = "SELECT * FROM film";
         rs = databaseRetrive(mySQLStatement);
         while (rs.next()) {
-            film.add(retriveFilm(rs));
+            film.add(retrieveFilm(rs));
         }
 
         mySQLStatement = "SELECT * FROM forestillinger";
         rs = databaseRetrive(mySQLStatement);
         while (rs.next()) {
-            forestillinger.add(retriveForestillinger(rs));
+            forestillinger.add(retrieveForestillinger(rs));
         }
 
         mySQLStatement = "SELECT * FROM billeter";
         rs = databaseRetrive(mySQLStatement);
         while (rs.next()) {
-            billetter.add(retriveBilleter(rs));
+            billetter.add(retrieveBilleter(rs));
         }
 
         rs.close();
