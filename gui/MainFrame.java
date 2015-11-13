@@ -6,13 +6,24 @@
 package gui;
 
 import handler.DBHandler;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.StandardCopyOption;
+import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.DefaultListModel;
+import javax.swing.JDialog;
+import javax.swing.ListModel;
 import model.Billet;
 import model.Film;
 import model.Forestilling;
@@ -29,11 +40,13 @@ public class MainFrame extends javax.swing.JFrame {
     private ArrayList<Sal> sale;
     private ArrayList<Forestilling> forestillinger;
     private ArrayList<Billet> billetter;
+    private ListModel listModel;
 
     /**
      * Creates new form MainFrame
      */
     private void updateArrays() {
+        listModel = new DefaultListModel();
 
         try {
             db.loadArrayLists(sale, film, forestillinger, billetter);
@@ -48,10 +61,18 @@ public class MainFrame extends javax.swing.JFrame {
         }
 
         filmCombo.removeAllItems();
+        String alleForestillinger = "Alle forestillinger";
+        filmCombo.addItem(alleForestillinger);
 
         for (Film film : film) {
             filmCombo.addItem(film.getTitel());
         }
+    }
+    
+    public void updateDialog(JDialog dialog) {
+        dialog.pack();
+        dialog.setLocationRelativeTo(this);
+        dialog.setVisible(true);
     }
 
     public MainFrame() {
@@ -101,13 +122,42 @@ public class MainFrame extends javax.swing.JFrame {
         dbIndstillingerButton = new javax.swing.JButton();
         jLabel17 = new javax.swing.JLabel();
         dbPasswordField = new javax.swing.JPasswordField();
+        jPanel3 = new javax.swing.JPanel();
+        jLabel22 = new javax.swing.JLabel();
+        titelField = new javax.swing.JTextField();
+        jLabel23 = new javax.swing.JLabel();
+        spilletidField = new javax.swing.JTextField();
+        dbIndstillingerButton1 = new javax.swing.JButton();
+        jButton3 = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
+        jLabel24 = new javax.swing.JLabel();
+        jLabel25 = new javax.swing.JLabel();
+        tilføjForestillingTimeField = new javax.swing.JTextField();
+        tilføjForestillingMinutField = new javax.swing.JTextField();
+        jLabel26 = new javax.swing.JLabel();
+        tilføjForestillingDato = new com.toedter.calendar.JDateChooser();
+        fundendeFilmCombo = new javax.swing.JComboBox();
+        jLabel27 = new javax.swing.JLabel();
+        findFilmField = new javax.swing.JTextField();
+        jButton4 = new javax.swing.JButton();
+        jLabel28 = new javax.swing.JLabel();
+        salCombo = new javax.swing.JComboBox();
+        jButton5 = new javax.swing.JButton();
         errorDialog = new javax.swing.JDialog();
         errorLabelHeader = new javax.swing.JLabel();
         errorLabel1 = new javax.swing.JLabel();
         errorLabel2 = new javax.swing.JLabel();
         errorDialogButton = new javax.swing.JButton();
         errorLabel3 = new javax.swing.JLabel();
+        jDialog1 = new javax.swing.JDialog();
+        jFileChooser1 = new javax.swing.JFileChooser();
+        jDialog2 = new javax.swing.JDialog();
+        jLabel29 = new javax.swing.JLabel();
+        jLabel30 = new javax.swing.JLabel();
+        jLabel31 = new javax.swing.JLabel();
+        adminBrugernavnField = new javax.swing.JTextField();
+        adminPasswordField = new javax.swing.JPasswordField();
+        jButton6 = new javax.swing.JButton();
         headerPanel = new javax.swing.JPanel();
         tilFosidenButton = new javax.swing.JButton();
         jLayeredPane1 = new javax.swing.JLayeredPane();
@@ -183,11 +233,8 @@ public class MainFrame extends javax.swing.JFrame {
                                     .addComponent(jLabel16)))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addContainerGap()
-                                .addComponent(jLabel17))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(104, 104, 104)
-                                .addComponent(dbIndstillingerButton)))
-                        .addGap(0, 95, Short.MAX_VALUE))
+                                .addComponent(jLabel17)))
+                        .addGap(0, 274, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addContainerGap()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -197,6 +244,10 @@ public class MainFrame extends javax.swing.JFrame {
                             .addComponent(dbIPField, javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(dbPasswordField))))
                 .addContainerGap())
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(89, 89, 89)
+                .addComponent(dbIndstillingerButton)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -221,35 +272,204 @@ public class MainFrame extends javax.swing.JFrame {
                 .addComponent(jLabel17)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(dbPasswordField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(dbIndstillingerButton)
-                .addContainerGap())
+                .addContainerGap(65, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Database indstillinger", jPanel1);
+
+        jLabel22.setText("Titel");
+
+        jLabel23.setText("Spilletid");
+
+        spilletidField.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                spilletidFieldKeyTyped(evt);
+            }
+        });
+
+        dbIndstillingerButton1.setText("Tilføj film");
+        dbIndstillingerButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                dbIndstillingerButton1ActionPerformed(evt);
+            }
+        });
+
+        jButton3.setText("Tilføj plakat");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(spilletidField, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(titelField, javax.swing.GroupLayout.Alignment.TRAILING)))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel22)
+                                    .addComponent(jLabel23)))
+                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(jButton3)))
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGap(119, 119, 119)
+                .addComponent(dbIndstillingerButton1)
+                .addContainerGap(170, Short.MAX_VALUE))
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel22)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(titelField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel23)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(spilletidField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jButton3)
+                .addGap(18, 18, 18)
+                .addComponent(dbIndstillingerButton1)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        jTabbedPane1.addTab("Tilføj film", jPanel3);
+
+        jLabel24.setText("Dato");
+
+        jLabel25.setText("Tidspunkt");
+
+        tilføjForestillingTimeField.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
+        tilføjForestillingTimeField.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                tilføjForestillingTimeFieldKeyTyped(evt);
+            }
+        });
+
+        tilføjForestillingMinutField.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                tilføjForestillingMinutFieldKeyTyped(evt);
+            }
+        });
+
+        jLabel26.setText(":");
+
+        jLabel27.setText("Find film");
+
+        jButton4.setText("Søg efter titel");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
+
+        jLabel28.setText("Sal");
+
+        jButton5.setText("Tilføj forestlling");
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 330, Short.MAX_VALUE)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(tilføjForestillingDato, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(jLabel27, javax.swing.GroupLayout.DEFAULT_SIZE, 189, Short.MAX_VALUE)
+                        .addGap(155, 155, 155))
+                    .addComponent(fundendeFilmCombo, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel24)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addComponent(tilføjForestillingTimeField)
+                                    .addComponent(jLabel25, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLabel26)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(tilføjForestillingMinutField, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(findFilmField)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jButton4))
+                    .addComponent(jLabel28, javax.swing.GroupLayout.DEFAULT_SIZE, 344, Short.MAX_VALUE)
+                    .addComponent(salCombo, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(124, 124, 124)
+                .addComponent(jButton5)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 307, Short.MAX_VALUE)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel24)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(tilføjForestillingDato, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(11, 11, 11)
+                .addComponent(jLabel25)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(tilføjForestillingTimeField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(tilføjForestillingMinutField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel26))
+                .addGap(18, 18, 18)
+                .addComponent(jLabel27)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(findFilmField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton4))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(fundendeFilmCombo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jLabel28)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(salCombo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jButton5)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jTabbedPane1.addTab("Tilføj ny sal", jPanel2);
+        jTabbedPane1.addTab("Tilføj forestilling", jPanel2);
 
         javax.swing.GroupLayout adminDialogLayout = new javax.swing.GroupLayout(adminDialog.getContentPane());
         adminDialog.getContentPane().setLayout(adminDialogLayout);
         adminDialogLayout.setHorizontalGroup(
             adminDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jTabbedPane1)
+            .addGroup(adminDialogLayout.createSequentialGroup()
+                .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 369, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         adminDialogLayout.setVerticalGroup(
             adminDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jTabbedPane1)
+            .addGroup(adminDialogLayout.createSequentialGroup()
+                .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 382, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         errorLabelHeader.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
@@ -303,6 +523,94 @@ public class MainFrame extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 31, Short.MAX_VALUE)
                 .addComponent(errorDialogButton)
                 .addContainerGap())
+        );
+
+        jFileChooser1.setDialogTitle("Vælg plakat");
+        jFileChooser1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jFileChooser1ActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jDialog1Layout = new javax.swing.GroupLayout(jDialog1.getContentPane());
+        jDialog1.getContentPane().setLayout(jDialog1Layout);
+        jDialog1Layout.setHorizontalGroup(
+            jDialog1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 582, Short.MAX_VALUE)
+            .addGroup(jDialog1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jDialog1Layout.createSequentialGroup()
+                    .addGap(0, 0, Short.MAX_VALUE)
+                    .addComponent(jFileChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(0, 0, Short.MAX_VALUE)))
+        );
+        jDialog1Layout.setVerticalGroup(
+            jDialog1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 397, Short.MAX_VALUE)
+            .addGroup(jDialog1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jDialog1Layout.createSequentialGroup()
+                    .addGap(0, 0, Short.MAX_VALUE)
+                    .addComponent(jFileChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(0, 0, Short.MAX_VALUE)))
+        );
+
+        jLabel29.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabel29.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel29.setText("Log in");
+
+        jLabel30.setText("Brugernavn");
+
+        jLabel31.setText("Kodeord");
+
+        adminBrugernavnField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                adminBrugernavnFieldActionPerformed(evt);
+            }
+        });
+
+        jButton6.setText("Log in");
+        jButton6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton6ActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jDialog2Layout = new javax.swing.GroupLayout(jDialog2.getContentPane());
+        jDialog2.getContentPane().setLayout(jDialog2Layout);
+        jDialog2Layout.setHorizontalGroup(
+            jDialog2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jDialog2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jDialog2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel29, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(adminBrugernavnField)
+                    .addGroup(jDialog2Layout.createSequentialGroup()
+                        .addGroup(jDialog2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel30)
+                            .addComponent(jLabel31))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(adminPasswordField))
+                .addContainerGap())
+            .addGroup(jDialog2Layout.createSequentialGroup()
+                .addGap(102, 102, 102)
+                .addComponent(jButton6)
+                .addContainerGap(106, Short.MAX_VALUE))
+        );
+        jDialog2Layout.setVerticalGroup(
+            jDialog2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jDialog2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel29)
+                .addGap(18, 18, 18)
+                .addComponent(jLabel30)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(adminBrugernavnField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jLabel31)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(adminPasswordField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jButton6)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -392,7 +700,6 @@ public class MainFrame extends javax.swing.JFrame {
 
         jLabel19.setText("Vælg film");
 
-        filmCombo.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "s" }));
         filmCombo.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 filmComboMouseClicked(evt);
@@ -511,7 +818,7 @@ public class MainFrame extends javax.swing.JFrame {
                             .addComponent(jLabel6)
                             .addComponent(jLabel5)
                             .addComponent(jLabel7))))
-                .addContainerGap(144, Short.MAX_VALUE))
+                .addContainerGap(151, Short.MAX_VALUE))
         );
         footerAdresseLayout.setVerticalGroup(
             footerAdresseLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -596,7 +903,7 @@ public class MainFrame extends javax.swing.JFrame {
                     .addComponent(facebookLabel)
                     .addComponent(jLabel3)
                     .addComponent(jLabel13))
-                .addContainerGap(58, Short.MAX_VALUE))
+                .addContainerGap(115, Short.MAX_VALUE))
         );
         footerSocialLayout.setVerticalGroup(
             footerSocialLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -690,55 +997,20 @@ public class MainFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        adminDialog.pack();
-        adminDialog.setLocationRelativeTo(this);
-        adminDialog.setVisible(true);
+//        jDialog2.pack();
+//        jDialog2.setLocationRelativeTo(this);
+//        jDialog2.setVisible(true);
+        
+        updateDialog(adminDialog);
+
+        for (Sal sal1 : sale) {
+            salCombo.addItem(sal1);
+        }
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    private void dbIndstillingerButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dbIndstillingerButtonActionPerformed
-        String pwd = "";
-        for (int i = 0; i < dbPasswordField.getPassword().length; i++) {
-            pwd = pwd + dbPasswordField.getPassword()[i];
-        }
-
-        try {
-            db.updateDBConn(dbBrugernavnField.getText(), pwd, dbIPField.getText() + ":" + dbPortField.getText(), dbDatabasenavnField.getText());
-            errorLabelHeader.setText("Succes");
-            errorLabel1.setText("Du Gjorde Det!");
-            errorLabel2.setText("Der er nu forbindelse til en anden database");
-            errorLabel3.setText("");
-            errorDialog.pack();
-            errorDialog.setLocationRelativeTo(this);
-            errorDialog.setVisible(true);
-        } catch (SQLException | ClassNotFoundException | FileNotFoundException | UnsupportedEncodingException ex) {
-            errorLabelHeader.setText("Der skete en fejl");
-            errorLabel1.setText("Kontakt systemadministratoren og oplys følgende");
-            errorLabel2.setText(ex.getMessage());
-            errorLabel3.setText("");
-            errorDialog.pack();
-            errorDialog.setLocationRelativeTo(this);
-            errorDialog.setVisible(true);
-        }
-
-        if ("Succes".equals(errorLabelHeader.getText())) {
-            dbBrugernavnField.setText("");
-            dbIPField.setText("");
-            dbDatabasenavnField.setText("");
-            dbPasswordField.setText("");
-            dbPortField.setText("");
-        }
-
-        updateArrays();
-    }//GEN-LAST:event_dbIndstillingerButtonActionPerformed
-
-    private void dbPortFieldKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_dbPortFieldKeyTyped
-        char number = evt.getKeyChar();
-        if (!Character.isDigit(number)) {
-            evt.consume();
-        }
-    }//GEN-LAST:event_dbPortFieldKeyTyped
-
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        updateArrays();
+        
         filmUdvalgsPanel.setVisible(true);
         forsidePanel.setVisible(false);
         valgAfPladsPanel.setVisible(false);
@@ -767,19 +1039,27 @@ public class MainFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_errorDialogButtonActionPerformed
 
     private void filmComboActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_filmComboActionPerformed
+        FilmUdvalgPanel forestilling;
         forestillingsPanel.removeAll();
 
-        for (Forestilling forestilling1 : forestillinger) {
-            if (forestilling1.getFilmTitel() == filmCombo.getSelectedItem()) {
-                FilmUdvalgPanel forestilling = new FilmUdvalgPanel(forestilling1, valgAfPladsPanel, filmUdvalgsPanel);
+        if (filmCombo.getSelectedIndex() == 0) {
+            for (Forestilling forestilling1 : forestillinger) {
+                forestilling = new FilmUdvalgPanel(forestilling1, valgAfPladsPanel, filmUdvalgsPanel);
                 forestilling.setVisible(true);
                 forestillingsPanel.add(forestilling);
             }
-            
+        } else {
+            for (Forestilling forestilling1 : forestillinger) {
+                if (forestilling1.getFilmTitel() == filmCombo.getSelectedItem()) {
+                    forestilling = new FilmUdvalgPanel(forestilling1, valgAfPladsPanel, filmUdvalgsPanel);
+                    forestilling.setVisible(true);
+                    forestillingsPanel.add(forestilling);
+                }
+            }
+        }
         forestillingsPanel.revalidate();
         forestillingsPanel.repaint();
-            
-        }
+
     }//GEN-LAST:event_filmComboActionPerformed
 
     private void filmComboMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_filmComboMouseReleased
@@ -791,12 +1071,163 @@ public class MainFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_filmComboMouseClicked
 
     private void filmComboMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_filmComboMouseExited
-  
+
     }//GEN-LAST:event_filmComboMouseExited
 
     private void filmComboItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_filmComboItemStateChanged
 
     }//GEN-LAST:event_filmComboItemStateChanged
+
+    private void dbIndstillingerButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dbIndstillingerButton1ActionPerformed
+        try {
+            String titel = titelField.getText();
+            //int spileltid = Integer.parseInt(spilletidField.getText());
+            //db.addFilm(titel, spileltid);
+            File file = jFileChooser1.getSelectedFile();
+            File target = new File(System.getProperty("user.dir") + "/src/rescources", titel + ".jpg");
+            Files.copy(file.toPath(), target.toPath(), StandardCopyOption.REPLACE_EXISTING);
+            
+        } catch (IOException ex) {
+            Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_dbIndstillingerButton1ActionPerformed
+
+    private void spilletidFieldKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_spilletidFieldKeyTyped
+        char number = evt.getKeyChar();
+        if (!Character.isDigit(number)) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_spilletidFieldKeyTyped
+
+    private void dbIndstillingerButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dbIndstillingerButtonActionPerformed
+        String pwd = "";
+        for (int i = 0; i < dbPasswordField.getPassword().length; i++) {
+            pwd = pwd + dbPasswordField.getPassword()[i];
+        }
+
+        try {
+            db.updateDBConn(dbBrugernavnField.getText(), pwd, dbIPField.getText() + ":" + dbPortField.getText(), dbDatabasenavnField.getText());
+            errorLabelHeader.setText("Succes");
+            errorLabel1.setText("Du Gjorde Det!");
+            errorLabel2.setText("Der er nu forbindelse til en anden database");
+            errorLabel3.setText("");
+            updateDialog(errorDialog);
+        } catch (SQLException | ClassNotFoundException | FileNotFoundException | UnsupportedEncodingException ex) {
+            errorLabelHeader.setText("Der skete en fejl");
+            errorLabel1.setText("Kontakt systemadministratoren og oplys følgende");
+            errorLabel2.setText(ex.getMessage());
+            errorLabel3.setText("");
+            updateDialog(errorDialog);
+        }
+
+        if ("Succes".equals(errorLabelHeader.getText())) {
+            dbBrugernavnField.setText("");
+            dbIPField.setText("");
+            dbDatabasenavnField.setText("");
+            dbPasswordField.setText("");
+            dbPortField.setText("");
+        }
+
+        updateArrays();
+    }//GEN-LAST:event_dbIndstillingerButtonActionPerformed
+
+    private void dbPortFieldKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_dbPortFieldKeyTyped
+        char number = evt.getKeyChar();
+        if (!Character.isDigit(number)) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_dbPortFieldKeyTyped
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+            updateDialog(jDialog1);
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jFileChooser1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jFileChooser1ActionPerformed
+        jDialog1.setVisible(false);
+    }//GEN-LAST:event_jFileChooser1ActionPerformed
+
+    private void tilføjForestillingTimeFieldKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tilføjForestillingTimeFieldKeyTyped
+        char number = evt.getKeyChar();
+        if (!Character.isDigit(number)) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_tilføjForestillingTimeFieldKeyTyped
+
+    private void tilføjForestillingMinutFieldKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tilføjForestillingMinutFieldKeyTyped
+        char number = evt.getKeyChar();
+        if (!Character.isDigit(number)) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_tilføjForestillingMinutFieldKeyTyped
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        ArrayList<Film> fundendeFilm;
+        try {
+            fundendeFilm = db.searchForFilm(findFilmField.getText());
+            for (Film fundendeFilm1 : fundendeFilm) {
+                fundendeFilmCombo.addItem(fundendeFilm1);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+
+    }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+//                  VIRKER IKKE DATE FORMAT SKAL FIKSES!
+
+//        try {
+//            String dato = tilføjForestillingDato.getDateFormatString();
+//            String tidspunkt = tilføjForestillingTimeField.getText() + ":" + tilføjForestillingMinutField.getText();
+//            Film film = (Film) fundendeFilmCombo.getSelectedItem();
+//            int film_id = film.getId();
+//            Sal sal = (Sal) salCombo.getSelectedItem();
+//            int sal_id = sal.getId();
+//            
+//            db.addForestilling(dato, tidspunkt, film_id, sal_id);
+//        } catch (SQLException ex) {
+//            Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
+//        } catch (ClassNotFoundException ex) {
+//            Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+    }//GEN-LAST:event_jButton5ActionPerformed
+
+    private void adminBrugernavnFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_adminBrugernavnFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_adminBrugernavnFieldActionPerformed
+
+    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+       
+//        if (adminBrugernavnField.getText().equalsIgnoreCase("admin") && adminPasswordField.getPassword().equals(adminArray)) {
+//            adminDialog.pack();
+//            adminDialog.setLocationRelativeTo(this);
+//            adminDialog.setVisible(true);
+//        } else {
+//            errorLabelHeader.setText("Fejl i log in");
+//            if (adminBrugernavnField.getText().equalsIgnoreCase("admin")) {
+//                errorLabel1.setText("Den indtastede adgangskode er forkert");
+//                errorLabel2.setText("");
+//                errorLabel3.setText("");
+//                updateDialog(errorDialog);
+//            }
+//            if (adminPasswordField.getPassword().equals("admin")) {
+//                errorLabel1.setText("Det indtastede brugernavn er forkert");
+//                errorLabel2.setText("");
+//                errorLabel3.setText("");
+//                updateDialog(errorDialog);
+//            }
+//            if (!(adminBrugernavnField.getText().equals("admin") && adminPasswordField.getPassword().equals("admin"))) {
+//                errorLabel1.setText("Begge inputfelter er forkerte");
+//                errorLabel2.setText("");
+//                errorLabel3.setText("");
+//                updateDialog(errorDialog);
+//            }
+//        }
+
+    }//GEN-LAST:event_jButton6ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -834,11 +1265,14 @@ public class MainFrame extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextField adminBrugernavnField;
     private javax.swing.JDialog adminDialog;
+    private javax.swing.JPasswordField adminPasswordField;
     private javax.swing.JTextField dbBrugernavnField;
     private javax.swing.JTextField dbDatabasenavnField;
     private javax.swing.JTextField dbIPField;
     private javax.swing.JButton dbIndstillingerButton;
+    private javax.swing.JButton dbIndstillingerButton1;
     private javax.swing.JPasswordField dbPasswordField;
     private javax.swing.JTextField dbPortField;
     private javax.swing.JDialog errorDialog;
@@ -851,6 +1285,7 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JComboBox filmCombo;
     private javax.swing.JPanel filmUdvalgsPanel;
     private javax.swing.JScrollPane filmudValgsScroll;
+    private javax.swing.JTextField findFilmField;
     private javax.swing.JPanel footerAdmin;
     private javax.swing.JPanel footerAdresse;
     private javax.swing.JPanel footerOmOs;
@@ -858,10 +1293,18 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JPanel footerSocial;
     private javax.swing.JPanel forestillingsPanel;
     private javax.swing.JPanel forsidePanel;
+    private javax.swing.JComboBox fundendeFilmCombo;
     private javax.swing.JPanel headerPanel;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButton4;
+    private javax.swing.JButton jButton5;
+    private javax.swing.JButton jButton6;
     private com.toedter.calendar.JDateChooser jDateChooser1;
+    private javax.swing.JDialog jDialog1;
+    private javax.swing.JDialog jDialog2;
+    private javax.swing.JFileChooser jFileChooser1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -876,7 +1319,17 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel21;
+    private javax.swing.JLabel jLabel22;
+    private javax.swing.JLabel jLabel23;
+    private javax.swing.JLabel jLabel24;
+    private javax.swing.JLabel jLabel25;
+    private javax.swing.JLabel jLabel26;
+    private javax.swing.JLabel jLabel27;
+    private javax.swing.JLabel jLabel28;
+    private javax.swing.JLabel jLabel29;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel30;
+    private javax.swing.JLabel jLabel31;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
@@ -886,8 +1339,15 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JLayeredPane jLayeredPane1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
     private javax.swing.JTabbedPane jTabbedPane1;
+    private javax.swing.JComboBox salCombo;
+    private javax.swing.JTextField spilletidField;
     private javax.swing.JButton tilFosidenButton;
+    private com.toedter.calendar.JDateChooser tilføjForestillingDato;
+    private javax.swing.JTextField tilføjForestillingMinutField;
+    private javax.swing.JTextField tilføjForestillingTimeField;
+    private javax.swing.JTextField titelField;
     private javax.swing.JPanel valgAfPladsPanel;
     // End of variables declaration//GEN-END:variables
 }

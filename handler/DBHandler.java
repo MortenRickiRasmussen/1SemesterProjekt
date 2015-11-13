@@ -22,8 +22,8 @@ public class DBHandler {
     private Statement stmt;
     private FileHandler settingsFil;
     private ArrayList<String> dbSettings;
-    
-    public DBHandler() throws IOException, ClassNotFoundException, SQLException{
+
+    public DBHandler() throws IOException, ClassNotFoundException, SQLException {
         settingsFil = new FileHandler("src/rescources/DatabaseIndstillinger.txt");
         dbSettings = settingsFil.openFile();
         database_usr = dbSettings.get(1);
@@ -32,8 +32,7 @@ public class DBHandler {
         schema = dbSettings.get(7);
         createConn();
     }
-    
-    
+
     public void updateDBConn(String usr, String pw, String url, String schema) throws SQLException, ClassNotFoundException, FileNotFoundException, UnsupportedEncodingException {
         database_usr = usr;
         database_pwd = pw;
@@ -41,7 +40,7 @@ public class DBHandler {
         this.schema = schema;
         reconnectToDB();
         if (reconnectToDB() == true) {
-        settingsFil.updateDBFile(database_usr, database_pwd, database_url, this.schema);
+            settingsFil.updateDBFile(database_usr, database_pwd, database_url, this.schema);
         }
     }
 
@@ -56,7 +55,7 @@ public class DBHandler {
         Class.forName(JDBC_DRIVER);
         conn = DriverManager.getConnection("jdbc:mysql://" + database_url + "/" + schema, database_usr, database_pwd);
         stmt = (Statement) conn.createStatement();
-        if(conn.isValid(1)) {
+        if (conn.isValid(1)) {
             connected = true;
         }
         return connected;
@@ -72,6 +71,12 @@ public class DBHandler {
         createConn();
         rs = stmt.executeQuery(mySQLStatement);
         return rs;
+    }
+
+    public void databaseExecute(String mySQLStatement) throws SQLException, ClassNotFoundException {
+        createConn();
+        stmt.execute(mySQLStatement);
+        close();
     }
 
     public Forestilling retrieveForestillinger(ResultSet rs) throws ClassNotFoundException, SQLException {
@@ -167,4 +172,43 @@ public class DBHandler {
         close();
 
     }
+
+    public void addFilm(String titel, int spilletid) throws SQLException, ClassNotFoundException {
+        String mySQLStatement = "INSERT INTO film (titel, spilletid) VALUES ('"
+                + titel + "',"
+                + spilletid + ");";
+
+        databaseExecute(mySQLStatement);
+    }
+
+    public ArrayList searchForFilm(String searchTerm) throws SQLException, ClassNotFoundException {
+        String mySQLStatement = "SELECT * FROM film WHERE (titel LIKE '%"
+                + searchTerm + "%');";
+        
+        ArrayList<Film> film = new ArrayList<>();
+
+        ResultSet rs = databaseRetrive(mySQLStatement);
+
+        while (rs.next()) {
+            int id = rs.getInt("id");
+            String titel = rs.getString("titel");
+            int spilletid = rs.getInt("spilletid");
+
+            Film film1 = new Film(id, titel, spilletid);
+            film.add(film1);
+        }
+        
+        return film;
+    }
+    
+    public void addForestilling(String dato, String tidspunkt, int film_id, int sal_id) throws SQLException, ClassNotFoundException {
+        String mySQLStatement = "INSERT INTO forestillinger (dato, tidspunkt, film_id, sal_id VALUES ('"
+                + dato + "','"
+                + tidspunkt + "',"
+                + film_id + ","
+                + sal_id + ",);";
+        
+        databaseExecute(mySQLStatement);
+    }
+    
 }

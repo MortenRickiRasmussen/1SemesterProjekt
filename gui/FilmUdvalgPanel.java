@@ -24,6 +24,7 @@ public class FilmUdvalgPanel extends javax.swing.JPanel {
      */
     public FilmUdvalgPanel(Forestilling forestilling, JPanel bestilBilleterPanel, JPanel forestillingsPanel) {
         initComponents();
+        plaketLabel.setIcon(forestilling.getPlakat());
         titelLabel.setText(forestilling.getFilmTitel());
         datoLabel.setText("" + forestilling.getDato());
         tidspunktLabel.setText(forestilling.getTidspunkt());
@@ -41,7 +42,7 @@ public class FilmUdvalgPanel extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel1 = new javax.swing.JLabel();
+        plaketLabel = new javax.swing.JLabel();
         titelLabel = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         datoLabel = new javax.swing.JLabel();
@@ -51,7 +52,9 @@ public class FilmUdvalgPanel extends javax.swing.JPanel {
         jLabel7 = new javax.swing.JLabel();
         salLabel = new javax.swing.JLabel();
 
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/rescources/Hunger games.jpg"))); // NOI18N
+        setMaximumSize(new java.awt.Dimension(950, 182));
+        setMinimumSize(new java.awt.Dimension(950, 182));
+        setPreferredSize(new java.awt.Dimension(950, 182));
 
         titelLabel.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         titelLabel.setText("The Hunger Games: The MockingJay 2. del");
@@ -81,45 +84,52 @@ public class FilmUdvalgPanel extends javax.swing.JPanel {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(titelLabel)
-                .addGap(84, 84, 84)
+                .addComponent(plaketLabel)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel3)
-                    .addComponent(jLabel6)
-                    .addComponent(jLabel7))
-                .addGap(38, 38, 38)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(salLabel)
-                    .addComponent(tidspunktLabel)
-                    .addComponent(datoLabel))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 192, Short.MAX_VALUE)
-                .addComponent(bestilBilleterButton)
-                .addContainerGap())
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addComponent(titelLabel)
+                        .addContainerGap(538, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(26, 26, 26)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel3)
+                            .addComponent(jLabel6)
+                            .addComponent(jLabel7))
+                        .addGap(38, 38, 38)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(salLabel)
+                            .addComponent(tidspunktLabel)
+                            .addComponent(datoLabel))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(bestilBilleterButton)
+                        .addContainerGap())))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(0, 55, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
-                    .addComponent(datoLabel))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(titelLabel)
-                    .addComponent(bestilBilleterButton)
-                    .addComponent(jLabel6)
-                    .addComponent(tidspunktLabel))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel7)
-                    .addComponent(salLabel))
-                .addGap(60, 60, 60))
-            .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                .addContainerGap())
+                .addComponent(plaketLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(titelLabel)
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel3)
+                            .addComponent(datoLabel))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel6)
+                            .addComponent(tidspunktLabel))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel7)
+                            .addComponent(salLabel)))
+                    .addComponent(bestilBilleterButton))
+                .addGap(35, 35, 35))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -132,10 +142,10 @@ public class FilmUdvalgPanel extends javax.swing.JPanel {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton bestilBilleterButton;
     private javax.swing.JLabel datoLabel;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel plaketLabel;
     private javax.swing.JLabel salLabel;
     private javax.swing.JLabel tidspunktLabel;
     private javax.swing.JLabel titelLabel;

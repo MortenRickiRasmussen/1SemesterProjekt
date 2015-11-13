@@ -25,6 +25,10 @@ public class Sal {
         return navn;
     }
     
+    public String toString() {
+        return navn;
+    }
+    
     
     
     
