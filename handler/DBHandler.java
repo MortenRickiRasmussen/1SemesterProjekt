@@ -17,9 +17,18 @@ public class DBHandler {
     private String schema = "/1SemesterProjekt";
     private Connection conn;
     private Statement stmt;
+    
+    public void updateDBConn(String usr, String pw, String url, String schema) throws SQLException, ClassNotFoundException {
+        database_usr = usr;
+        database_pwd = pw;
+        database_url = url;
+        this.schema = schema;
+        reconnectToDB();
+    }
 
-    public void reconnectToDB() throws SQLException {
+    public void reconnectToDB() throws SQLException, ClassNotFoundException {
         close();
+        createConn();
     }
 
     public void createConn() throws ClassNotFoundException, SQLException {
