@@ -1,0 +1,8 @@
+//USERNAME
+mortyhdd_1SPro
+//PASSWORD
+BioTrio123
+//URL
+mortyhd.dk:3306
+//SCHEMA
+mortyhdd_1semesterprojekt
