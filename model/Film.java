@@ -14,4 +14,18 @@ public class Film {
         this.titel = titel;
         this.spilleTid = spilleTid;
     }
+
+    public int getId() {
+        return id;
+    }
+
+    public String getTitel() {
+        return titel;
+    }
+
+    public int getSpilleTid() {
+        return spilleTid;
+    }
+    
+    
 }

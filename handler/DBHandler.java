@@ -72,8 +72,9 @@ public class DBHandler {
         Date dato = rs.getDate("dato");
         String tidspunkt = rs.getString("tidspunkt");
         int film_id = rs.getInt("film_id");
+        int sal_id = rs.getInt("sal_id");
 
-        Forestilling forestilling = new Forestilling(id, dato, tidspunkt, film_id);
+        Forestilling forestilling = new Forestilling(id, dato, tidspunkt, film_id, sal_id);
 
         return forestilling;
     }
@@ -113,7 +114,7 @@ public class DBHandler {
         return billet;
     }
 
-    public void loadArrayLists(ArrayList sale, ArrayList film, ArrayList forestillinger, ArrayList billetter) throws SQLException, ClassNotFoundException {
+    public void loadArrayLists(ArrayList<Sal> sale, ArrayList<Film> film, ArrayList<Forestilling> forestillinger, ArrayList<Billet> billetter) throws SQLException, ClassNotFoundException {
         sale.clear();
         film.clear();
         forestillinger.clear();
@@ -134,10 +135,21 @@ public class DBHandler {
         mySQLStatement = "SELECT * FROM forestillinger";
         rs = databaseRetrive(mySQLStatement);
         while (rs.next()) {
-            forestillinger.add(retrieveForestillinger(rs));
+            Forestilling forestilling = retrieveForestillinger(rs);
+            for (Film film1 : film) {
+                if (film1.getId() == forestilling.getFilmId()) {
+                    forestilling.setFilmTitel(film1.getTitel());
+                }
+            }
+            for (Sal sal1 : sale) {
+                if (sal1.getId() == forestilling.getSalId()) {
+                    forestilling.setSal(sal1.getNavn());
+                }
+            }
+            forestillinger.add(forestilling);
         }
 
-        mySQLStatement = "SELECT * FROM billeter";
+        mySQLStatement = "SELECT * FROM billetter";
         rs = databaseRetrive(mySQLStatement);
         while (rs.next()) {
             billetter.add(retrieveBilleter(rs));

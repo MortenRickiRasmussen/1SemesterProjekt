@@ -16,6 +16,16 @@ public class Sal {
         this.rækker = rækker;
         this.sædder = sædder;
     }
+
+    public int getId() {
+        return id;
+    }
+
+    public String getNavn() {
+        return navn;
+    }
+    
+    
     
     
 }
