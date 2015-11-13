@@ -23,13 +23,14 @@ public class DBHandler {
     private FileHandler settingsFil;
     private ArrayList<String> dbSettings;
     
-    public DBHandler() throws IOException{
-        settingsFil = new FileHandler("/rescources/DatabaseIndstillinger.txt");
+    public DBHandler() throws IOException, ClassNotFoundException, SQLException{
+        settingsFil = new FileHandler("src/rescources/DatabaseIndstillinger.txt");
         dbSettings = settingsFil.openFile();
         database_usr = dbSettings.get(1);
         database_pwd = dbSettings.get(3);
         database_url = dbSettings.get(5);
         schema = dbSettings.get(7);
+        createConn();
     }
     
     

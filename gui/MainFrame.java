@@ -5,16 +5,34 @@
  */
 package gui;
 
+import handler.DBHandler;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  *
  * @author Morten Ricki Rasmussen
  */
 public class MainFrame extends javax.swing.JFrame {
+    private DBHandler db;
 
     /**
      * Creates new form MainFrame
      */
     public MainFrame() {
+        try {
+            db = new DBHandler();
+        } catch (IOException ex) {
+            Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
+        }
         initComponents();
         forsidePanel.setVisible(true);
         valgAfPladsPanel.setVisible(false);
@@ -42,8 +60,8 @@ public class MainFrame extends javax.swing.JFrame {
         jLabel16 = new javax.swing.JLabel();
         dbBrugernavnField = new javax.swing.JTextField();
         dbIndstillingerButton = new javax.swing.JButton();
-        dbPasswordField = new javax.swing.JTextField();
         jLabel17 = new javax.swing.JLabel();
+        dbPasswordField = new javax.swing.JPasswordField();
         jPanel2 = new javax.swing.JPanel();
         headerPanel = new javax.swing.JPanel();
         tilFosidenButton = new javax.swing.JButton();
@@ -106,9 +124,9 @@ public class MainFrame extends javax.swing.JFrame {
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addContainerGap()
@@ -126,12 +144,12 @@ public class MainFrame extends javax.swing.JFrame {
                         .addGap(0, 95, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addContainerGap()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(dbPasswordField)
-                            .addComponent(dbBrugernavnField)
-                            .addComponent(dbDatabasenavnField)
-                            .addComponent(dbPortField)
-                            .addComponent(dbIPField))))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(dbBrugernavnField, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(dbDatabasenavnField, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(dbPortField, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(dbIPField, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(dbPasswordField))))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -255,7 +273,7 @@ public class MainFrame extends javax.swing.JFrame {
                 .addComponent(jLabel20)
                 .addGap(33, 33, 33)
                 .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(26, Short.MAX_VALUE))
+                .addContainerGap(32, Short.MAX_VALUE))
         );
 
         filmUdvalgsPanel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
@@ -286,12 +304,13 @@ public class MainFrame extends javax.swing.JFrame {
             filmUdvalgsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, filmUdvalgsPanelLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(filmUdvalgsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel18)
+                .addGroup(filmUdvalgsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(filmUdvalgsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabel19)))
+                        .addComponent(jLabel19))
+                    .addGroup(filmUdvalgsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel18)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 484, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
@@ -362,7 +381,7 @@ public class MainFrame extends javax.swing.JFrame {
                             .addComponent(jLabel6)
                             .addComponent(jLabel5)
                             .addComponent(jLabel7))))
-                .addContainerGap(151, Short.MAX_VALUE))
+                .addContainerGap(144, Short.MAX_VALUE))
         );
         footerAdresseLayout.setVerticalGroup(
             footerAdresseLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -447,7 +466,7 @@ public class MainFrame extends javax.swing.JFrame {
                     .addComponent(facebookLabel)
                     .addComponent(jLabel3)
                     .addComponent(jLabel13))
-                .addContainerGap(71, Short.MAX_VALUE))
+                .addContainerGap(58, Short.MAX_VALUE))
         );
         footerSocialLayout.setVerticalGroup(
             footerSocialLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -547,7 +566,22 @@ public class MainFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void dbIndstillingerButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dbIndstillingerButtonActionPerformed
-        // TODO add your handling code here:
+        String pwd = "";
+        for (int i = 0; i < dbPasswordField.getPassword().length; i++) {
+            pwd = pwd+dbPasswordField.getPassword()[i];
+        }
+        
+        try {
+            db.updateDBConn(dbBrugernavnField.getText(), pwd, dbIPField.getText()+":"+dbPortField.getText(), dbDatabasenavnField.getText());
+        } catch (SQLException ex) {
+            Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (UnsupportedEncodingException ex) {
+            Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_dbIndstillingerButtonActionPerformed
 
     private void dbPortFieldKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_dbPortFieldKeyTyped
@@ -602,7 +636,7 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JTextField dbDatabasenavnField;
     private javax.swing.JTextField dbIPField;
     private javax.swing.JButton dbIndstillingerButton;
-    private javax.swing.JTextField dbPasswordField;
+    private javax.swing.JPasswordField dbPasswordField;
     private javax.swing.JTextField dbPortField;
     private javax.swing.JLabel facebookLabel;
     private javax.swing.JPanel filmUdvalgsPanel;

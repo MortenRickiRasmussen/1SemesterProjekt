@@ -1,8 +1,0 @@
-//USERNAME
-mortyhdd_1SemPro
-//PASSWORD
-kya94cjw
-//URL
-mortyhd.dk:3306
-//SCHEMA
-1SemesterProjekt
