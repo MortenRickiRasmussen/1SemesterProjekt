@@ -210,4 +210,13 @@ public class DBHandler {
         databaseExecute(mySQLStatement);
     }
     
+    public void addSal(String name, int rows, int seats) throws SQLException, ClassNotFoundException{
+        String mySQLStatement = "INSERT INTO sale (navn, rækker, sædder) VALUES ('"
+                + name + "',"
+                + rows + ","
+                + seats + ");";
+        //System.out.println(mySQLStatement);
+        databaseExecute(mySQLStatement);
+    }
+    
 }
