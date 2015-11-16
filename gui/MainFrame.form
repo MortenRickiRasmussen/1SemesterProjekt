@@ -591,9 +591,6 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="adminBrugernavnField">
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="adminBrugernavnFieldActionPerformed"/>
-          </Events>
         </Component>
         <Component class="javax.swing.JPasswordField" name="adminPasswordField">
           <Events>
@@ -894,14 +891,13 @@
                 </Property>
               </Properties>
               <Events>
-                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="filmComboMouseClicked"/>
-                <EventHandler event="mouseExited" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="filmComboMouseExited"/>
-                <EventHandler event="mouseReleased" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="filmComboMouseReleased"/>
-                <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="filmComboItemStateChanged"/>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="filmComboActionPerformed"/>
               </Events>
             </Component>
             <Component class="com.toedter.calendar.JDateChooser" name="jDateChooser1">
+              <Events>
+                <EventHandler event="propertyChange" listener="java.beans.PropertyChangeListener" parameters="java.beans.PropertyChangeEvent" handler="jDateChooser1PropertyChange"/>
+              </Events>
             </Component>
           </SubComponents>
         </Container>

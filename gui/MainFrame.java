@@ -6,20 +6,15 @@
 package gui;
 
 import handler.DBHandler;
-import java.awt.event.KeyEvent;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.nio.file.Files;
-import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
-import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
+import java.util.Date;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
@@ -69,11 +64,55 @@ public class MainFrame extends javax.swing.JFrame {
             filmCombo.addItem(film.getTitel());
         }
     }
-    
+
     public void updateDialog(JDialog dialog) {
         dialog.pack();
         dialog.setLocationRelativeTo(this);
         dialog.setVisible(true);
+    }
+
+    public void updateForestillinger() {
+        forestillingsPanel.removeAll();
+
+        for (Forestilling forestilling : forestillinger) {
+            if (filmCombo.getSelectedIndex() == 0) {
+                FilmUdvalgPanel f = new FilmUdvalgPanel(forestilling, valgAfPladsPanel, filmUdvalgsPanel);
+                f.setVisible(true);
+                forestillingsPanel.add(f);
+            } else {
+                if (filmCombo.getSelectedItem() == forestilling.getFilmTitel()) {
+                    FilmUdvalgPanel f = new FilmUdvalgPanel(forestilling, valgAfPladsPanel, filmUdvalgsPanel);
+                    f.setVisible(true);
+                    forestillingsPanel.add(f);
+                }
+            }
+        }
+
+        if (!(jDateChooser1.getDate() == null)) {
+            forestillingsPanel.removeAll();
+            Date dateFromDateChooser = jDateChooser1.getDate();
+            String dateString = String.format("%1$td-%1$tm-%1$tY", dateFromDateChooser);
+            if (filmCombo.getSelectedIndex() == 0) {
+                for (Forestilling forestilling : forestillinger) {
+                    if (dateString.equals(forestilling.getDato())) {
+                        FilmUdvalgPanel f = new FilmUdvalgPanel(forestilling, valgAfPladsPanel, filmUdvalgsPanel);
+                        f.setVisible(true);
+                        forestillingsPanel.add(f);
+                    }
+                }
+            } else {
+                for (Forestilling forestilling : forestillinger) {
+                    if (dateString.equals(forestilling.getDato()) && filmCombo.getSelectedItem() == forestilling.getFilmTitel()) {
+                        FilmUdvalgPanel f = new FilmUdvalgPanel(forestilling, valgAfPladsPanel, filmUdvalgsPanel);
+                        f.setVisible(true);
+                        forestillingsPanel.add(f);
+                    }
+                }
+            }
+        }
+
+        forestillingsPanel.revalidate();
+        forestillingsPanel.repaint();
     }
 
     public MainFrame() {
@@ -548,12 +587,6 @@ public class MainFrame extends javax.swing.JFrame {
 
         jLabel31.setText("Kodeord");
 
-        adminBrugernavnField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                adminBrugernavnFieldActionPerformed(evt);
-            }
-        });
-
         adminPasswordField.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 adminPasswordFieldKeyPressed(evt);
@@ -694,25 +727,15 @@ public class MainFrame extends javax.swing.JFrame {
 
         jLabel19.setText("Vælg film");
 
-        filmCombo.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                filmComboMouseClicked(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                filmComboMouseExited(evt);
-            }
-            public void mouseReleased(java.awt.event.MouseEvent evt) {
-                filmComboMouseReleased(evt);
-            }
-        });
-        filmCombo.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                filmComboItemStateChanged(evt);
-            }
-        });
         filmCombo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 filmComboActionPerformed(evt);
+            }
+        });
+
+        jDateChooser1.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                jDateChooser1PropertyChange(evt);
             }
         });
 
@@ -991,11 +1014,9 @@ public class MainFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-
         updateDialog(adminLoginDialog);
-        
-        //updateDialog(adminDialog);
 
+        salCombo.removeAll();
         for (Sal sal1 : sale) {
             salCombo.addItem(sal1);
         }
@@ -1003,7 +1024,7 @@ public class MainFrame extends javax.swing.JFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         updateArrays();
-        
+
         filmUdvalgsPanel.setVisible(true);
         forsidePanel.setVisible(false);
         valgAfPladsPanel.setVisible(false);
@@ -1032,44 +1053,8 @@ public class MainFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_errorDialogButtonActionPerformed
 
     private void filmComboActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_filmComboActionPerformed
-        FilmUdvalgPanel forestilling;
-        forestillingsPanel.removeAll();
-
-        if (filmCombo.getSelectedIndex() == 0) {
-            for (Forestilling forestilling1 : forestillinger) {
-                forestilling = new FilmUdvalgPanel(forestilling1, valgAfPladsPanel, filmUdvalgsPanel);
-                forestilling.setVisible(true);
-                forestillingsPanel.add(forestilling);
-            }
-        } else {
-            for (Forestilling forestilling1 : forestillinger) {
-                if (forestilling1.getFilmTitel() == filmCombo.getSelectedItem()) {
-                    forestilling = new FilmUdvalgPanel(forestilling1, valgAfPladsPanel, filmUdvalgsPanel);
-                    forestilling.setVisible(true);
-                    forestillingsPanel.add(forestilling);
-                }
-            }
-        }
-        forestillingsPanel.revalidate();
-        forestillingsPanel.repaint();
-
+        updateForestillinger();
     }//GEN-LAST:event_filmComboActionPerformed
-
-    private void filmComboMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_filmComboMouseReleased
-
-    }//GEN-LAST:event_filmComboMouseReleased
-
-    private void filmComboMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_filmComboMouseClicked
-
-    }//GEN-LAST:event_filmComboMouseClicked
-
-    private void filmComboMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_filmComboMouseExited
-
-    }//GEN-LAST:event_filmComboMouseExited
-
-    private void filmComboItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_filmComboItemStateChanged
-
-    }//GEN-LAST:event_filmComboItemStateChanged
 
     private void dbIndstillingerButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dbIndstillingerButton1ActionPerformed
         try {
@@ -1096,7 +1081,7 @@ public class MainFrame extends javax.swing.JFrame {
             errorLabel2.setText("Oplys følgende");
             errorLabel3.setText(ex.getMessage());
             updateDialog(errorDialog);
-        } 
+        }
     }//GEN-LAST:event_dbIndstillingerButton1ActionPerformed
 
     private void spilletidFieldKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_spilletidFieldKeyTyped
@@ -1146,7 +1131,7 @@ public class MainFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_dbPortFieldKeyTyped
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-            updateDialog(fileChooser);
+        updateDialog(fileChooser);
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jFileChooser1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jFileChooser1ActionPerformed
@@ -1171,6 +1156,7 @@ public class MainFrame extends javax.swing.JFrame {
         ArrayList<Film> fundendeFilm;
         try {
             fundendeFilm = db.searchForFilm(findFilmField.getText());
+            fundendeFilmCombo.removeAll();
             for (Film fundendeFilm1 : fundendeFilm) {
                 fundendeFilmCombo.addItem(fundendeFilm1);
             }
@@ -1191,9 +1177,9 @@ public class MainFrame extends javax.swing.JFrame {
             int film_id = film.getId();
             Sal sal = (Sal) salCombo.getSelectedItem();
             int sal_id = sal.getId();
-            
+
             db.addForestilling(dato, tidspunkt, film_id, sal_id);
-            
+
             errorLabelHeader.setText("Succes");
             errorLabel1.setText("Forestillingen med " + film.getTitel() + " blev succesfuldt tilføjet til databasen");
             errorLabel2.setText("Folk kan nu bestille billeter til forestillingen");
@@ -1208,10 +1194,6 @@ public class MainFrame extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jButton5ActionPerformed
 
-    private void adminBrugernavnFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_adminBrugernavnFieldActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_adminBrugernavnFieldActionPerformed
-
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
         adminBrugernavnField.requestFocus();
         String userName = "admin";
@@ -1220,27 +1202,33 @@ public class MainFrame extends javax.swing.JFrame {
         for (int i = 0; i < adminPasswordField.getPassword().length; i++) {
             inputPassword = inputPassword + adminPasswordField.getPassword()[i];
         }
-        
+
         if (adminBrugernavnField.getText().equalsIgnoreCase(userName) && inputPassword.equals(password)) {
             updateDialog(adminDialog);
             adminLoginDialog.setVisible(false);
             adminBrugernavnField.setText("");
         } else {
-                errorLabel1.setText("Begge inputfelter er forkerte");
-                errorLabel2.setText("");
-                errorLabel3.setText("");
-                updateDialog(errorDialog);
-            
+            errorLabel1.setText("Begge inputfelter er forkerte");
+            errorLabel2.setText("");
+            errorLabel3.setText("");
+            updateDialog(errorDialog);
+
         }
         adminPasswordField.setText("");
 
     }//GEN-LAST:event_jButton6ActionPerformed
 
     private void adminPasswordFieldKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_adminPasswordFieldKeyPressed
-        if (evt.getKeyCode() == evt.VK_ENTER){
+        if (evt.getKeyCode() == evt.VK_ENTER) {
             jButton6.doClick();
         }
     }//GEN-LAST:event_adminPasswordFieldKeyPressed
+
+    private void jDateChooser1PropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_jDateChooser1PropertyChange
+        if (!(jDateChooser1.getDate() == null)) {
+            updateForestillinger();
+        }
+    }//GEN-LAST:event_jDateChooser1PropertyChange
 
     /**
      * @param args the command line arguments
