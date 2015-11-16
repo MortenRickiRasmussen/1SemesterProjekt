@@ -149,9 +149,9 @@ public class MainFrame extends javax.swing.JFrame {
         errorLabel2 = new javax.swing.JLabel();
         errorDialogButton = new javax.swing.JButton();
         errorLabel3 = new javax.swing.JLabel();
-        jDialog1 = new javax.swing.JDialog();
+        fileChooser = new javax.swing.JDialog();
         jFileChooser1 = new javax.swing.JFileChooser();
-        jDialog2 = new javax.swing.JDialog();
+        adminLoginDialog = new javax.swing.JDialog();
         jLabel29 = new javax.swing.JLabel();
         jLabel30 = new javax.swing.JLabel();
         jLabel31 = new javax.swing.JLabel();
@@ -532,22 +532,22 @@ public class MainFrame extends javax.swing.JFrame {
             }
         });
 
-        javax.swing.GroupLayout jDialog1Layout = new javax.swing.GroupLayout(jDialog1.getContentPane());
-        jDialog1.getContentPane().setLayout(jDialog1Layout);
-        jDialog1Layout.setHorizontalGroup(
-            jDialog1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        javax.swing.GroupLayout fileChooserLayout = new javax.swing.GroupLayout(fileChooser.getContentPane());
+        fileChooser.getContentPane().setLayout(fileChooserLayout);
+        fileChooserLayout.setHorizontalGroup(
+            fileChooserLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 582, Short.MAX_VALUE)
-            .addGroup(jDialog1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jDialog1Layout.createSequentialGroup()
+            .addGroup(fileChooserLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(fileChooserLayout.createSequentialGroup()
                     .addGap(0, 0, Short.MAX_VALUE)
                     .addComponent(jFileChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGap(0, 0, Short.MAX_VALUE)))
         );
-        jDialog1Layout.setVerticalGroup(
-            jDialog1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        fileChooserLayout.setVerticalGroup(
+            fileChooserLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 397, Short.MAX_VALUE)
-            .addGroup(jDialog1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jDialog1Layout.createSequentialGroup()
+            .addGroup(fileChooserLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(fileChooserLayout.createSequentialGroup()
                     .addGap(0, 0, Short.MAX_VALUE)
                     .addComponent(jFileChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGap(0, 0, Short.MAX_VALUE)))
@@ -574,30 +574,30 @@ public class MainFrame extends javax.swing.JFrame {
             }
         });
 
-        javax.swing.GroupLayout jDialog2Layout = new javax.swing.GroupLayout(jDialog2.getContentPane());
-        jDialog2.getContentPane().setLayout(jDialog2Layout);
-        jDialog2Layout.setHorizontalGroup(
-            jDialog2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jDialog2Layout.createSequentialGroup()
+        javax.swing.GroupLayout adminLoginDialogLayout = new javax.swing.GroupLayout(adminLoginDialog.getContentPane());
+        adminLoginDialog.getContentPane().setLayout(adminLoginDialogLayout);
+        adminLoginDialogLayout.setHorizontalGroup(
+            adminLoginDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(adminLoginDialogLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jDialog2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(adminLoginDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel29, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(adminBrugernavnField)
-                    .addGroup(jDialog2Layout.createSequentialGroup()
-                        .addGroup(jDialog2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(adminLoginDialogLayout.createSequentialGroup()
+                        .addGroup(adminLoginDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel30)
                             .addComponent(jLabel31))
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addComponent(adminPasswordField))
                 .addContainerGap())
-            .addGroup(jDialog2Layout.createSequentialGroup()
+            .addGroup(adminLoginDialogLayout.createSequentialGroup()
                 .addGap(102, 102, 102)
                 .addComponent(jButton6)
                 .addContainerGap(106, Short.MAX_VALUE))
         );
-        jDialog2Layout.setVerticalGroup(
-            jDialog2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jDialog2Layout.createSequentialGroup()
+        adminLoginDialogLayout.setVerticalGroup(
+            adminLoginDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(adminLoginDialogLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel29)
                 .addGap(18, 18, 18)
@@ -903,7 +903,7 @@ public class MainFrame extends javax.swing.JFrame {
                     .addComponent(facebookLabel)
                     .addComponent(jLabel3)
                     .addComponent(jLabel13))
-                .addContainerGap(115, Short.MAX_VALUE))
+                .addContainerGap(71, Short.MAX_VALUE))
         );
         footerSocialLayout.setVerticalGroup(
             footerSocialLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -997,11 +997,10 @@ public class MainFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-//        jDialog2.pack();
-//        jDialog2.setLocationRelativeTo(this);
-//        jDialog2.setVisible(true);
+
+        updateDialog(adminLoginDialog);
         
-        updateDialog(adminDialog);
+        //updateDialog(adminDialog);
 
         for (Sal sal1 : sale) {
             salCombo.addItem(sal1);
@@ -1139,11 +1138,11 @@ public class MainFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_dbPortFieldKeyTyped
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-            updateDialog(jDialog1);
+            updateDialog(fileChooser);
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jFileChooser1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jFileChooser1ActionPerformed
-        jDialog1.setVisible(false);
+        fileChooser.setVisible(false);
     }//GEN-LAST:event_jFileChooser1ActionPerformed
 
     private void tilføjForestillingTimeFieldKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tilføjForestillingTimeFieldKeyTyped
@@ -1201,31 +1200,23 @@ public class MainFrame extends javax.swing.JFrame {
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
        
-//        if (adminBrugernavnField.getText().equalsIgnoreCase("admin") && adminPasswordField.getPassword().equals(adminArray)) {
-//            adminDialog.pack();
-//            adminDialog.setLocationRelativeTo(this);
-//            adminDialog.setVisible(true);
-//        } else {
-//            errorLabelHeader.setText("Fejl i log in");
-//            if (adminBrugernavnField.getText().equalsIgnoreCase("admin")) {
-//                errorLabel1.setText("Den indtastede adgangskode er forkert");
-//                errorLabel2.setText("");
-//                errorLabel3.setText("");
-//                updateDialog(errorDialog);
-//            }
-//            if (adminPasswordField.getPassword().equals("admin")) {
-//                errorLabel1.setText("Det indtastede brugernavn er forkert");
-//                errorLabel2.setText("");
-//                errorLabel3.setText("");
-//                updateDialog(errorDialog);
-//            }
-//            if (!(adminBrugernavnField.getText().equals("admin") && adminPasswordField.getPassword().equals("admin"))) {
-//                errorLabel1.setText("Begge inputfelter er forkerte");
-//                errorLabel2.setText("");
-//                errorLabel3.setText("");
-//                updateDialog(errorDialog);
-//            }
-//        }
+        String userName = "admin";
+        String password = "admin";
+        String inputPassword = "";
+        for (int i = 0; i < adminPasswordField.getPassword().length; i++) {
+            password = password + adminPasswordField.getPassword()[i];
+        }
+        
+        if (adminBrugernavnField.getText().equalsIgnoreCase(userName) && inputPassword.equals(password)) {
+            updateDialog(adminDialog);
+            adminLoginDialog.setVisible(false);
+        } else {
+                errorLabel1.setText("Begge inputfelter er forkerte");
+                errorLabel2.setText("");
+                errorLabel3.setText("");
+                updateDialog(errorDialog);
+            
+        }
 
     }//GEN-LAST:event_jButton6ActionPerformed
 
@@ -1267,6 +1258,7 @@ public class MainFrame extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField adminBrugernavnField;
     private javax.swing.JDialog adminDialog;
+    private javax.swing.JDialog adminLoginDialog;
     private javax.swing.JPasswordField adminPasswordField;
     private javax.swing.JTextField dbBrugernavnField;
     private javax.swing.JTextField dbDatabasenavnField;
@@ -1282,6 +1274,7 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JLabel errorLabel3;
     private javax.swing.JLabel errorLabelHeader;
     private javax.swing.JLabel facebookLabel;
+    private javax.swing.JDialog fileChooser;
     private javax.swing.JComboBox filmCombo;
     private javax.swing.JPanel filmUdvalgsPanel;
     private javax.swing.JScrollPane filmudValgsScroll;
@@ -1302,8 +1295,6 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
     private com.toedter.calendar.JDateChooser jDateChooser1;
-    private javax.swing.JDialog jDialog1;
-    private javax.swing.JDialog jDialog2;
     private javax.swing.JFileChooser jFileChooser1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
