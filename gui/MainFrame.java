@@ -1080,13 +1080,17 @@ public class MainFrame extends javax.swing.JFrame {
     private void dbIndstillingerButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dbIndstillingerButton1ActionPerformed
         try {
             String titel = titelField.getText();
-            //int spileltid = Integer.parseInt(spilletidField.getText());
-            //db.addFilm(titel, spileltid);
+            int spileltid = Integer.parseInt(spilletidField.getText());
+            db.addFilm(titel, spileltid);
             File file = jFileChooser1.getSelectedFile();
             File target = new File(System.getProperty("user.dir") + "/src/rescources", titel + ".jpg");
             Files.copy(file.toPath(), target.toPath(), StandardCopyOption.REPLACE_EXISTING);
             
         } catch (IOException ex) {
+            Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
             Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_dbIndstillingerButton1ActionPerformed
@@ -1204,7 +1208,7 @@ public class MainFrame extends javax.swing.JFrame {
         String password = "admin";
         String inputPassword = "";
         for (int i = 0; i < adminPasswordField.getPassword().length; i++) {
-            password = password + adminPasswordField.getPassword()[i];
+            inputPassword = inputPassword + adminPasswordField.getPassword()[i];
         }
         
         if (adminBrugernavnField.getText().equalsIgnoreCase(userName) && inputPassword.equals(password)) {
