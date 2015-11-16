@@ -6,6 +6,7 @@
 package gui;
 
 import handler.DBHandler;
+import java.awt.event.KeyEvent;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -221,28 +222,21 @@ public class MainFrame extends javax.swing.JFrame {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addContainerGap()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel12)
-                                    .addComponent(jLabel14)
-                                    .addComponent(jLabel15)
-                                    .addComponent(jLabel16)))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addContainerGap()
-                                .addComponent(jLabel17)))
+                            .addComponent(jLabel12)
+                            .addComponent(jLabel14)
+                            .addComponent(jLabel15)
+                            .addComponent(jLabel16)
+                            .addComponent(jLabel17))
                         .addGap(0, 274, Short.MAX_VALUE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(dbBrugernavnField, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(dbDatabasenavnField, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(dbPortField, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(dbIPField, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(dbPasswordField))))
+                    .addComponent(dbBrugernavnField, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(dbDatabasenavnField, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(dbPortField, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(dbIPField, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(dbPasswordField))
                 .addContainerGap())
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(89, 89, 89)
@@ -308,22 +302,15 @@ public class MainFrame extends javax.swing.JFrame {
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(spilletidField, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(titelField, javax.swing.GroupLayout.Alignment.TRAILING)))
+                    .addComponent(spilletidField, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(titelField, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel3Layout.createSequentialGroup()
-                                .addContainerGap()
-                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel22)
-                                    .addComponent(jLabel23)))
-                            .addGroup(jPanel3Layout.createSequentialGroup()
-                                .addContainerGap()
-                                .addComponent(jButton3)))
+                            .addComponent(jLabel22)
+                            .addComponent(jLabel23)
+                            .addComponent(jButton3))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
             .addGroup(jPanel3Layout.createSequentialGroup()
@@ -567,6 +554,12 @@ public class MainFrame extends javax.swing.JFrame {
             }
         });
 
+        adminPasswordField.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                adminPasswordFieldKeyPressed(evt);
+            }
+        });
+
         jButton6.setText("Log in");
         jButton6.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -614,6 +607,7 @@ public class MainFrame extends javax.swing.JFrame {
         );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("BioTrio");
         setMaximumSize(new java.awt.Dimension(950, 700));
         setMinimumSize(new java.awt.Dimension(950, 700));
 
@@ -818,7 +812,7 @@ public class MainFrame extends javax.swing.JFrame {
                             .addComponent(jLabel6)
                             .addComponent(jLabel5)
                             .addComponent(jLabel7))))
-                .addContainerGap(151, Short.MAX_VALUE))
+                .addContainerGap(132, Short.MAX_VALUE))
         );
         footerAdresseLayout.setVerticalGroup(
             footerAdresseLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -903,7 +897,7 @@ public class MainFrame extends javax.swing.JFrame {
                     .addComponent(facebookLabel)
                     .addComponent(jLabel3)
                     .addComponent(jLabel13))
-                .addContainerGap(71, Short.MAX_VALUE))
+                .addContainerGap(34, Short.MAX_VALUE))
         );
         footerSocialLayout.setVerticalGroup(
             footerSocialLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -964,13 +958,13 @@ public class MainFrame extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(footerSocial, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(footerAdmin, javax.swing.GroupLayout.DEFAULT_SIZE, 287, Short.MAX_VALUE))
+                .addComponent(footerAdmin, javax.swing.GroupLayout.DEFAULT_SIZE, 323, Short.MAX_VALUE))
         );
         footerPanelLayout.setVerticalGroup(
             footerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(footerOmOs, javax.swing.GroupLayout.DEFAULT_SIZE, 156, Short.MAX_VALUE)
             .addComponent(footerAdresse, javax.swing.GroupLayout.DEFAULT_SIZE, 156, Short.MAX_VALUE)
-            .addComponent(footerSocial, javax.swing.GroupLayout.DEFAULT_SIZE, 156, Short.MAX_VALUE)
+            .addComponent(footerSocial, javax.swing.GroupLayout.PREFERRED_SIZE, 156, Short.MAX_VALUE)
             .addComponent(footerAdmin, javax.swing.GroupLayout.DEFAULT_SIZE, 156, Short.MAX_VALUE)
         );
 
@@ -1182,20 +1176,21 @@ public class MainFrame extends javax.swing.JFrame {
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
 //                  VIRKER IKKE DATE FORMAT SKAL FIKSES!
 
-//        try {
-//            String dato = tilføjForestillingDato.getDateFormatString();
-//            String tidspunkt = tilføjForestillingTimeField.getText() + ":" + tilføjForestillingMinutField.getText();
-//            Film film = (Film) fundendeFilmCombo.getSelectedItem();
-//            int film_id = film.getId();
-//            Sal sal = (Sal) salCombo.getSelectedItem();
-//            int sal_id = sal.getId();
-//            
-//            db.addForestilling(dato, tidspunkt, film_id, sal_id);
-//        } catch (SQLException ex) {
-//            Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
-//        } catch (ClassNotFoundException ex) {
-//            Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
-//        }
+        try {
+            java.sql.Date dato = new java.sql.Date(tilføjForestillingDato.getDate().getTime());
+            System.out.println(dato);
+            String tidspunkt = tilføjForestillingTimeField.getText() + ":" + tilføjForestillingMinutField.getText();
+            Film film = (Film) fundendeFilmCombo.getSelectedItem();
+            int film_id = film.getId();
+            Sal sal = (Sal) salCombo.getSelectedItem();
+            int sal_id = sal.getId();
+            
+            db.addForestilling(dato, tidspunkt, film_id, sal_id);
+        } catch (SQLException ex) {
+            Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void adminBrugernavnFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_adminBrugernavnFieldActionPerformed
@@ -1203,7 +1198,7 @@ public class MainFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_adminBrugernavnFieldActionPerformed
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
-       
+        adminBrugernavnField.requestFocus();
         String userName = "admin";
         String password = "admin";
         String inputPassword = "";
@@ -1214,6 +1209,7 @@ public class MainFrame extends javax.swing.JFrame {
         if (adminBrugernavnField.getText().equalsIgnoreCase(userName) && inputPassword.equals(password)) {
             updateDialog(adminDialog);
             adminLoginDialog.setVisible(false);
+            adminBrugernavnField.setText("");
         } else {
                 errorLabel1.setText("Begge inputfelter er forkerte");
                 errorLabel2.setText("");
@@ -1221,8 +1217,15 @@ public class MainFrame extends javax.swing.JFrame {
                 updateDialog(errorDialog);
             
         }
+        adminPasswordField.setText("");
 
     }//GEN-LAST:event_jButton6ActionPerformed
+
+    private void adminPasswordFieldKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_adminPasswordFieldKeyPressed
+        if (evt.getKeyCode() == evt.VK_ENTER){
+            jButton6.doClick();
+        }
+    }//GEN-LAST:event_adminPasswordFieldKeyPressed
 
     /**
      * @param args the command line arguments

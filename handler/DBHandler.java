@@ -201,13 +201,13 @@ public class DBHandler {
         return film;
     }
     
-    public void addForestilling(String dato, String tidspunkt, int film_id, int sal_id) throws SQLException, ClassNotFoundException {
-        String mySQLStatement = "INSERT INTO forestillinger (dato, tidspunkt, film_id, sal_id VALUES ('"
+    public void addForestilling(Date dato, String tidspunkt, int film_id, int sal_id) throws SQLException, ClassNotFoundException {
+        String mySQLStatement = "INSERT INTO forestillinger (dato, tidspunkt, film_id, sal_id) VALUES ('"
                 + dato + "','"
                 + tidspunkt + "',"
                 + film_id + ","
-                + sal_id + ",);";
-        
+                + sal_id + ");";
+        System.out.println(mySQLStatement);
         databaseExecute(mySQLStatement);
     }
     
