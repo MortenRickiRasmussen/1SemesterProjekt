@@ -207,7 +207,6 @@ public class DBHandler {
                 + tidspunkt + "',"
                 + film_id + ","
                 + sal_id + ");";
-        System.out.println(mySQLStatement);
         databaseExecute(mySQLStatement);
     }
     

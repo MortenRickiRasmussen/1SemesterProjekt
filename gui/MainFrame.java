@@ -812,7 +812,7 @@ public class MainFrame extends javax.swing.JFrame {
                             .addComponent(jLabel6)
                             .addComponent(jLabel5)
                             .addComponent(jLabel7))))
-                .addContainerGap(132, Short.MAX_VALUE))
+                .addContainerGap(151, Short.MAX_VALUE))
         );
         footerAdresseLayout.setVerticalGroup(
             footerAdresseLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -897,7 +897,7 @@ public class MainFrame extends javax.swing.JFrame {
                     .addComponent(facebookLabel)
                     .addComponent(jLabel3)
                     .addComponent(jLabel13))
-                .addContainerGap(34, Short.MAX_VALUE))
+                .addContainerGap(71, Short.MAX_VALUE))
         );
         footerSocialLayout.setVerticalGroup(
             footerSocialLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -964,7 +964,7 @@ public class MainFrame extends javax.swing.JFrame {
             footerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(footerOmOs, javax.swing.GroupLayout.DEFAULT_SIZE, 156, Short.MAX_VALUE)
             .addComponent(footerAdresse, javax.swing.GroupLayout.DEFAULT_SIZE, 156, Short.MAX_VALUE)
-            .addComponent(footerSocial, javax.swing.GroupLayout.PREFERRED_SIZE, 156, Short.MAX_VALUE)
+            .addComponent(footerSocial, javax.swing.GroupLayout.DEFAULT_SIZE, 156, Short.MAX_VALUE)
             .addComponent(footerAdmin, javax.swing.GroupLayout.DEFAULT_SIZE, 156, Short.MAX_VALUE)
         );
 
@@ -1079,14 +1079,24 @@ public class MainFrame extends javax.swing.JFrame {
             File file = jFileChooser1.getSelectedFile();
             File target = new File(System.getProperty("user.dir") + "/src/rescources", titel + ".jpg");
             Files.copy(file.toPath(), target.toPath(), StandardCopyOption.REPLACE_EXISTING);
-            
+            errorLabelHeader.setText("Succes");
+            errorLabel1.setText("Filmen " + titel + " blev succesfuldt tilføjet til databasen");
+            errorLabel2.setText("Du kan nu tilføje forestillinger med den film");
+            errorLabel3.setText("");
+            updateDialog(errorDialog);
         } catch (IOException ex) {
-            Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SQLException ex) {
-            Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
-        }
+            errorLabelHeader.setText("Filen blev ikke fundet");
+            errorLabel1.setText("Plakaten du prøvede at tilføje blev ikke fundet");
+            errorLabel2.setText("Prøv venligst igen, eller brug en anden fil");
+            errorLabel3.setText("");
+            updateDialog(errorDialog);
+        } catch (SQLException | ClassNotFoundException ex) {
+            errorLabelHeader.setText("Der skete en uventet fejæ");
+            errorLabel1.setText("Prøv venligst igen, eller kontakt systemadministratoren");
+            errorLabel2.setText("Oplys følgende");
+            errorLabel3.setText(ex.getMessage());
+            updateDialog(errorDialog);
+        } 
     }//GEN-LAST:event_dbIndstillingerButton1ActionPerformed
 
     private void spilletidFieldKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_spilletidFieldKeyTyped
@@ -1174,11 +1184,8 @@ public class MainFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-//                  VIRKER IKKE DATE FORMAT SKAL FIKSES!
-
         try {
             java.sql.Date dato = new java.sql.Date(tilføjForestillingDato.getDate().getTime());
-            System.out.println(dato);
             String tidspunkt = tilføjForestillingTimeField.getText() + ":" + tilføjForestillingMinutField.getText();
             Film film = (Film) fundendeFilmCombo.getSelectedItem();
             int film_id = film.getId();
@@ -1186,10 +1193,18 @@ public class MainFrame extends javax.swing.JFrame {
             int sal_id = sal.getId();
             
             db.addForestilling(dato, tidspunkt, film_id, sal_id);
-        } catch (SQLException ex) {
-            Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
+            
+            errorLabelHeader.setText("Succes");
+            errorLabel1.setText("Forestillingen med " + film.getTitel() + " blev succesfuldt tilføjet til databasen");
+            errorLabel2.setText("Folk kan nu bestille billeter til forestillingen");
+            errorLabel3.setText("");
+            updateDialog(errorDialog);
+        } catch (SQLException | ClassNotFoundException ex) {
+            errorLabelHeader.setText("Uventet Fejl");
+            errorLabel1.setText("Der opstod en uventet fejl, prøv igen eller");
+            errorLabel2.setText("kontakt systemadministratoren og oplys følgende");
+            errorLabel3.setText(ex.getMessage());
+            updateDialog(errorDialog);
         }
     }//GEN-LAST:event_jButton5ActionPerformed
 
