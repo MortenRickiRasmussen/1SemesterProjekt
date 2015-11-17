@@ -244,6 +244,7 @@ public class MainFrame extends javax.swing.JFrame {
         pladsPanelAntalBilleterComboBox = new javax.swing.JComboBox();
         pladsPanelTelefonnummerField = new javax.swing.JTextField();
         pladsPanelBestilButton = new javax.swing.JButton();
+        jLabel38 = new javax.swing.JLabel();
         footerPanel = new javax.swing.JPanel();
         footerAdresse = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
@@ -872,7 +873,7 @@ public class MainFrame extends javax.swing.JFrame {
         salPanel.setLayout(salPanelLayout);
         salPanelLayout.setHorizontalGroup(
             salPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 568, Short.MAX_VALUE)
+            .addGap(0, 571, Short.MAX_VALUE)
         );
         salPanelLayout.setVerticalGroup(
             salPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -909,26 +910,28 @@ public class MainFrame extends javax.swing.JFrame {
             }
         });
 
+        jLabel38.setText("Telefonnummer:");
+
         javax.swing.GroupLayout valgAfPladsPanelLayout = new javax.swing.GroupLayout(valgAfPladsPanel);
         valgAfPladsPanel.setLayout(valgAfPladsPanelLayout);
         valgAfPladsPanelLayout.setHorizontalGroup(
             valgAfPladsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(valgAfPladsPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(valgAfPladsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(valgAfPladsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(pladsPanelTitle)
                     .addComponent(pladsPanelDato)
                     .addComponent(pladsPanelTidspunkt)
                     .addComponent(jLabel35)
                     .addComponent(jLabel36)
                     .addGroup(valgAfPladsPanelLayout.createSequentialGroup()
-                        .addGroup(valgAfPladsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(pladsPanelTelefonnummerField, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel37, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(jLabel37)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(pladsPanelAntalBilleterComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(pladsPanelBestilButton))
-                .addGap(279, 279, 279)
+                    .addComponent(pladsPanelBestilButton)
+                    .addComponent(jLabel38)
+                    .addComponent(pladsPanelTelefonnummerField))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 285, Short.MAX_VALUE)
                 .addComponent(salPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
@@ -951,11 +954,13 @@ public class MainFrame extends javax.swing.JFrame {
                         .addGroup(valgAfPladsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel37)
                             .addComponent(pladsPanelAntalBilleterComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jLabel38)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(pladsPanelTelefonnummerField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(pladsPanelBestilButton)
-                        .addGap(0, 275, Short.MAX_VALUE))
+                        .addGap(0, 247, Short.MAX_VALUE))
                     .addComponent(salPanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
@@ -1444,7 +1449,7 @@ public class MainFrame extends javax.swing.JFrame {
     private void pladsPanelBestilButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pladsPanelBestilButtonActionPerformed
         if (!pladsPanelTelefonnummerField.getText().isEmpty()) {
             try {
-                boolean succeeded = dh.bestilBilletter(Integer.parseInt(pladsPanelTelefonnummerField.getText()), pladsPanelAntalBilleterComboBox.getSelectedIndex());
+                boolean succeeded = dh.bestilBilletter(Integer.parseInt(pladsPanelTelefonnummerField.getText()));
                 if (succeeded == false){
                     errorLabelHeader.setText("Bestilling fejlede");
                     errorLabel1.setText("Har du husket at vælge pladser?");
@@ -1589,6 +1594,7 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel35;
     private javax.swing.JLabel jLabel36;
     private javax.swing.JLabel jLabel37;
+    private javax.swing.JLabel jLabel38;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;

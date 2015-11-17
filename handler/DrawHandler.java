@@ -28,6 +28,7 @@ public class DrawHandler {
     private int seatsY;
     private ArrayList<Integer> seatsArray;
     private int widthOffset;
+    private int numberOfSeats;
 
     public DrawHandler() throws IOException, ClassNotFoundException, SQLException {
         boxSize = 20;
@@ -91,6 +92,7 @@ public class DrawHandler {
         this.g = g;
         this.sal = sal;
         this.forestilling = forestilling;
+        this.numberOfSeats = numberOfSeats;
         widthOffset = panelWidth-2*walkwayOffset-sal.getSædder()*boxSize;
         eraseDrawing();
         takenSeats = new boolean[sal.getRækker()][sal.getSædder()];
@@ -152,7 +154,7 @@ public class DrawHandler {
             seatsChosen++;
         }
         seatsArray.clear();
-        if (seatsChosen <= sal.getSædder() && seatsChosen > 0 && seatsY <= sal.getRækker() && seatsChosen > 0) {
+        if (seatsX > 0 && seatsChosen <= sal.getSædder() && seatsChosen > 0 && seatsY <= sal.getRækker() && seatsChosen > 0) {
             if (isFree(seatsY, seatsX, numberOfSeats) == true) {
                 for (int i = 0; i < numberOfSeats; i++) {
                     drawSelectedSeat(seatsY, seatsX);
@@ -164,7 +166,7 @@ public class DrawHandler {
 
     }
 
-    public boolean bestilBilletter(int telefonNummer, int numberOfSeats) throws SQLException, ClassNotFoundException {
+    public boolean bestilBilletter(int telefonNummer) throws SQLException, ClassNotFoundException {
         if (!seatsArray.isEmpty()) {
             for (int i = 0; i < numberOfSeats; i++) {
                 db.addBillet(forestilling.getId(), seatsY, seatsArray.get(i), telefonNummer);
