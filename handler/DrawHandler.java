@@ -63,7 +63,7 @@ public class DrawHandler {
 
     public void drawCanvas(int seats) {
         g.setColor(Color.BLUE);
-        g.fillRect(walkwayOffset+widthOffset, boxSize / 2 - 2, seats * boxSize-walkwayOffset, 4);
+        g.fillRect(walkwayOffset+widthOffset, boxSize / 2 - 2, seats * boxSize, 4);
         g.setColor(Color.BLACK);
     }
 

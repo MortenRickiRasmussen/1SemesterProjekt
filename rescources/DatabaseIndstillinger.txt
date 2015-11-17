@@ -1,8 +1,8 @@
 //USERNAME
-netbeans
+mortyhdd_1SPro
 //PASSWORD
-netbeanstest
+BioTrio123
 //URL
-localhost:3306
+mortyhd.dk:3306
 //SCHEMA
-BioTrioTest
+mortyhdd_1semesterprojekt
