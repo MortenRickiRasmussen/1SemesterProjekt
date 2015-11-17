@@ -184,7 +184,7 @@ public class DBHandler {
     public ArrayList searchForFilm(String searchTerm) throws SQLException, ClassNotFoundException {
         String mySQLStatement = "SELECT * FROM film WHERE (titel LIKE '%"
                 + searchTerm + "%');";
-        
+
         ArrayList<Film> film = new ArrayList<>();
 
         ResultSet rs = databaseRetrive(mySQLStatement);
@@ -197,10 +197,10 @@ public class DBHandler {
             Film film1 = new Film(id, titel, spilletid);
             film.add(film1);
         }
-        
+
         return film;
     }
-    
+
     public void addForestilling(Date dato, String tidspunkt, int film_id, int sal_id) throws SQLException, ClassNotFoundException {
         String mySQLStatement = "INSERT INTO forestillinger (dato, tidspunkt, film_id, sal_id) VALUES ('"
                 + dato + "','"
@@ -209,14 +209,49 @@ public class DBHandler {
                 + sal_id + ");";
         databaseExecute(mySQLStatement);
     }
-    
-    public void addSal(String name, int rows, int seats) throws SQLException, ClassNotFoundException{
+
+    public void addSal(String name, int rows, int seats) throws SQLException, ClassNotFoundException {
         String mySQLStatement = "INSERT INTO sale (navn, rækker, sædder) VALUES ('"
                 + name + "',"
                 + rows + ","
                 + seats + ");";
-        //System.out.println(mySQLStatement);
         databaseExecute(mySQLStatement);
     }
-    
+
+    public String addTelefonNr(int telefonNr) throws SQLException, ClassNotFoundException {
+        String id = null;
+        String mySQLStatement = "SELECT * FROM telefonnummer WHERE telefonnummer LIKE " + telefonNr;
+        ResultSet rs = databaseRetrive(mySQLStatement);
+        while (rs.next()) {
+            id = "" + rs.getInt("id");
+        }
+
+        if (id == null) {
+            mySQLStatement = "INSERT INTO telefonnummer (telefonnummer) VALUES ("
+                    + telefonNr + ");";
+
+            databaseExecute(mySQLStatement);
+            mySQLStatement = "SELECT * FROM telefonnummer WHERE telefonnummer LIKE " + telefonNr;
+            rs = databaseRetrive(mySQLStatement);
+            while (rs.next()) {
+                id = "" + rs.getInt("id");
+            }
+        }
+
+        return id;
+    }
+
+    public void addBillet(int forestillingsId, int række, int sædde, int telefonnummer) throws SQLException, ClassNotFoundException {
+
+        String telefon_id = addTelefonNr(telefonnummer);
+        
+        String mySQLStatement = "INSERT INTO billetter (forestillings_id, række, sædde, telefon_id) VALUES ("
+                + forestillingsId + ","
+                + række + ","
+                + sædde + ","
+                + telefon_id + ");";
+
+        databaseExecute(mySQLStatement);
+    }
+
 }
