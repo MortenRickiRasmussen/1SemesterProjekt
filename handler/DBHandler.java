@@ -10,6 +10,7 @@ import model.*;
 /**
  * @author Jakob Ferdinandsen
  * @author Morten Ricki Rasmussen
+ * 
  */
 public class DBHandler {
 
@@ -23,6 +24,12 @@ public class DBHandler {
     private FileHandler settingsFil;
     private ArrayList<String> dbSettings;
 
+    /**
+     * 
+     * @throws IOException
+     * @throws ClassNotFoundException
+     * @throws SQLException 
+     */
     public DBHandler() throws IOException, ClassNotFoundException, SQLException {
         settingsFil = new FileHandler("src/rescources/DatabaseIndstillinger.txt");
         dbSettings = settingsFil.openFile();
@@ -33,6 +40,19 @@ public class DBHandler {
         createConn();
     }
 
+    /**
+     * Metode som bruges til at opdatere forbindelsen til DB, sådan at DB indstillinger kan skiftes.
+     * Metoden overskriver filen med DB indstillinger, 
+     * hvis der er blevet oprrettet forbindelse til ny database
+     * @param usr
+     * @param pw
+     * @param url
+     * @param schema
+     * @throws SQLException
+     * @throws ClassNotFoundException
+     * @throws FileNotFoundException
+     * @throws UnsupportedEncodingException 
+     */
     public void updateDBConn(String usr, String pw, String url, String schema) throws SQLException, ClassNotFoundException, FileNotFoundException, UnsupportedEncodingException {
         database_usr = usr;
         database_pwd = pw;
@@ -44,12 +64,25 @@ public class DBHandler {
         }
     }
 
+    /**
+     * Metode som bruges til at reconnecte til DB. 
+     * Retunere en boolean for at fortælle om der blev oprettet forbindelse
+     * @return Boolean 
+     * @throws SQLException
+     * @throws ClassNotFoundException 
+     */
     public boolean reconnectToDB() throws SQLException, ClassNotFoundException {
         close();
         boolean connected = createConn();
         return connected;
     }
 
+    /**
+     * Metode til at oprette forbindelse til database.
+     * @return Boolean
+     * @throws ClassNotFoundException
+     * @throws SQLException 
+     */
     public boolean createConn() throws ClassNotFoundException, SQLException {
         boolean connected = false;
         Class.forName(JDBC_DRIVER);
@@ -61,11 +94,24 @@ public class DBHandler {
         return connected;
     }
 
+    /**
+     * Metode til at lukke for forbindelse samt statement
+     * @throws SQLException 
+     */
     public void close() throws SQLException {
         stmt.close();
         conn.close();
     }
 
+    /**
+     * Metode til at hente noget fra databasen. 
+     * Denne retunere et ResultSet med alt dataen. 
+     * Metoden bruges af andre metoder 
+     * @param mySQLStatement
+     * @return ResultSet
+     * @throws SQLException
+     * @throws ClassNotFoundException 
+     */
     public ResultSet databaseRetrive(String mySQLStatement) throws SQLException, ClassNotFoundException {
         ResultSet rs = null;
         createConn();
@@ -73,12 +119,26 @@ public class DBHandler {
         return rs;
     }
 
+    /**
+     * Metode til at udføre en vilkårlig handling på databasen. 
+     * Metoden bruges af andre metoder
+     * @param mySQLStatement
+     * @throws SQLException
+     * @throws ClassNotFoundException 
+     */
     public void databaseExecute(String mySQLStatement) throws SQLException, ClassNotFoundException {
         createConn();
         stmt.execute(mySQLStatement);
         close();
     }
 
+    /**
+     * Metode til at hente forestillinger fra databasen. 
+     * @param rs
+     * @return funden forestilling
+     * @throws ClassNotFoundException
+     * @throws SQLException 
+     */
     public Forestilling retrieveForestillinger(ResultSet rs) throws ClassNotFoundException, SQLException {
 
         int id = rs.getInt("id");
@@ -92,6 +152,12 @@ public class DBHandler {
         return forestilling;
     }
 
+    /**
+     * Metode til at hente hvilke film som er i Databasen
+     * @return Film 
+     * @throws SQLException
+     * @throws ClassNotFoundException 
+     */
     public Film retrieveFilm(ResultSet rs) throws SQLException, ClassNotFoundException {
 
         int id = rs.getInt("id");
@@ -103,6 +169,15 @@ public class DBHandler {
         return film;
     }
 
+    /**
+     * Metode til at hente de forskellige sale fra databasen.
+     * Metoden bruges når der skal oprettes nye forestillinger, sådan at de kun 
+     * kan vælge gyldigesale
+     * @param rs
+     * @return fundende sal
+     * @throws SQLException
+     * @throws ClassNotFoundException 
+     */
     public Sal retrieveSal(ResultSet rs) throws SQLException, ClassNotFoundException {
 
         int id = rs.getInt("id");
@@ -115,6 +190,14 @@ public class DBHandler {
         return sal;
     }
 
+    /**
+     * Metoden bruges til at bestemme hvilke pladser der allerede er optaget.
+     * når man bestiller nye billetter
+     * @param rs
+     * @return funden billet
+     * @throws ClassNotFoundException
+     * @throws SQLException 
+     */
     public Billet retrieveBilleter(ResultSet rs) throws ClassNotFoundException, SQLException {
 
         int id = rs.getInt("id");
@@ -127,6 +210,16 @@ public class DBHandler {
         return billet;
     }
 
+    /**
+     * Metoden bruges til at fylde data i ArrayLists som der efter kan bruges af systemet.
+     * Metoden bruger alle de tidligere retriveSal, retriveFilm, osv.
+     * @param sale
+     * @param film
+     * @param forestillinger
+     * @param billetter
+     * @throws SQLException
+     * @throws ClassNotFoundException 
+     */
     public void loadArrayLists(ArrayList<Sal> sale, ArrayList<Film> film, ArrayList<Forestilling> forestillinger, ArrayList<Billet> billetter) throws SQLException, ClassNotFoundException {
         sale.clear();
         film.clear();
@@ -173,6 +266,13 @@ public class DBHandler {
 
     }
 
+    /**
+     * Metode til at tilføje ny film til databasen.
+     * @param titel
+     * @param spilletid
+     * @throws SQLException
+     * @throws ClassNotFoundException 
+     */
     public void addFilm(String titel, int spilletid) throws SQLException, ClassNotFoundException {
         String mySQLStatement = "INSERT INTO film (titel, spilletid) VALUES ('"
                 + titel + "',"
@@ -181,6 +281,13 @@ public class DBHandler {
         databaseExecute(mySQLStatement);
     }
 
+    /**
+     * Metode til at finde film frem fra databasen
+     * @param searchTerm
+     * @return ArrayList med fundende film
+     * @throws SQLException
+     * @throws ClassNotFoundException 
+     */
     public ArrayList searchForFilm(String searchTerm) throws SQLException, ClassNotFoundException {
         String mySQLStatement = "SELECT * FROM film WHERE (titel LIKE '%"
                 + searchTerm + "%');";
@@ -201,6 +308,15 @@ public class DBHandler {
         return film;
     }
 
+    /**
+     * Metode til at tilføje en ny forstilling til databasen.
+     * @param dato
+     * @param tidspunkt
+     * @param film_id
+     * @param sal_id
+     * @throws SQLException
+     * @throws ClassNotFoundException 
+     */
     public void addForestilling(Date dato, String tidspunkt, int film_id, int sal_id) throws SQLException, ClassNotFoundException {
         String mySQLStatement = "INSERT INTO forestillinger (dato, tidspunkt, film_id, sal_id) VALUES ('"
                 + dato + "','"
@@ -210,6 +326,14 @@ public class DBHandler {
         databaseExecute(mySQLStatement);
     }
 
+    /**
+     * Metode til at tilføje en ny sal til systemet.
+     * @param name
+     * @param rows
+     * @param seats
+     * @throws SQLException
+     * @throws ClassNotFoundException 
+     */
     public void addSal(String name, int rows, int seats) throws SQLException, ClassNotFoundException {
         String mySQLStatement = "INSERT INTO sale (navn, rækker, sædder) VALUES ('"
                 + name + "',"
@@ -218,6 +342,14 @@ public class DBHandler {
         databaseExecute(mySQLStatement);
     }
 
+    /**
+     * Metode til at tilføje et nyt telefonnummer, hvis telefonnummeret ikke allerede eksistere.
+     * Metoden returnere det id som telefonnummeret har fået i databasen
+     * @param telefonNr
+     * @return Telefonnummer id
+     * @throws SQLException
+     * @throws ClassNotFoundException 
+     */
     public String addTelefonNr(int telefonNr) throws SQLException, ClassNotFoundException {
         String id = null;
         String mySQLStatement = "SELECT * FROM telefonnummer WHERE telefonnummer LIKE " + telefonNr;
@@ -241,6 +373,15 @@ public class DBHandler {
         return id;
     }
 
+    /**
+     * Metoden bruges til at tilføje bestilite billetter til databasen. 
+     * @param forestillingsId
+     * @param række
+     * @param sædde
+     * @param telefonnummer
+     * @throws SQLException
+     * @throws ClassNotFoundException 
+     */
     public void addBillet(int forestillingsId, int række, int sædde, int telefonnummer) throws SQLException, ClassNotFoundException {
 
         String telefon_id = addTelefonNr(telefonnummer);
