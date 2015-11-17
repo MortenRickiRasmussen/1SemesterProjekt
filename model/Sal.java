@@ -1,10 +1,12 @@
 package model;
 
 /**
+ * Objekt til at indholde informtion om en sal
  *
- * @author Morten Ricki Rasmussen 
+ * @author Morten Ricki Rasmussen
  */
 public class Sal {
+
     private int id;
     private String navn;
     private int rækker;
@@ -24,12 +26,9 @@ public class Sal {
     public String getNavn() {
         return navn;
     }
-    
+
+    @Override
     public String toString() {
         return navn;
     }
-    
-    
-    
-    
 }

@@ -16,10 +16,19 @@ public class FileHandler {
     private String path;
     private int numberOfLines;
 
+    /**
+     * 
+     * @param filePath Stien til den fil som skal bruges
+     */
     public FileHandler(String filePath) {
         path = filePath;
     }
     
+    /**
+     * Metode som bruges til at åbne film og læsse antallet af linjer.
+     * @return Retunere antallat af linjer i filen
+     * @throws IOException 
+     */
     public ArrayList<String> openFile() throws IOException {
         FileReader fr = new FileReader(path);
         BufferedReader textReader = new BufferedReader(fr);
@@ -32,6 +41,11 @@ public class FileHandler {
         return textData;
     }
 
+    /**
+     * Metoden bruges til at læse fra en fil. 
+     * @return
+     * @throws IOException 
+     */
     public int readLines() throws IOException {
         FileReader file_to_read = new FileReader(path);
         BufferedReader bf = new BufferedReader(file_to_read);
@@ -44,6 +58,16 @@ public class FileHandler {
         return numberOfLines;
     }
     
+    /**
+     * Metode til at opdatere den valgte fil sådan at den indeholder den nye DB information.
+     * Metoden bruges til at skrive database indstillingerne ned i en fil.
+     * @param usr Database Brugernavn
+     * @param pwd Database Kodeord
+     * @param url Database URL
+     * @param schema Database navn
+     * @throws FileNotFoundException
+     * @throws UnsupportedEncodingException 
+     */
     public void updateDBFile(String usr, String pwd, String url, String schema) throws FileNotFoundException, UnsupportedEncodingException{
         PrintWriter writer = new PrintWriter("src/rescources/DatabaseIndstillinger.txt");
         writer.println("//USERNAME");

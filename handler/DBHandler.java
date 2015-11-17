@@ -44,10 +44,10 @@ public class DBHandler {
      * Metode som bruges til at opdatere forbindelsen til DB, sådan at DB indstillinger kan skiftes.
      * Metoden overskriver filen med DB indstillinger, 
      * hvis der er blevet oprrettet forbindelse til ny database
-     * @param usr
-     * @param pw
-     * @param url
-     * @param schema
+     * @param usr Brugernavn til databasen
+     * @param pw Kodeord til databasen
+     * @param url URL til databasen
+     * @param schema Database navnet
      * @throws SQLException
      * @throws ClassNotFoundException
      * @throws FileNotFoundException
@@ -67,7 +67,7 @@ public class DBHandler {
     /**
      * Metode som bruges til at reconnecte til DB. 
      * Retunere en boolean for at fortælle om der blev oprettet forbindelse
-     * @return Boolean 
+     * @return Boolean som fortæller om der blev oprettet forbindelse
      * @throws SQLException
      * @throws ClassNotFoundException 
      */
@@ -79,7 +79,7 @@ public class DBHandler {
 
     /**
      * Metode til at oprette forbindelse til database.
-     * @return Boolean
+     * @return Boolean til at fortælle om der blev oprettet forbindelse
      * @throws ClassNotFoundException
      * @throws SQLException 
      */
@@ -107,7 +107,7 @@ public class DBHandler {
      * Metode til at hente noget fra databasen. 
      * Denne retunere et ResultSet med alt dataen. 
      * Metoden bruges af andre metoder 
-     * @param mySQLStatement
+     * @param mySQLStatement MySQLStatement til brug af databasen
      * @return ResultSet
      * @throws SQLException
      * @throws ClassNotFoundException 
@@ -122,8 +122,8 @@ public class DBHandler {
     /**
      * Metode til at udføre en vilkårlig handling på databasen. 
      * Metoden bruges af andre metoder
-     * @param mySQLStatement
-     * @throws SQLException
+     * @param mySQLStatement MySQLStatement til brug af databasen
+     * @throws SQLException 
      * @throws ClassNotFoundException 
      */
     public void databaseExecute(String mySQLStatement) throws SQLException, ClassNotFoundException {
@@ -134,7 +134,7 @@ public class DBHandler {
 
     /**
      * Metode til at hente forestillinger fra databasen. 
-     * @param rs
+     * @param rs ResultSet 
      * @return funden forestilling
      * @throws ClassNotFoundException
      * @throws SQLException 
@@ -173,7 +173,7 @@ public class DBHandler {
      * Metode til at hente de forskellige sale fra databasen.
      * Metoden bruges når der skal oprettes nye forestillinger, sådan at de kun 
      * kan vælge gyldigesale
-     * @param rs
+     * @param rs ResultSet
      * @return fundende sal
      * @throws SQLException
      * @throws ClassNotFoundException 
@@ -193,7 +193,7 @@ public class DBHandler {
     /**
      * Metoden bruges til at bestemme hvilke pladser der allerede er optaget.
      * når man bestiller nye billetter
-     * @param rs
+     * @param rs ResultSet
      * @return funden billet
      * @throws ClassNotFoundException
      * @throws SQLException 
@@ -213,10 +213,10 @@ public class DBHandler {
     /**
      * Metoden bruges til at fylde data i ArrayLists som der efter kan bruges af systemet.
      * Metoden bruger alle de tidligere retriveSal, retriveFilm, osv.
-     * @param sale
-     * @param film
-     * @param forestillinger
-     * @param billetter
+     * @param sale ArrayList til sale
+     * @param film ArrayList til film
+     * @param forestillinger ArrayList til forestillinger
+     * @param billetter ArrayList til bestilte billetter
      * @throws SQLException
      * @throws ClassNotFoundException 
      */
@@ -268,8 +268,8 @@ public class DBHandler {
 
     /**
      * Metode til at tilføje ny film til databasen.
-     * @param titel
-     * @param spilletid
+     * @param titel Filmtitlen
+     * @param spilletid Spilletiden
      * @throws SQLException
      * @throws ClassNotFoundException 
      */
@@ -283,14 +283,14 @@ public class DBHandler {
 
     /**
      * Metode til at finde film frem fra databasen
-     * @param searchTerm
+     * @param filmtitel - Filmtitlen 
      * @return ArrayList med fundende film
      * @throws SQLException
      * @throws ClassNotFoundException 
      */
-    public ArrayList searchForFilm(String searchTerm) throws SQLException, ClassNotFoundException {
+    public ArrayList searchForFilm(String filmtitel) throws SQLException, ClassNotFoundException {
         String mySQLStatement = "SELECT * FROM film WHERE (titel LIKE '%"
-                + searchTerm + "%');";
+                + filmtitel + "%');";
 
         ArrayList<Film> film = new ArrayList<>();
 
@@ -310,10 +310,10 @@ public class DBHandler {
 
     /**
      * Metode til at tilføje en ny forstilling til databasen.
-     * @param dato
-     * @param tidspunkt
-     * @param film_id
-     * @param sal_id
+     * @param dato Datoen for den nye forestilling
+     * @param tidspunkt Tidspunktet for den nye forestilling
+     * @param film_id Film_id på den film der bliver spillet
+     * @param sal_id Sal_id på den sal som forestillingen vises i 
      * @throws SQLException
      * @throws ClassNotFoundException 
      */
@@ -328,9 +328,9 @@ public class DBHandler {
 
     /**
      * Metode til at tilføje en ny sal til systemet.
-     * @param name
-     * @param rows
-     * @param seats
+     * @param name Navnet på salen
+     * @param rows antal rækker i salen
+     * @param seats antal sædder på hver række
      * @throws SQLException
      * @throws ClassNotFoundException 
      */
@@ -345,7 +345,7 @@ public class DBHandler {
     /**
      * Metode til at tilføje et nyt telefonnummer, hvis telefonnummeret ikke allerede eksistere.
      * Metoden returnere det id som telefonnummeret har fået i databasen
-     * @param telefonNr
+     * @param telefonNr Telefonnummer på den som bestiller billetter
      * @return Telefonnummer id
      * @throws SQLException
      * @throws ClassNotFoundException 
@@ -375,10 +375,10 @@ public class DBHandler {
 
     /**
      * Metoden bruges til at tilføje bestilite billetter til databasen. 
-     * @param forestillingsId
-     * @param række
-     * @param sædde
-     * @param telefonnummer
+     * @param forestillingsId Id på den forestilling der bestilles billetter til
+     * @param række Hvilken række billetten er til
+     * @param sædde Hvilket sædde billetten er til
+     * @param telefonnummer Telefonnummeret som der bestilles billetter med
      * @throws SQLException
      * @throws ClassNotFoundException 
      */

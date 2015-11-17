@@ -1,14 +1,16 @@
 package model;
 
 /**
+ * Objekt som indeholder infomation om Film
  *
- * @author Morten Ricki Rasmussen 
+ * @author Morten Ricki Rasmussen
  */
 public class Film {
-    private  int id;
+
+    private int id;
     private String titel;
     private int spilleTid;
-    
+
     public Film(int id, String titel, int spilleTid) {
         this.id = id;
         this.titel = titel;
@@ -26,7 +28,7 @@ public class Film {
     public int getSpilleTid() {
         return spilleTid;
     }
-    
+
     public String toString() {
         return titel;
     }
