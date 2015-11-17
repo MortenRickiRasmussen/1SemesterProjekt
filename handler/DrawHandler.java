@@ -27,6 +27,7 @@ public class DrawHandler {
     private Forestilling forestilling;
     private int seatsY;
     private ArrayList<Integer> seatsArray;
+    private int widthOffset;
 
     public DrawHandler() throws IOException, ClassNotFoundException, SQLException {
         boxSize = 20;
@@ -45,29 +46,29 @@ public class DrawHandler {
 
     public void drawGrid(int rows, int seats) {
         g.setColor(Color.WHITE);
-        g.fillRect(0, 0, seats * boxSize + 2 * walkwayOffset, rows * boxSize + screenOffset + walkwayOffset);
+        g.fillRect(widthOffset, 0, seats * boxSize + 2 * walkwayOffset + widthOffset, rows * boxSize + screenOffset + walkwayOffset);
         g.setColor(Color.BLACK);
         drawCanvas(seats);
         int newRow = screenOffset;
         int newSeat = walkwayOffset;
         for (int i = 0; i <= rows; i++) {
-            g.drawLine(walkwayOffset, newRow, seats * boxSize + walkwayOffset, newRow);
+            g.drawLine(walkwayOffset+widthOffset, newRow, seats * boxSize + walkwayOffset+widthOffset, newRow);
             newRow += boxSize;
         }
         for (int i = 0; i <= seats; i++) {
-            g.drawLine(newSeat, screenOffset, newSeat, screenOffset + rows * boxSize);
+            g.drawLine(newSeat+widthOffset, screenOffset, newSeat+widthOffset, screenOffset + rows * boxSize);
             newSeat += boxSize;
         }
     }
 
     public void drawCanvas(int seats) {
         g.setColor(Color.BLUE);
-        g.fillRect(walkwayOffset, boxSize / 2 - 2, seats * boxSize, 4);
+        g.fillRect(walkwayOffset+widthOffset, boxSize / 2 - 2, seats * boxSize-walkwayOffset, 4);
         g.setColor(Color.BLACK);
     }
 
     public void drawTakenSeat(int row, int seat) {
-        int startX = (seat - 1) * boxSize + 1 + walkwayOffset;
+        int startX = (seat - 1) * boxSize + 1 + walkwayOffset + widthOffset;
         int startY = (row - 1) * boxSize + 1 + screenOffset;
         int endX = boxSize - 1;
         int endY = boxSize - 1;
@@ -77,7 +78,7 @@ public class DrawHandler {
     }
 
     public void drawSelectedSeat(int row, int seat) {
-        int startX = (seat - 1) * boxSize + 1 + walkwayOffset;
+        int startX = (seat - 1) * boxSize + 1 + walkwayOffset + widthOffset;
         int startY = (row - 1) * boxSize + 1 + screenOffset;
         int endX = boxSize - 1;
         int endY = boxSize - 1;
@@ -86,10 +87,11 @@ public class DrawHandler {
         g.setColor(Color.BLACK);
     }
 
-    public void drawForestillingsSal(Forestilling forestilling, Sal sal, ArrayList<Billet> billetter, Graphics g, int numberOfSeats) {
+    public void drawForestillingsSal(Forestilling forestilling, Sal sal, ArrayList<Billet> billetter, Graphics g, int numberOfSeats, int panelWidth) {
         this.g = g;
         this.sal = sal;
         this.forestilling = forestilling;
+        widthOffset = panelWidth-2*walkwayOffset-sal.getSædder()*boxSize;
         eraseDrawing();
         takenSeats = new boolean[sal.getRækker()][sal.getSædder()];
         for (int i = 0; i < sal.getRækker(); i++) {
@@ -129,10 +131,10 @@ public class DrawHandler {
     public void setSeatsPoint(Point p) {
         seatsPoint = p;
     }
+    
 
     public void drawSeatsAtMouse(Point p, int numberOfSeats) {
-        seatsPoint = p;
-        int seatsX = p.x - walkwayOffset;
+        int seatsX = p.x - walkwayOffset - widthOffset;
         seatsY = p.y - screenOffset;
         if (seatsX / 10 % 2 != 0) {
             seatsX = (seatsX / 10 - 1) / 2 + 1;

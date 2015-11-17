@@ -118,7 +118,7 @@ public class MainFrame extends javax.swing.JFrame {
     }
 
     public void drawLastSelectedForestilling(Graphics g) {
-        dh.drawForestillingsSal(forestillinger.get(selectedForestilling.get(0)), sale.get(forestillinger.get(selectedForestilling.get(0)).getSalId() - 1), billetter, g, pladsPanelAntalBilleterComboBox.getSelectedIndex());
+        dh.drawForestillingsSal(forestillinger.get(selectedForestilling.get(0)), sale.get(forestillinger.get(selectedForestilling.get(0)).getSalId() - 1), billetter, g, pladsPanelAntalBilleterComboBox.getSelectedIndex(), salPanel.getWidth());
     }
 
     public MainFrame() {
@@ -916,23 +916,19 @@ public class MainFrame extends javax.swing.JFrame {
             .addGroup(valgAfPladsPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(valgAfPladsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(pladsPanelTitle)
+                    .addComponent(pladsPanelDato)
+                    .addComponent(pladsPanelTidspunkt)
+                    .addComponent(jLabel35)
+                    .addComponent(jLabel36)
                     .addGroup(valgAfPladsPanelLayout.createSequentialGroup()
-                        .addGroup(valgAfPladsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(pladsPanelTitle)
-                            .addComponent(pladsPanelDato)
-                            .addComponent(pladsPanelTidspunkt)
-                            .addComponent(jLabel35)
-                            .addComponent(jLabel36)
-                            .addGroup(valgAfPladsPanelLayout.createSequentialGroup()
-                                .addGroup(valgAfPladsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                    .addComponent(pladsPanelTelefonnummerField, javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel37, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(pladsPanelAntalBilleterComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(279, 279, 279))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, valgAfPladsPanelLayout.createSequentialGroup()
-                        .addComponent(pladsPanelBestilButton)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)))
+                        .addGroup(valgAfPladsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(pladsPanelTelefonnummerField, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel37, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(pladsPanelAntalBilleterComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(pladsPanelBestilButton))
+                .addGap(279, 279, 279)
                 .addComponent(salPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
@@ -957,14 +953,11 @@ public class MainFrame extends javax.swing.JFrame {
                             .addComponent(pladsPanelAntalBilleterComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(pladsPanelTelefonnummerField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(142, 321, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, valgAfPladsPanelLayout.createSequentialGroup()
-                        .addGroup(valgAfPladsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(valgAfPladsPanelLayout.createSequentialGroup()
-                                .addGap(0, 0, Short.MAX_VALUE)
-                                .addComponent(pladsPanelBestilButton))
-                            .addComponent(salPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addContainerGap())))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(pladsPanelBestilButton)
+                        .addGap(0, 275, Short.MAX_VALUE))
+                    .addComponent(salPanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout jLayeredPane1Layout = new javax.swing.GroupLayout(jLayeredPane1);
@@ -1459,8 +1452,8 @@ public class MainFrame extends javax.swing.JFrame {
                     errorLabel3.setText("");
                 }else{
                     errorLabelHeader.setText("Bestilling Fuldført");
-                    errorLabel1.setText(forestillinger.get(selectedForestilling.get(0)).getDato());
-                    errorLabel2.setText(forestillinger.get(selectedForestilling.get(0)).getTidspunkt());
+                    errorLabel1.setText("Dato: "+forestillinger.get(selectedForestilling.get(0)).getDato());
+                    errorLabel2.setText("Tidspunkt: "+forestillinger.get(selectedForestilling.get(0)).getTidspunkt());
                     errorLabel3.setText("");
                 }
             } catch (SQLException | ClassNotFoundException ex) {
