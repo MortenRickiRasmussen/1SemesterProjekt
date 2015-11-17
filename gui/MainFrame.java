@@ -6,6 +6,8 @@
 package gui;
 
 import handler.DBHandler;
+import handler.DrawHandler;
+import java.awt.Graphics;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -32,6 +34,8 @@ import model.Sal;
 public class MainFrame extends javax.swing.JFrame {
 
     private DBHandler db;
+    private DrawHandler dh;
+    private ArrayList<Integer> selectedForestilling;
     private ArrayList<Film> film;
     private ArrayList<Sal> sale;
     private ArrayList<Forestilling> forestillinger;
@@ -51,9 +55,7 @@ public class MainFrame extends javax.swing.JFrame {
             errorLabel1.setText("Der er muligvis ikke forbindelse til databasen");
             errorLabel2.setText("Check om der er forbindelse til internettet");
             errorLabel3.setText(ex.getMessage());
-            errorDialog.pack();
-            errorDialog.setLocationRelativeTo(this);
-            errorDialog.setVisible(true);
+            updateDialog(errorDialog);
         }
 
         filmCombo.removeAllItems();
@@ -76,12 +78,12 @@ public class MainFrame extends javax.swing.JFrame {
 
         for (Forestilling forestilling : forestillinger) {
             if (filmCombo.getSelectedIndex() == 0) {
-                FilmUdvalgPanel f = new FilmUdvalgPanel(forestilling, valgAfPladsPanel, filmUdvalgsPanel);
+                FilmUdvalgPanel f = new FilmUdvalgPanel(forestilling, valgAfPladsPanel, filmUdvalgsPanel, selectedForestilling);
                 f.setVisible(true);
                 forestillingsPanel.add(f);
             } else {
                 if (filmCombo.getSelectedItem() == forestilling.getFilmTitel()) {
-                    FilmUdvalgPanel f = new FilmUdvalgPanel(forestilling, valgAfPladsPanel, filmUdvalgsPanel);
+                    FilmUdvalgPanel f = new FilmUdvalgPanel(forestilling, valgAfPladsPanel, filmUdvalgsPanel, selectedForestilling);
                     f.setVisible(true);
                     forestillingsPanel.add(f);
                 }
@@ -95,7 +97,7 @@ public class MainFrame extends javax.swing.JFrame {
             if (filmCombo.getSelectedIndex() == 0) {
                 for (Forestilling forestilling : forestillinger) {
                     if (dateString.equals(forestilling.getDato())) {
-                        FilmUdvalgPanel f = new FilmUdvalgPanel(forestilling, valgAfPladsPanel, filmUdvalgsPanel);
+                        FilmUdvalgPanel f = new FilmUdvalgPanel(forestilling, valgAfPladsPanel, filmUdvalgsPanel, selectedForestilling);
                         f.setVisible(true);
                         forestillingsPanel.add(f);
                     }
@@ -103,7 +105,7 @@ public class MainFrame extends javax.swing.JFrame {
             } else {
                 for (Forestilling forestilling : forestillinger) {
                     if (dateString.equals(forestilling.getDato()) && filmCombo.getSelectedItem() == forestilling.getFilmTitel()) {
-                        FilmUdvalgPanel f = new FilmUdvalgPanel(forestilling, valgAfPladsPanel, filmUdvalgsPanel);
+                        FilmUdvalgPanel f = new FilmUdvalgPanel(forestilling, valgAfPladsPanel, filmUdvalgsPanel, selectedForestilling);
                         f.setVisible(true);
                         forestillingsPanel.add(f);
                     }
@@ -115,9 +117,14 @@ public class MainFrame extends javax.swing.JFrame {
         forestillingsPanel.repaint();
     }
 
+    public void drawLastSelectedForestilling(Graphics g) {
+        dh.drawForestillingsSal(forestillinger.get(selectedForestilling.get(0)), sale.get(forestillinger.get(selectedForestilling.get(0)).getSalId() - 1), billetter, g, pladsPanelAntalBilleterComboBox.getSelectedIndex());
+    }
+
     public MainFrame() {
         try {
             db = new DBHandler();
+            dh = new DrawHandler();
         } catch (IOException ex) {
             Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) {
@@ -130,13 +137,13 @@ public class MainFrame extends javax.swing.JFrame {
         valgAfPladsPanel.setVisible(false);
         filmUdvalgsPanel.setVisible(false);
 
+        selectedForestilling = new ArrayList<>();
         film = new ArrayList<>();
         sale = new ArrayList<>();
         forestillinger = new ArrayList<>();
         billetter = new ArrayList<>();
 
         updateArrays();
-
 
     }
 
@@ -222,6 +229,21 @@ public class MainFrame extends javax.swing.JFrame {
         filmCombo = new javax.swing.JComboBox();
         jDateChooser1 = new com.toedter.calendar.JDateChooser();
         valgAfPladsPanel = new javax.swing.JPanel();
+        salPanel = new javax.swing.JPanel(){
+            public void paint(Graphics g){
+                super.paint(g);
+                drawLastSelectedForestilling(g);
+            }
+        };
+        pladsPanelTitle = new javax.swing.JLabel();
+        jLabel35 = new javax.swing.JLabel();
+        pladsPanelDato = new javax.swing.JLabel();
+        jLabel36 = new javax.swing.JLabel();
+        pladsPanelTidspunkt = new javax.swing.JLabel();
+        jLabel37 = new javax.swing.JLabel();
+        pladsPanelAntalBilleterComboBox = new javax.swing.JComboBox();
+        pladsPanelTelefonnummerField = new javax.swing.JTextField();
+        pladsPanelBestilButton = new javax.swing.JButton();
         footerPanel = new javax.swing.JPanel();
         footerAdresse = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
@@ -834,16 +856,115 @@ public class MainFrame extends javax.swing.JFrame {
         );
 
         valgAfPladsPanel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        valgAfPladsPanel.addComponentListener(new java.awt.event.ComponentAdapter() {
+            public void componentShown(java.awt.event.ComponentEvent evt) {
+                valgAfPladsPanelComponentShown(evt);
+            }
+        });
+
+        salPanel.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                salPanelMousePressed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout salPanelLayout = new javax.swing.GroupLayout(salPanel);
+        salPanel.setLayout(salPanelLayout);
+        salPanelLayout.setHorizontalGroup(
+            salPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 568, Short.MAX_VALUE)
+        );
+        salPanelLayout.setVerticalGroup(
+            salPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+
+        pladsPanelTitle.setFont(new java.awt.Font("sansserif", 1, 24)); // NOI18N
+        pladsPanelTitle.setText("titel");
+
+        jLabel35.setText("Dato:");
+
+        pladsPanelDato.setFont(new java.awt.Font("sansserif", 1, 16)); // NOI18N
+        pladsPanelDato.setText("jLabel35");
+
+        jLabel36.setText("Tidspunkt:");
+
+        pladsPanelTidspunkt.setFont(new java.awt.Font("sansserif", 1, 16)); // NOI18N
+        pladsPanelTidspunkt.setText("jLabel35");
+
+        jLabel37.setText("Antal billetter:");
+
+        pladsPanelAntalBilleterComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "0", "1", "2", "3", "4" }));
+
+        pladsPanelTelefonnummerField.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                pladsPanelTelefonnummerFieldKeyTyped(evt);
+            }
+        });
+
+        pladsPanelBestilButton.setText("Bestil billetter");
+        pladsPanelBestilButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                pladsPanelBestilButtonActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout valgAfPladsPanelLayout = new javax.swing.GroupLayout(valgAfPladsPanel);
         valgAfPladsPanel.setLayout(valgAfPladsPanelLayout);
         valgAfPladsPanelLayout.setHorizontalGroup(
             valgAfPladsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 946, Short.MAX_VALUE)
+            .addGroup(valgAfPladsPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(valgAfPladsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(valgAfPladsPanelLayout.createSequentialGroup()
+                        .addGroup(valgAfPladsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(pladsPanelTitle)
+                            .addComponent(pladsPanelDato)
+                            .addComponent(pladsPanelTidspunkt)
+                            .addComponent(jLabel35)
+                            .addComponent(jLabel36)
+                            .addGroup(valgAfPladsPanelLayout.createSequentialGroup()
+                                .addGroup(valgAfPladsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addComponent(pladsPanelTelefonnummerField, javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel37, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(pladsPanelAntalBilleterComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(279, 279, 279))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, valgAfPladsPanelLayout.createSequentialGroup()
+                        .addComponent(pladsPanelBestilButton)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)))
+                .addComponent(salPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
         valgAfPladsPanelLayout.setVerticalGroup(
             valgAfPladsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 501, Short.MAX_VALUE)
+            .addGroup(valgAfPladsPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(valgAfPladsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(valgAfPladsPanelLayout.createSequentialGroup()
+                        .addComponent(pladsPanelTitle)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel35)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(pladsPanelDato)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jLabel36)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(pladsPanelTidspunkt)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(valgAfPladsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel37)
+                            .addComponent(pladsPanelAntalBilleterComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(pladsPanelTelefonnummerField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(142, 321, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, valgAfPladsPanelLayout.createSequentialGroup()
+                        .addGroup(valgAfPladsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(valgAfPladsPanelLayout.createSequentialGroup()
+                                .addGap(0, 0, Short.MAX_VALUE)
+                                .addComponent(pladsPanelBestilButton))
+                            .addComponent(salPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addContainerGap())))
         );
 
         javax.swing.GroupLayout jLayeredPane1Layout = new javax.swing.GroupLayout(jLayeredPane1);
@@ -899,7 +1020,7 @@ public class MainFrame extends javax.swing.JFrame {
                             .addComponent(jLabel6)
                             .addComponent(jLabel5)
                             .addComponent(jLabel7))))
-                .addContainerGap(151, Short.MAX_VALUE))
+                .addContainerGap(132, Short.MAX_VALUE))
         );
         footerAdresseLayout.setVerticalGroup(
             footerAdresseLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -984,7 +1105,7 @@ public class MainFrame extends javax.swing.JFrame {
                     .addComponent(facebookLabel)
                     .addComponent(jLabel3)
                     .addComponent(jLabel13))
-                .addContainerGap(71, Short.MAX_VALUE))
+                .addContainerGap(34, Short.MAX_VALUE))
         );
         footerSocialLayout.setVerticalGroup(
             footerSocialLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1096,7 +1217,7 @@ public class MainFrame extends javax.swing.JFrame {
         forestillingsPanel.removeAll();
 
         for (Forestilling forestilling1 : forestillinger) {
-            FilmUdvalgPanel forestilling = new FilmUdvalgPanel(forestilling1, valgAfPladsPanel, filmUdvalgsPanel);
+            FilmUdvalgPanel forestilling = new FilmUdvalgPanel(forestilling1, valgAfPladsPanel, filmUdvalgsPanel, selectedForestilling);
             forestilling.setVisible(true);
             forestillingsPanel.add(forestilling);
         }
@@ -1107,12 +1228,20 @@ public class MainFrame extends javax.swing.JFrame {
         forsidePanel.setVisible(true);
         valgAfPladsPanel.setVisible(false);
         filmUdvalgsPanel.setVisible(false);
+        pladsPanelAntalBilleterComboBox.setSelectedIndex(0);
+        pladsPanelTelefonnummerField.setText("");
     }//GEN-LAST:event_tilFosidenButtonActionPerformed
 
     private void errorDialogButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_errorDialogButtonActionPerformed
         errorDialog.setVisible(false);
         if (errorLabelHeader.getText() == "Succes") {
             adminDialog.setVisible(false);
+        }
+        if (errorLabelHeader.getText().equals("Bestilling Fuldført")){
+            valgAfPladsPanel.setVisible(false);
+            forsidePanel.setVisible(true);
+            pladsPanelAntalBilleterComboBox.setSelectedIndex(0);
+            pladsPanelTelefonnummerField.setText("");
         }
     }//GEN-LAST:event_errorDialogButtonActionPerformed
 
@@ -1307,6 +1436,55 @@ public class MainFrame extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_addSalButtonActionPerformed
 
+    private void valgAfPladsPanelComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_valgAfPladsPanelComponentShown
+        salPanel.repaint();
+        pladsPanelTitle.setText(forestillinger.get(selectedForestilling.get(0)).getFilmTitel());
+        pladsPanelDato.setText(forestillinger.get(selectedForestilling.get(0)).getDato());
+        pladsPanelTidspunkt.setText(forestillinger.get(selectedForestilling.get(0)).getTidspunkt());
+    }//GEN-LAST:event_valgAfPladsPanelComponentShown
+
+    private void salPanelMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_salPanelMousePressed
+        dh.setSeatsPoint(evt.getPoint());
+        salPanel.repaint();
+    }//GEN-LAST:event_salPanelMousePressed
+
+    private void pladsPanelBestilButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pladsPanelBestilButtonActionPerformed
+        if (!pladsPanelTelefonnummerField.getText().isEmpty()) {
+            try {
+                boolean succeeded = dh.bestilBilletter(Integer.parseInt(pladsPanelTelefonnummerField.getText()), pladsPanelAntalBilleterComboBox.getSelectedIndex());
+                if (succeeded == false){
+                    errorLabelHeader.setText("Bestilling fejlede");
+                    errorLabel1.setText("Har du husket at vælge pladser?");
+                    errorLabel2.setText("Har du indtastet et gyldigt telefonnummer?");
+                    errorLabel3.setText("");
+                }else{
+                    errorLabelHeader.setText("Bestilling Fuldført");
+                    errorLabel1.setText(forestillinger.get(selectedForestilling.get(0)).getDato());
+                    errorLabel2.setText(forestillinger.get(selectedForestilling.get(0)).getTidspunkt());
+                    errorLabel3.setText("");
+                }
+            } catch (SQLException | ClassNotFoundException ex) {
+                errorLabelHeader.setText("Uventet fejl");
+                errorLabel1.setText("Kontakt system administrator");
+                errorLabel2.setText("Oplys følgende til administratoren:");
+                errorLabel3.setText(ex.getMessage());
+            }
+        }else{
+            errorLabelHeader.setText("Bestilling fejlede");
+            errorLabel1.setText("Indtast venligst et gyldigt telefonnumer.");
+            errorLabel2.setText("Et gyldigt telefonnummer består af 8 tal.");
+            errorLabel3.setText("");
+        }
+        updateDialog(errorDialog);
+    }//GEN-LAST:event_pladsPanelBestilButtonActionPerformed
+
+    private void pladsPanelTelefonnummerFieldKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_pladsPanelTelefonnummerFieldKeyTyped
+        char number = evt.getKeyChar();
+        if (!Character.isDigit(number) || pladsPanelTelefonnummerField.getText().length() >= 8) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_pladsPanelTelefonnummerFieldKeyTyped
+
     /**
      * @param args the command line arguments
      */
@@ -1415,6 +1593,9 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel32;
     private javax.swing.JLabel jLabel33;
     private javax.swing.JLabel jLabel34;
+    private javax.swing.JLabel jLabel35;
+    private javax.swing.JLabel jLabel36;
+    private javax.swing.JLabel jLabel37;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
@@ -1427,7 +1608,14 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JTabbedPane jTabbedPane1;
+    private javax.swing.JComboBox pladsPanelAntalBilleterComboBox;
+    private javax.swing.JButton pladsPanelBestilButton;
+    private javax.swing.JLabel pladsPanelDato;
+    private javax.swing.JTextField pladsPanelTelefonnummerField;
+    private javax.swing.JLabel pladsPanelTidspunkt;
+    private javax.swing.JLabel pladsPanelTitle;
     private javax.swing.JComboBox salCombo;
+    private javax.swing.JPanel salPanel;
     private javax.swing.JTextField spilletidField;
     private javax.swing.JButton tilFosidenButton;
     private com.toedter.calendar.JDateChooser tilføjForestillingDato;

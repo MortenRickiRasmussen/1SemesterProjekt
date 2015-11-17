@@ -27,8 +27,17 @@ public class Sal {
         return navn;
     }
 
+    public int getRækker() {
+        return rækker;
+    }
+
+    public int getSædder() {
+        return sædder;
+    }
+    
     @Override
     public String toString() {
         return navn;
     }
+    
 }

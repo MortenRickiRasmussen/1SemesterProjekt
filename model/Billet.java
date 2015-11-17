@@ -18,4 +18,18 @@ public class Billet {
         this.række = række;
         this.sædde = sædde;
     }
+
+    public int getForestillings_id() {
+        return forestillings_id;
+    }
+
+    public int getRække() {
+        return række;
+    }
+
+    public int getSædde() {
+        return sædde;
+    }
+    
+    
 }

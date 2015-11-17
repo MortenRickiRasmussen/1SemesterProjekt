@@ -5,6 +5,8 @@
  */
 package gui;
 
+import handler.DrawHandler;
+import java.util.ArrayList;
 import javax.swing.JPanel;
 import model.Forestilling;
 
@@ -15,6 +17,8 @@ import model.Forestilling;
 public class FilmUdvalgPanel extends javax.swing.JPanel {
     private JPanel bestilBilleterPanel;
     private JPanel filmUdvalgsPanel;
+    private ArrayList<Integer> selectedForestilling;
+    private Forestilling forestilling;
 
     /**
      * Creates new form Filmududvalg
@@ -22,7 +26,7 @@ public class FilmUdvalgPanel extends javax.swing.JPanel {
      * @param bestilBilleterPanel
      * @param filmUdvalgsPanel
      */
-    public FilmUdvalgPanel(Forestilling forestilling, JPanel bestilBilleterPanel, JPanel forestillingsPanel) {
+    public FilmUdvalgPanel(Forestilling forestilling, JPanel bestilBilleterPanel, JPanel forestillingsPanel, ArrayList<Integer> selectedForestilling) {
         initComponents();
         plaketLabel.setIcon(forestilling.getPlakat());
         titelLabel.setText(forestilling.getFilmTitel());
@@ -31,6 +35,8 @@ public class FilmUdvalgPanel extends javax.swing.JPanel {
         salLabel.setText(forestilling.getSalNavn());
         this.bestilBilleterPanel = bestilBilleterPanel;
         this.filmUdvalgsPanel = forestillingsPanel;
+        this.selectedForestilling = selectedForestilling;
+        this.forestilling = forestilling;
     }
 
     /**
@@ -136,6 +142,8 @@ public class FilmUdvalgPanel extends javax.swing.JPanel {
     private void bestilBilleterButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bestilBilleterButtonActionPerformed
         bestilBilleterPanel.setVisible(true);
         filmUdvalgsPanel.setVisible(false);
+        selectedForestilling.clear();
+        selectedForestilling.add(forestilling.getId()-1);
     }//GEN-LAST:event_bestilBilleterButtonActionPerformed
 
 
