@@ -183,9 +183,9 @@ public class DBHandler {
         int id = rs.getInt("id");
         String navn = rs.getString("navn");
         int rækker = rs.getInt("rækker");
-        int sædder = rs.getInt("sædder");
+        int sæder = rs.getInt("sæder");
 
-        Sal sal = new Sal(id, navn, rækker, sædder);
+        Sal sal = new Sal(id, navn, rækker, sæder);
 
         return sal;
     }
@@ -330,12 +330,12 @@ public class DBHandler {
      * Metode til at tilføje en ny sal til systemet.
      * @param name Navnet på salen
      * @param rows antal rækker i salen
-     * @param seats antal sædder på hver række
+     * @param seats antal sæder på hver række
      * @throws SQLException
      * @throws ClassNotFoundException 
      */
     public void addSal(String name, int rows, int seats) throws SQLException, ClassNotFoundException {
-        String mySQLStatement = "INSERT INTO sale (navn, rækker, sædder) VALUES ('"
+        String mySQLStatement = "INSERT INTO sale (navn, rækker, sæder) VALUES ('"
                 + name + "',"
                 + rows + ","
                 + seats + ");";

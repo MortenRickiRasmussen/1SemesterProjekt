@@ -29,6 +29,7 @@ public class Film {
         return spilleTid;
     }
 
+    @Override
     public String toString() {
         return titel;
     }
