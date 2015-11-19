@@ -493,6 +493,9 @@
       </SubComponents>
     </Container>
     <Container class="javax.swing.JDialog" name="errorDialog">
+      <Properties>
+        <Property name="alwaysOnTop" type="boolean" value="true"/>
+      </Properties>
 
       <Layout>
         <DimensionLayout dim="0">
