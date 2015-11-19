@@ -71,9 +71,9 @@ public class FilmUdvalgPanel extends javax.swing.JPanel {
 
         tidspunktLabel.setText("21:30");
 
-        jLabel6.setText("Tidspunkt");
+        jLabel6.setText("Tidspunkt:");
 
-        bestilBilleterButton.setText("Bestil Billetter");
+        bestilBilleterButton.setText("Bestil billetter");
         bestilBilleterButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 bestilBilleterButtonActionPerformed(evt);

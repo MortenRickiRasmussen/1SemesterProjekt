@@ -10,13 +10,13 @@ public class Sal {
     private int id;
     private String navn;
     private int rækker;
-    private int sædder;
+    private int sæder;
 
-    public Sal(int id, String navn, int rækker, int sædder) {
+    public Sal(int id, String navn, int rækker, int sæder) {
         this.id = id;
         this.navn = navn;
         this.rækker = rækker;
-        this.sædder = sædder;
+        this.sæder = sæder;
     }
 
     public int getId() {
@@ -31,8 +31,8 @@ public class Sal {
         return rækker;
     }
 
-    public int getSædder() {
-        return sædder;
+    public int getSæder() {
+        return sæder;
     }
     
     @Override

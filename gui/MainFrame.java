@@ -232,6 +232,7 @@ public class MainFrame extends javax.swing.JFrame {
         jLabel39 = new javax.swing.JLabel();
         jLabel40 = new javax.swing.JLabel();
         jLabel41 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
         filmUdvalgsPanel = new javax.swing.JPanel();
         filmudValgsScroll = new javax.swing.JScrollPane();
         forestillingsPanel = new javax.swing.JPanel();
@@ -747,7 +748,7 @@ public class MainFrame extends javax.swing.JFrame {
         setMaximumSize(new java.awt.Dimension(950, 700));
         setMinimumSize(new java.awt.Dimension(950, 700));
 
-        tilFosidenButton.setText("Til fosiden");
+        tilFosidenButton.setText("Til forsiden");
         tilFosidenButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 tilFosidenButtonActionPerformed(evt);
@@ -771,7 +772,6 @@ public class MainFrame extends javax.swing.JFrame {
         jLayeredPane1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
         forsidePanel.setBackground(new java.awt.Color(255, 255, 255));
-        forsidePanel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
         jLabel21.setBackground(new java.awt.Color(255, 255, 255));
         jLabel21.setFont(new java.awt.Font("Wide Latin", 1, 48)); // NOI18N
@@ -800,6 +800,9 @@ public class MainFrame extends javax.swing.JFrame {
         jLabel41.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel41.setText("De frit kan vælge deres pladser");
 
+        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabel2.setText("Telefonnummeret bruges efterføgende når de afhenter deres billetter");
+
         javax.swing.GroupLayout forsidePanelLayout = new javax.swing.GroupLayout(forsidePanel);
         forsidePanel.setLayout(forsidePanelLayout);
         forsidePanelLayout.setHorizontalGroup(
@@ -808,14 +811,15 @@ public class MainFrame extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(forsidePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel21, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel20, javax.swing.GroupLayout.DEFAULT_SIZE, 1006, Short.MAX_VALUE))
+                    .addComponent(jLabel20, javax.swing.GroupLayout.DEFAULT_SIZE, 1008, Short.MAX_VALUE))
                 .addContainerGap())
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, forsidePanelLayout.createSequentialGroup()
                 .addGap(58, 58, 58)
                 .addGroup(forsidePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel39)
                     .addComponent(jLabel40)
-                    .addComponent(jLabel41))
+                    .addComponent(jLabel41)
+                    .addComponent(jLabel2))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 435, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(31, 31, 31))
@@ -836,8 +840,10 @@ public class MainFrame extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel40)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel41)))
-                .addContainerGap(32, Short.MAX_VALUE))
+                        .addComponent(jLabel41)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel2)))
+                .addContainerGap(34, Short.MAX_VALUE))
         );
 
         filmUdvalgsPanel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
@@ -1070,7 +1076,7 @@ public class MainFrame extends javax.swing.JFrame {
 
         jLabel47.setText("Derfor er vi også den biograf som har de");
 
-        jLabel48.setText("Næstved og omegen.");
+        jLabel48.setText("Næstved og omegn.");
 
         jLabel49.setText("Vi er den mest moderne biograf i");
 
@@ -1137,11 +1143,9 @@ public class MainFrame extends javax.swing.JFrame {
                             .addComponent(jLabel49)
                             .addComponent(jLabel46)
                             .addComponent(jLabel47))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 111, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(footerAdresseLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(footerAdresseLayout.createSequentialGroup()
-                        .addComponent(jLabel13)
-                        .addGap(12, 12, 12))
+                    .addComponent(jLabel13)
                     .addComponent(jLabel3)
                     .addComponent(facebookLabel))
                 .addGap(118, 118, 118)
@@ -1192,9 +1196,9 @@ public class MainFrame extends javax.swing.JFrame {
                                 .addComponent(jLabel47)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jLabel46)))
-                        .addGap(12, 12, 12)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel52)
-                        .addContainerGap(16, Short.MAX_VALUE))))
+                        .addContainerGap(22, Short.MAX_VALUE))))
         );
 
         javax.swing.GroupLayout footerPanelLayout = new javax.swing.GroupLayout(footerPanel);
@@ -1629,6 +1633,7 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel19;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel21;
     private javax.swing.JLabel jLabel22;
