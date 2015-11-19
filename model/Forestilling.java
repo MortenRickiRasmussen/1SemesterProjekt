@@ -79,7 +79,7 @@ public class Forestilling {
     public void setFilmTitel(String titel) {
         this.filmTitel = titel;
         try {
-            plakat = new ImageIcon(getClass().getResource("/rescources/" + titel + ".jpg"));
+            plakat = new ImageIcon(getClass().getResource("/rescources/" + titel.toLowerCase() + ".jpg"));
         } catch (NullPointerException ex) {
             plakat = new ImageIcon(getClass().getResource("/rescources/standardbillede.jpg"));
         }
