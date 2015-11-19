@@ -30,6 +30,13 @@ public class DrawHandler {
     private int widthOffset;
     private int numberOfSeats;
 
+    /**
+     * DrawHandlerklassen står for at tegne biografsalen til en given forestilling, når der skal vælges pladser.
+     * Den tjekker også for optagede pladser og håndterer bestillingen af billetter til databasen.
+     * @throws IOException
+     * @throws ClassNotFoundException
+     * @throws SQLException
+     */
     public DrawHandler() throws IOException, ClassNotFoundException, SQLException {
         boxSize = 20;
         screenOffset = 70;
@@ -39,12 +46,20 @@ public class DrawHandler {
         seatsArray = new ArrayList<>();
     }
 
+    /**
+     * Tegner oven på panelets Graphics(g), Bliver brugt til at fjerne saltegningen fra panelet.
+     */
     public void eraseDrawing() {
         g.setColor(new Color(214, 217, 223));
-        g.fillRect(0, 0, 1000, 1000);
+        g.fillRect(0, 0, widthOffset, 1000);
         g.setColor(Color.BLACK);
     }
 
+    /**
+     * Tegner rækker og sæder på panelets Graphics(g), ud fra hvormange rækker og sæder den får
+     * @param rows Antal rækker i salen.
+     * @param seats Antal sæder i salen.
+     */
     public void drawGrid(int rows, int seats) {
         g.setColor(Color.WHITE);
         g.fillRect(widthOffset, 0, seats * boxSize + 2 * walkwayOffset + widthOffset, rows * boxSize + screenOffset + walkwayOffset);
@@ -62,12 +77,21 @@ public class DrawHandler {
         }
     }
 
+    /**
+     * Tegner lærredet på Graphics(g) ud fra antal sæder.
+     * @param seats antal sæder.
+     */
     public void drawCanvas(int seats) {
         g.setColor(Color.BLUE);
         g.fillRect(walkwayOffset+widthOffset, boxSize / 2 - 2, seats * boxSize, 4);
         g.setColor(Color.BLACK);
     }
 
+    /**
+     * Tegner optagede sæder på Graphics(g). 
+     * @param row antal rækker.
+     * @param seat antal sæder.
+     */
     public void drawTakenSeat(int row, int seat) {
         int startX = (seat - 1) * boxSize + 1 + walkwayOffset + widthOffset;
         int startY = (row - 1) * boxSize + 1 + screenOffset;
@@ -78,6 +102,11 @@ public class DrawHandler {
         g.setColor(Color.BLACK);
     }
 
+    /**
+     * Tegner valgte sæder på Graphics(g)
+     * @param row antal rækker.
+     * @param seat antal sæder.
+     */
     public void drawSelectedSeat(int row, int seat) {
         int startX = (seat - 1) * boxSize + 1 + walkwayOffset + widthOffset;
         int startY = (row - 1) * boxSize + 1 + screenOffset;
@@ -88,21 +117,30 @@ public class DrawHandler {
         g.setColor(Color.BLACK);
     }
 
+    /**
+     * Tager informationer fra GUI og sorterer dem samt kalder diverse methoder i denne klasse for at tegne salen på panelet.
+     * @param forestilling Et objekt af Forestillingsklassen
+     * @param sal Et objekt af Salklassen
+     * @param billetter En arraylist af objekter fra Billet klassen
+     * @param g Graphics fra panelet som skal tegnes på
+     * @param numberOfSeats Antal valgte sæder
+     * @param panelWidth Bredden på det givne panel
+     */
     public void drawForestillingsSal(Forestilling forestilling, Sal sal, ArrayList<Billet> billetter, Graphics g, int numberOfSeats, int panelWidth) {
         this.g = g;
         this.sal = sal;
         this.forestilling = forestilling;
         this.numberOfSeats = numberOfSeats;
-        widthOffset = panelWidth-2*walkwayOffset-sal.getSædder()*boxSize;
+        widthOffset = panelWidth-2*walkwayOffset-sal.getSæder()*boxSize;
         eraseDrawing();
-        takenSeats = new boolean[sal.getRækker()][sal.getSædder()];
+        takenSeats = new boolean[sal.getRækker()][sal.getSæder()];
         for (int i = 0; i < sal.getRækker(); i++) {
-            for (int j = 0; j < sal.getSædder(); j++) {
+            for (int j = 0; j < sal.getSæder(); j++) {
                 takenSeats[i][j] = false;
             }
         }
 
-        drawGrid(sal.getRækker(), sal.getSædder());
+        drawGrid(sal.getRækker(), sal.getSæder());
         for (int i = 0; i < billetter.size(); i++) {
             if (billetter.get(i).getForestillings_id() == forestilling.getId()) {
                 drawTakenSeat(billetter.get(i).getRække(), billetter.get(i).getSædde());
@@ -114,6 +152,13 @@ public class DrawHandler {
         }
     }
 
+    /**
+     * Tjekker om de valgte sæder er optagede.
+     * @param row
+     * @param startSeat
+     * @param numberOfSeats
+     * @return boolean
+     */
     public boolean isFree(int row, int startSeat, int numberOfSeats) {
         int start = startSeat;
         int freeCount = 0;
@@ -130,11 +175,19 @@ public class DrawHandler {
         }
     }
 
+    /**
+     * sætter et punkt for valgte sæder.
+     * @param p Point hvor der skal tegnes valgte sæder
+     */
     public void setSeatsPoint(Point p) {
         seatsPoint = p;
     }
     
-
+    /**
+     * Beregner hvor der skal tegnes ud fra et punkt og tegner derefter de valgte sæder(vha. drawSelectedSeat)
+     * @param p Point hvor der skal tegnes valgte sæder
+     * @param numberOfSeats Antal valgte sæder
+     */
     public void drawSeatsAtMouse(Point p, int numberOfSeats) {
         int seatsX = p.x - walkwayOffset - widthOffset;
         seatsY = p.y - screenOffset;
@@ -154,7 +207,7 @@ public class DrawHandler {
             seatsChosen++;
         }
         seatsArray.clear();
-        if (seatsX > 0 && seatsChosen <= sal.getSædder() && seatsChosen > 0 && seatsY <= sal.getRækker() && seatsChosen > 0) {
+        if (seatsX > 0 && seatsChosen <= sal.getSæder() && seatsChosen > 0 && seatsY <= sal.getRækker() && seatsChosen > 0) {
             if (isFree(seatsY, seatsX, numberOfSeats) == true) {
                 for (int i = 0; i < numberOfSeats; i++) {
                     drawSelectedSeat(seatsY, seatsX);
@@ -166,6 +219,13 @@ public class DrawHandler {
 
     }
 
+    /**
+     * Hvis de valgte sæder er ledige sender denne metode informationerne omkring bestillingen til databasen
+     * @param telefonNummer
+     * @return boolean
+     * @throws SQLException
+     * @throws ClassNotFoundException
+     */
     public boolean bestilBilletter(int telefonNummer) throws SQLException, ClassNotFoundException {
         if (!seatsArray.isEmpty()) {
             for (int i = 0; i < numberOfSeats; i++) {
