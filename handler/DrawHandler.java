@@ -143,8 +143,8 @@ public class DrawHandler {
         drawGrid(sal.getRækker(), sal.getSæder());
         for (int i = 0; i < billetter.size(); i++) {
             if (billetter.get(i).getForestillings_id() == forestilling.getId()) {
-                drawTakenSeat(billetter.get(i).getRække(), billetter.get(i).getSædde());
-                takenSeats[billetter.get(i).getRække() - 1][billetter.get(i).getSædde() - 1] = true;
+                drawTakenSeat(billetter.get(i).getRække(), billetter.get(i).getSæde());
+                takenSeats[billetter.get(i).getRække() - 1][billetter.get(i).getSæde() - 1] = true;
             }
         }
         if (numberOfSeats != 0) {
