@@ -50,12 +50,16 @@ public class MainFrame extends javax.swing.JFrame {
 
         try {
             db.loadArrayLists(sale, film, forestillinger, billetter);
-        } catch (SQLException | ClassNotFoundException ex) {
-            errorLabelHeader.setText("Uventet fejl");
-            errorLabel1.setText("Der er muligvis ikke forbindelse til databasen");
-            errorLabel2.setText("Check om der er forbindelse til internettet");
-            errorLabel3.setText(ex.getMessage());
-            updateDialog(errorDialog);
+        } catch (SQLException | ClassNotFoundException | NullPointerException ex) {
+            errorLabelHeader.setText("Der er sket en uventet fejl");
+            errorLabel1.setText("Der er muligvis ikke blevet oprrettetforbindelse til databasen");
+            errorLabel2.setText("Klik på OK for at ændre database indsitllingerne");
+            errorLabel3.setText("");
+            errorDialog.pack();
+            errorDialog.setLocationRelativeTo(this);
+            errorDialog.setVisible(true);
+            updateDialog(errorDialog); 
+            errorDialog.isAlwaysOnTop();
         }
 
         filmCombo.removeAllItems();
@@ -132,6 +136,7 @@ public class MainFrame extends javax.swing.JFrame {
         } catch (SQLException ex) {
             Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
         initComponents();
         forsidePanel.setVisible(true);
         valgAfPladsPanel.setVisible(false);
@@ -584,6 +589,8 @@ public class MainFrame extends javax.swing.JFrame {
                 .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 382, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
         );
+
+        errorDialog.setAlwaysOnTop(true);
 
         errorLabelHeader.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         errorLabelHeader.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -1241,6 +1248,9 @@ public class MainFrame extends javax.swing.JFrame {
             pladsPanelAntalBilleterComboBox.setSelectedIndex(0);
             pladsPanelTelefonnummerField.setText("");
         }
+        if (errorLabel2.getText() == "Klik på OK for at ændre database indsitllingerne") {
+            updateDialog(adminDialog);
+        }
     }//GEN-LAST:event_errorDialogButtonActionPerformed
 
     private void filmComboActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_filmComboActionPerformed
@@ -1253,7 +1263,7 @@ public class MainFrame extends javax.swing.JFrame {
             int spileltid = Integer.parseInt(spilletidField.getText());
             db.addFilm(titel, spileltid);
             File file = jFileChooser1.getSelectedFile();
-            File target = new File(System.getProperty("user.dir") + "/src/rescources", titel + ".jpg");
+            File target = new File(System.getProperty("user.dir") + "/src/rescources", titel.toLowerCase() + ".jpg");
             Files.copy(file.toPath(), target.toPath(), StandardCopyOption.REPLACE_EXISTING);
             errorLabelHeader.setText("Succes");
             errorLabel1.setText("Filmen " + titel + " blev succesfuldt tilføjet til databasen");
