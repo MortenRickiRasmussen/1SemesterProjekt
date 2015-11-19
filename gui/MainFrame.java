@@ -256,25 +256,28 @@ public class MainFrame extends javax.swing.JFrame {
         pladsPanelTelefonnummerField = new javax.swing.JTextField();
         pladsPanelBestilButton = new javax.swing.JButton();
         jLabel38 = new javax.swing.JLabel();
+        jLabel42 = new javax.swing.JLabel();
+        jLabel43 = new javax.swing.JLabel();
+        jLabel44 = new javax.swing.JLabel();
+        jLabel45 = new javax.swing.JLabel();
         footerPanel = new javax.swing.JPanel();
         footerAdresse = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
-        footerOmOs = new javax.swing.JPanel();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel8 = new javax.swing.JLabel();
-        jLabel9 = new javax.swing.JLabel();
-        jLabel10 = new javax.swing.JLabel();
-        jLabel11 = new javax.swing.JLabel();
-        footerSocial = new javax.swing.JPanel();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel13 = new javax.swing.JLabel();
+        jLabel46 = new javax.swing.JLabel();
+        jLabel47 = new javax.swing.JLabel();
+        jLabel48 = new javax.swing.JLabel();
+        jLabel49 = new javax.swing.JLabel();
+        jLabel50 = new javax.swing.JLabel();
         facebookLabel = new javax.swing.JLabel();
-        footerAdmin = new javax.swing.JPanel();
-        jLabel4 = new javax.swing.JLabel();
+        jLabel13 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel51 = new javax.swing.JLabel();
+        jLabel52 = new javax.swing.JLabel();
 
         jLabel12.setText("IP/Hostname");
 
@@ -908,7 +911,7 @@ public class MainFrame extends javax.swing.JFrame {
         salPanel.setLayout(salPanelLayout);
         salPanelLayout.setHorizontalGroup(
             salPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 571, Short.MAX_VALUE)
+            .addGap(0, 563, Short.MAX_VALUE)
         );
         salPanelLayout.setVerticalGroup(
             salPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -947,26 +950,43 @@ public class MainFrame extends javax.swing.JFrame {
 
         jLabel38.setText("Telefonnummer:");
 
+        jLabel42.setForeground(java.awt.Color.white);
+        jLabel42.setText("Hvide sæder er ledige");
+
+        jLabel43.setForeground(java.awt.Color.red);
+        jLabel43.setText("Røde sæder er optaget");
+
+        jLabel44.setForeground(java.awt.Color.green);
+        jLabel44.setText("Grønne sæder er dine valgte ");
+
+        jLabel45.setForeground(java.awt.Color.blue);
+        jLabel45.setText("Blå markering er lærred");
+
         javax.swing.GroupLayout valgAfPladsPanelLayout = new javax.swing.GroupLayout(valgAfPladsPanel);
         valgAfPladsPanel.setLayout(valgAfPladsPanelLayout);
         valgAfPladsPanelLayout.setHorizontalGroup(
             valgAfPladsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(valgAfPladsPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(valgAfPladsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(pladsPanelTitle)
-                    .addComponent(pladsPanelDato)
-                    .addComponent(pladsPanelTidspunkt)
-                    .addComponent(jLabel35)
-                    .addComponent(jLabel36)
-                    .addGroup(valgAfPladsPanelLayout.createSequentialGroup()
-                        .addComponent(jLabel37)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(pladsPanelAntalBilleterComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(pladsPanelBestilButton)
-                    .addComponent(jLabel38)
-                    .addComponent(pladsPanelTelefonnummerField))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 285, Short.MAX_VALUE)
+                .addGroup(valgAfPladsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(valgAfPladsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(pladsPanelTitle)
+                        .addComponent(pladsPanelDato)
+                        .addComponent(pladsPanelTidspunkt)
+                        .addComponent(jLabel35)
+                        .addComponent(jLabel36)
+                        .addGroup(valgAfPladsPanelLayout.createSequentialGroup()
+                            .addComponent(jLabel37)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(pladsPanelAntalBilleterComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(pladsPanelBestilButton)
+                        .addComponent(jLabel38)
+                        .addComponent(pladsPanelTelefonnummerField))
+                    .addComponent(jLabel42)
+                    .addComponent(jLabel43)
+                    .addComponent(jLabel44)
+                    .addComponent(jLabel45))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 302, Short.MAX_VALUE)
                 .addComponent(salPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
@@ -995,7 +1015,15 @@ public class MainFrame extends javax.swing.JFrame {
                         .addComponent(pladsPanelTelefonnummerField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(pladsPanelBestilButton)
-                        .addGap(0, 247, Short.MAX_VALUE))
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel42, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel43)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel44)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel45)
+                        .addGap(0, 171, Short.MAX_VALUE))
                     .addComponent(salPanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
@@ -1027,7 +1055,6 @@ public class MainFrame extends javax.swing.JFrame {
 
         footerPanel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
-        footerAdresse.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         footerAdresse.setPreferredSize(new java.awt.Dimension(225, 189));
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
@@ -1038,6 +1065,51 @@ public class MainFrame extends javax.swing.JFrame {
         jLabel6.setText("4700");
 
         jLabel7.setText("Næstved");
+
+        jLabel46.setText("bedste faciliteter");
+
+        jLabel47.setText("Derfor er vi også den biograf som har de");
+
+        jLabel48.setText("Næstved og omegen.");
+
+        jLabel49.setText("Vi er den mest moderne biograf i");
+
+        jLabel50.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jLabel50.setText("Om os");
+
+        facebookLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/rescources/facebook-logo.png"))); // NOI18N
+        facebookLabel.setText("Følg os på Facebook");
+        facebookLabel.setToolTipText("Link til BioTrio's facebookside");
+        facebookLabel.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                facebookLabelMouseReleased(evt);
+            }
+        });
+
+        jLabel13.setIcon(new javax.swing.ImageIcon(getClass().getResource("/rescources/logo-twitter.png"))); // NOI18N
+        jLabel13.setText("Følg os på Twitter");
+        jLabel13.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                jLabel13MouseReleased(evt);
+            }
+        });
+
+        jLabel3.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jLabel3.setText("Sociale medier");
+
+        jButton1.setText("Admin Panel");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
+        jLabel4.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jLabel4.setText("Admin");
+
+        jLabel51.setText("kontakt@BioTrio.dk");
+
+        jLabel52.setText("+45 88 88 88 88 ");
 
         javax.swing.GroupLayout footerAdresseLayout = new javax.swing.GroupLayout(footerAdresse);
         footerAdresse.setLayout(footerAdresseLayout);
@@ -1052,172 +1124,88 @@ public class MainFrame extends javax.swing.JFrame {
                         .addGroup(footerAdresseLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel6)
                             .addComponent(jLabel5)
-                            .addComponent(jLabel7))))
-                .addContainerGap(151, Short.MAX_VALUE))
+                            .addComponent(jLabel7)
+                            .addComponent(jLabel51)
+                            .addComponent(jLabel52))))
+                .addGap(109, 109, 109)
+                .addGroup(footerAdresseLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel50)
+                    .addGroup(footerAdresseLayout.createSequentialGroup()
+                        .addGap(10, 10, 10)
+                        .addGroup(footerAdresseLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel48)
+                            .addComponent(jLabel49)
+                            .addComponent(jLabel46)
+                            .addComponent(jLabel47))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 111, Short.MAX_VALUE)
+                .addGroup(footerAdresseLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(footerAdresseLayout.createSequentialGroup()
+                        .addComponent(jLabel13)
+                        .addGap(12, 12, 12))
+                    .addComponent(jLabel3)
+                    .addComponent(facebookLabel))
+                .addGap(118, 118, 118)
+                .addGroup(footerAdresseLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel4)
+                    .addGroup(footerAdresseLayout.createSequentialGroup()
+                        .addGap(10, 10, 10)
+                        .addComponent(jButton1)))
+                .addGap(127, 127, 127))
         );
         footerAdresseLayout.setVerticalGroup(
             footerAdresseLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(footerAdresseLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel5)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel6)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel7)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-
-        footerOmOs.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        footerOmOs.setPreferredSize(new java.awt.Dimension(225, 189));
-
-        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        jLabel2.setText("Om os");
-
-        jLabel8.setText("Vi er den mest moderne biograf i");
-
-        jLabel9.setText("Næstved og omegen.");
-
-        jLabel10.setText("bedste faciliteter");
-
-        jLabel11.setText("Derfor er vi også den biograf som har de");
-
-        javax.swing.GroupLayout footerOmOsLayout = new javax.swing.GroupLayout(footerOmOs);
-        footerOmOs.setLayout(footerOmOsLayout);
-        footerOmOsLayout.setHorizontalGroup(
-            footerOmOsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(footerOmOsLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(footerOmOsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel2)
-                    .addGroup(footerOmOsLayout.createSequentialGroup()
-                        .addGap(10, 10, 10)
-                        .addGroup(footerOmOsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel9)
-                            .addComponent(jLabel8)
-                            .addComponent(jLabel10)
-                            .addComponent(jLabel11))))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        footerOmOsLayout.setVerticalGroup(
-            footerOmOsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(footerOmOsLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel8)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel9)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel11)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel10)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-
-        footerSocial.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        footerSocial.setPreferredSize(new java.awt.Dimension(225, 0));
-
-        jLabel3.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        jLabel3.setText("Sociale medier");
-
-        jLabel13.setIcon(new javax.swing.ImageIcon(getClass().getResource("/rescources/logo-twitter.png"))); // NOI18N
-        jLabel13.setText("Følg os på Twitter");
-        jLabel13.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseReleased(java.awt.event.MouseEvent evt) {
-                jLabel13MouseReleased(evt);
-            }
-        });
-
-        facebookLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/rescources/facebook-logo.png"))); // NOI18N
-        facebookLabel.setText("Følg os på Facebook");
-        facebookLabel.setToolTipText("Link til BioTrio's facebookside");
-        facebookLabel.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseReleased(java.awt.event.MouseEvent evt) {
-                facebookLabelMouseReleased(evt);
-            }
-        });
-
-        javax.swing.GroupLayout footerSocialLayout = new javax.swing.GroupLayout(footerSocial);
-        footerSocial.setLayout(footerSocialLayout);
-        footerSocialLayout.setHorizontalGroup(
-            footerSocialLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(footerSocialLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(footerSocialLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(facebookLabel)
-                    .addComponent(jLabel3)
-                    .addComponent(jLabel13))
-                .addContainerGap(71, Short.MAX_VALUE))
-        );
-        footerSocialLayout.setVerticalGroup(
-            footerSocialLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(footerSocialLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel3)
-                .addGap(19, 19, 19)
-                .addComponent(facebookLabel)
-                .addGap(18, 18, 18)
-                .addComponent(jLabel13)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-
-        footerAdmin.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        footerAdmin.setPreferredSize(new java.awt.Dimension(225, 0));
-
-        jLabel4.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        jLabel4.setText("Admin");
-
-        jButton1.setText("Admin Panel");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout footerAdminLayout = new javax.swing.GroupLayout(footerAdmin);
-        footerAdmin.setLayout(footerAdminLayout);
-        footerAdminLayout.setHorizontalGroup(
-            footerAdminLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(footerAdminLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(footerAdminLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel4)
-                    .addGroup(footerAdminLayout.createSequentialGroup()
-                        .addGap(10, 10, 10)
-                        .addComponent(jButton1)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        footerAdminLayout.setVerticalGroup(
-            footerAdminLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(footerAdminLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel4)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButton1)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(footerAdresseLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(footerAdresseLayout.createSequentialGroup()
+                        .addGroup(footerAdresseLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(footerAdresseLayout.createSequentialGroup()
+                                .addComponent(jLabel3)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(facebookLabel))
+                            .addGroup(footerAdresseLayout.createSequentialGroup()
+                                .addComponent(jLabel4)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jButton1)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel13)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(footerAdresseLayout.createSequentialGroup()
+                        .addGroup(footerAdresseLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(footerAdresseLayout.createSequentialGroup()
+                                .addComponent(jLabel1)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jLabel5)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLabel6)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLabel7)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLabel51))
+                            .addGroup(footerAdresseLayout.createSequentialGroup()
+                                .addComponent(jLabel50)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLabel49)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLabel48)
+                                .addGap(12, 12, 12)
+                                .addComponent(jLabel47)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLabel46)))
+                        .addGap(12, 12, 12)
+                        .addComponent(jLabel52)
+                        .addContainerGap(16, Short.MAX_VALUE))))
         );
 
         javax.swing.GroupLayout footerPanelLayout = new javax.swing.GroupLayout(footerPanel);
         footerPanel.setLayout(footerPanelLayout);
         footerPanelLayout.setHorizontalGroup(
             footerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(footerPanelLayout.createSequentialGroup()
-                .addComponent(footerAdresse, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(footerOmOs, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(footerSocial, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(footerAdmin, javax.swing.GroupLayout.DEFAULT_SIZE, 323, Short.MAX_VALUE))
+            .addComponent(footerAdresse, javax.swing.GroupLayout.DEFAULT_SIZE, 1028, Short.MAX_VALUE)
         );
         footerPanelLayout.setVerticalGroup(
             footerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(footerOmOs, javax.swing.GroupLayout.DEFAULT_SIZE, 156, Short.MAX_VALUE)
-            .addComponent(footerAdresse, javax.swing.GroupLayout.DEFAULT_SIZE, 156, Short.MAX_VALUE)
-            .addComponent(footerSocial, javax.swing.GroupLayout.DEFAULT_SIZE, 156, Short.MAX_VALUE)
-            .addComponent(footerAdmin, javax.swing.GroupLayout.DEFAULT_SIZE, 156, Short.MAX_VALUE)
+            .addComponent(footerAdresse, javax.swing.GroupLayout.DEFAULT_SIZE, 154, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -1618,11 +1606,8 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JPanel filmUdvalgsPanel;
     private javax.swing.JScrollPane filmudValgsScroll;
     private javax.swing.JTextField findFilmField;
-    private javax.swing.JPanel footerAdmin;
     private javax.swing.JPanel footerAdresse;
-    private javax.swing.JPanel footerOmOs;
     private javax.swing.JPanel footerPanel;
-    private javax.swing.JPanel footerSocial;
     private javax.swing.JPanel forestillingsPanel;
     private javax.swing.JPanel forsidePanel;
     private javax.swing.JComboBox fundendeFilmCombo;
@@ -1636,8 +1621,6 @@ public class MainFrame extends javax.swing.JFrame {
     private com.toedter.calendar.JDateChooser jDateChooser1;
     private javax.swing.JFileChooser jFileChooser1;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
@@ -1646,7 +1629,6 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel19;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel21;
     private javax.swing.JLabel jLabel22;
@@ -1671,11 +1653,20 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel40;
     private javax.swing.JLabel jLabel41;
+    private javax.swing.JLabel jLabel42;
+    private javax.swing.JLabel jLabel43;
+    private javax.swing.JLabel jLabel44;
+    private javax.swing.JLabel jLabel45;
+    private javax.swing.JLabel jLabel46;
+    private javax.swing.JLabel jLabel47;
+    private javax.swing.JLabel jLabel48;
+    private javax.swing.JLabel jLabel49;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel50;
+    private javax.swing.JLabel jLabel51;
+    private javax.swing.JLabel jLabel52;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
     private javax.swing.JLayeredPane jLayeredPane1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
