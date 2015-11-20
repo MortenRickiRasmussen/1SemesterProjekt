@@ -20,7 +20,8 @@ import javax.swing.*;
 import model.*;
 
 /**
- *
+ * @author Gudni Sigurdsson
+ * @author Jakob Ferdinandsen
  * @author Morten Ricki Rasmussen
  */
 public class MainFrame extends javax.swing.JFrame {
