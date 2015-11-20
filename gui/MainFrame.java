@@ -14,14 +14,11 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
 import java.util.Date;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
 import javax.swing.JDialog;
 import javax.swing.ListModel;
@@ -55,13 +52,10 @@ public class MainFrame extends javax.swing.JFrame {
             db.loadArrayLists(sale, film, forestillinger, billetter);
         } catch (SQLException | ClassNotFoundException | NullPointerException ex) {
             errorLabelHeader.setText("Der er sket en uventet fejl");
-            errorLabel1.setText("Der er muligvis ikke blevet oprrettetforbindelse til databasen");
-            errorLabel2.setText("Klik på OK for at ændre database indsitllingerne");
+            errorLabel1.setText("Der er muligvis ikke blevet oprettetforbindelse til databasen");
+            errorLabel2.setText("Klik på OK for at ændre database indstillingerne");
             errorLabel3.setText("");
-            errorDialog.pack();
-            errorDialog.setLocationRelativeTo(this);
-            errorDialog.setVisible(true);
-            updateDialog(errorDialog); 
+            updateDialog(errorDialog);
             errorDialog.isAlwaysOnTop();
         }
 
@@ -129,18 +123,19 @@ public class MainFrame extends javax.swing.JFrame {
     }
 
     public MainFrame() {
+        initComponents();
         try {
             db = new DBHandler();
-            dh = new DrawHandler();
-        } catch (IOException ex) {
-            Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SQLException ex) {
-            Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
+            dh = new DrawHandler(db);
+        } catch (IOException | ClassNotFoundException | SQLException ex) {
+            errorLabelHeader.setText("Der er sket en uventet fejl");
+            errorLabel1.setText("Der er muligvis ikke blevet oprettetforbindelse til databasen");
+            errorLabel2.setText("Klik på OK for at ændre database indstillingerne");
+            errorLabel3.setText("");
+            updateDialog(errorDialog);
+            errorDialog.isAlwaysOnTop();
         }
         
-        initComponents();
         forsidePanel.setVisible(true);
         valgAfPladsPanel.setVisible(false);
         filmUdvalgsPanel.setVisible(false);
@@ -843,7 +838,7 @@ public class MainFrame extends javax.swing.JFrame {
                         .addComponent(jLabel41)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel2)))
-                .addContainerGap(34, Short.MAX_VALUE))
+                .addContainerGap(63, Short.MAX_VALUE))
         );
 
         filmUdvalgsPanel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
@@ -1205,7 +1200,7 @@ public class MainFrame extends javax.swing.JFrame {
         footerPanel.setLayout(footerPanelLayout);
         footerPanelLayout.setHorizontalGroup(
             footerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(footerAdresse, javax.swing.GroupLayout.DEFAULT_SIZE, 1028, Short.MAX_VALUE)
+            .addComponent(footerAdresse, javax.swing.GroupLayout.DEFAULT_SIZE, 1038, Short.MAX_VALUE)
         );
         footerPanelLayout.setVerticalGroup(
             footerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1273,14 +1268,14 @@ public class MainFrame extends javax.swing.JFrame {
         if (errorLabelHeader.getText() == "Succes") {
             adminDialog.setVisible(false);
         }
-        if (errorLabelHeader.getText().equals("Bestilling Fuldført")){
+        if (errorLabelHeader.getText().equals("Bestilling Fuldført")) {
             valgAfPladsPanel.setVisible(false);
             forsidePanel.setVisible(true);
             pladsPanelAntalBilleterComboBox.setSelectedIndex(0);
             pladsPanelTelefonnummerField.setText("");
         }
-        if (errorLabel2.getText() == "Klik på OK for at ændre database indsitllingerne") {
-            updateDialog(adminDialog);
+        if (errorLabel2.getText() == "Klik på OK for at ændre database indstillingerne") {
+            updateDialog(adminLoginDialog);
         }
     }//GEN-LAST:event_errorDialogButtonActionPerformed
 
@@ -1392,10 +1387,13 @@ public class MainFrame extends javax.swing.JFrame {
             for (Film fundendeFilm1 : fundendeFilm) {
                 fundendeFilmCombo.addItem(fundendeFilm1);
             }
-        } catch (SQLException ex) {
-            Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException | ClassNotFoundException ex) {
+            errorLabelHeader.setText("Der er sket en uventet fejl");
+            errorLabel1.setText("Der er muligvis ikke blevet oprettetforbindelse til databasen");
+            errorLabel2.setText("Klik på OK for at ændre database indstillingerne");
+            errorLabel3.setText("");
+            updateDialog(errorDialog);
+            errorDialog.isAlwaysOnTop();
         }
 
 
@@ -1468,10 +1466,13 @@ public class MainFrame extends javax.swing.JFrame {
             int rows = Integer.parseInt(addSalRowsCountField.getText());
             int seats = Integer.parseInt(addSalSeatCountField.getText());
             db.addSal(name, rows, seats);
-        } catch (SQLException ex) {
-            Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException | ClassNotFoundException ex) {
+            errorLabelHeader.setText("Der er sket en uventet fejl");
+            errorLabel1.setText("Der er muligvis ikke blevet oprettetforbindelse til databasen");
+            errorLabel2.setText("Klik på OK for at ændre database indstillingerne");
+            errorLabel3.setText("");
+            updateDialog(errorDialog);
+            errorDialog.isAlwaysOnTop();
         }
     }//GEN-LAST:event_addSalButtonActionPerformed
 
@@ -1493,15 +1494,15 @@ public class MainFrame extends javax.swing.JFrame {
         if (!pladsPanelTelefonnummerField.getText().isEmpty()) {
             try {
                 boolean succeeded = dh.bestilBilletter(Integer.parseInt(pladsPanelTelefonnummerField.getText()));
-                if (succeeded == false){
+                if (succeeded == false) {
                     errorLabelHeader.setText("Bestilling fejlede");
                     errorLabel1.setText("Har du husket at vælge pladser?");
                     errorLabel2.setText("Har du indtastet et gyldigt telefonnummer?");
                     errorLabel3.setText("");
-                }else{
+                } else {
                     errorLabelHeader.setText("Bestilling Fuldført");
-                    errorLabel1.setText("Dato: "+forestillinger.get(selectedForestilling.get(0)).getDato());
-                    errorLabel2.setText("Tidspunkt: "+forestillinger.get(selectedForestilling.get(0)).getTidspunkt());
+                    errorLabel1.setText("Dato: " + forestillinger.get(selectedForestilling.get(0)).getDato());
+                    errorLabel2.setText("Tidspunkt: " + forestillinger.get(selectedForestilling.get(0)).getTidspunkt());
                     errorLabel3.setText("");
                 }
             } catch (SQLException | ClassNotFoundException ex) {
@@ -1510,7 +1511,7 @@ public class MainFrame extends javax.swing.JFrame {
                 errorLabel2.setText("Oplys følgende til administratoren:");
                 errorLabel3.setText(ex.getMessage());
             }
-        }else{
+        } else {
             errorLabelHeader.setText("Bestilling fejlede");
             errorLabel1.setText("Indtast venligst et gyldigt telefonnumer.");
             errorLabel2.setText("Et gyldigt telefonnummer består af 8 tal.");
@@ -1529,20 +1530,24 @@ public class MainFrame extends javax.swing.JFrame {
     private void facebookLabelMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_facebookLabelMouseReleased
         try {
             java.awt.Desktop.getDesktop().browse(new URI("https://www.facebook.com/BioTrio"));
-        } catch (IOException ex) {
-            Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (URISyntaxException ex) {
-            Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException | URISyntaxException ex) {
+            errorLabelHeader.setText("Videresendelse mislykkedes");
+            errorLabel1.setText("");
+            errorLabel2.setText("");
+            errorLabel3.setText("");
+            updateDialog(errorDialog);
         }
     }//GEN-LAST:event_facebookLabelMouseReleased
 
     private void jLabel13MouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel13MouseReleased
         try {
             java.awt.Desktop.getDesktop().browse(new URI("https://twitter.com/BioTrioNaestved"));
-        } catch (IOException ex) {
-            Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (URISyntaxException ex) {
-            Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException | URISyntaxException ex) {
+            errorLabelHeader.setText("Videresendelse mislykkedes");
+            errorLabel1.setText("");
+            errorLabel2.setText("");
+            errorLabel3.setText("");
+            updateDialog(errorDialog);
         }
 
     }//GEN-LAST:event_jLabel13MouseReleased
