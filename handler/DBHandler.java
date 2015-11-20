@@ -10,7 +10,7 @@ import model.*;
 /**
  * @author Jakob Ferdinandsen
  * @author Morten Ricki Rasmussen
- * 
+ *
  */
 public class DBHandler {
 
@@ -25,10 +25,10 @@ public class DBHandler {
     private ArrayList<String> dbSettings;
 
     /**
-     * 
+     *
      * @throws IOException
      * @throws ClassNotFoundException
-     * @throws SQLException 
+     * @throws SQLException
      */
     public DBHandler() throws IOException, ClassNotFoundException, SQLException {
         settingsFil = new FileHandler("src/rescources/DatabaseIndstillinger.txt");
@@ -41,9 +41,10 @@ public class DBHandler {
     }
 
     /**
-     * Metode som bruges til at opdatere forbindelsen til DB, sådan at DB indstillinger kan skiftes.
-     * Metoden overskriver filen med DB indstillinger, 
-     * hvis der er blevet oprrettet forbindelse til ny database
+     * Metode som bruges til at opdatere forbindelsen til DB, sådan at DB
+     * indstillinger kan skiftes. Metoden overskriver filen med DB
+     * indstillinger, hvis der er blevet oprrettet forbindelse til ny database
+     *
      * @param usr Brugernavn til databasen
      * @param pw Kodeord til databasen
      * @param url URL til databasen
@@ -51,7 +52,7 @@ public class DBHandler {
      * @throws SQLException
      * @throws ClassNotFoundException
      * @throws FileNotFoundException
-     * @throws UnsupportedEncodingException 
+     * @throws UnsupportedEncodingException
      */
     public void updateDBConn(String usr, String pw, String url, String schema) throws SQLException, ClassNotFoundException, FileNotFoundException, UnsupportedEncodingException {
         database_usr = usr;
@@ -65,11 +66,12 @@ public class DBHandler {
     }
 
     /**
-     * Metode som bruges til at reconnecte til DB. 
-     * Retunere en boolean for at fortælle om der blev oprettet forbindelse
+     * Metode som bruges til at reconnecte til DB. Retunere en boolean for at
+     * fortælle om der blev oprettet forbindelse
+     *
      * @return Boolean som fortæller om der blev oprettet forbindelse
      * @throws SQLException
-     * @throws ClassNotFoundException 
+     * @throws ClassNotFoundException
      */
     public boolean reconnectToDB() throws SQLException, ClassNotFoundException {
         close();
@@ -79,9 +81,10 @@ public class DBHandler {
 
     /**
      * Metode til at oprette forbindelse til database.
+     *
      * @return Boolean til at fortælle om der blev oprettet forbindelse
      * @throws ClassNotFoundException
-     * @throws SQLException 
+     * @throws SQLException
      */
     public boolean createConn() throws ClassNotFoundException, SQLException {
         boolean connected = false;
@@ -96,7 +99,8 @@ public class DBHandler {
 
     /**
      * Metode til at lukke for forbindelse samt statement
-     * @throws SQLException 
+     *
+     * @throws SQLException
      */
     public void close() throws SQLException {
         stmt.close();
@@ -104,13 +108,13 @@ public class DBHandler {
     }
 
     /**
-     * Metode til at hente noget fra databasen. 
-     * Denne retunere et ResultSet med alt dataen. 
-     * Metoden bruges af andre metoder 
+     * Metode til at hente noget fra databasen. Denne retunere et ResultSet med
+     * alt dataen. Metoden bruges af andre metoder
+     *
      * @param mySQLStatement MySQLStatement til brug af databasen
      * @return ResultSet
      * @throws SQLException
-     * @throws ClassNotFoundException 
+     * @throws ClassNotFoundException
      */
     public ResultSet databaseRetrive(String mySQLStatement) throws SQLException, ClassNotFoundException {
         ResultSet rs = null;
@@ -120,11 +124,12 @@ public class DBHandler {
     }
 
     /**
-     * Metode til at udføre en vilkårlig handling på databasen. 
-     * Metoden bruges af andre metoder
+     * Metode til at udføre en vilkårlig handling på databasen. Metoden bruges
+     * af andre metoder
+     *
      * @param mySQLStatement MySQLStatement til brug af databasen
-     * @throws SQLException 
-     * @throws ClassNotFoundException 
+     * @throws SQLException
+     * @throws ClassNotFoundException
      */
     public void databaseExecute(String mySQLStatement) throws SQLException, ClassNotFoundException {
         createConn();
@@ -133,11 +138,12 @@ public class DBHandler {
     }
 
     /**
-     * Metode til at hente forestillinger fra databasen. 
-     * @param rs ResultSet 
+     * Metode til at hente forestillinger fra databasen.
+     *
+     * @param rs ResultSet
      * @return funden forestilling
      * @throws ClassNotFoundException
-     * @throws SQLException 
+     * @throws SQLException
      */
     public Forestilling retrieveForestillinger(ResultSet rs) throws ClassNotFoundException, SQLException {
 
@@ -154,9 +160,10 @@ public class DBHandler {
 
     /**
      * Metode til at hente hvilke film som er i Databasen
-     * @return Film 
+     *
+     * @return Film
      * @throws SQLException
-     * @throws ClassNotFoundException 
+     * @throws ClassNotFoundException
      */
     public Film retrieveFilm(ResultSet rs) throws SQLException, ClassNotFoundException {
 
@@ -170,13 +177,14 @@ public class DBHandler {
     }
 
     /**
-     * Metode til at hente de forskellige sale fra databasen.
-     * Metoden bruges når der skal oprettes nye forestillinger, sådan at de kun 
-     * kan vælge gyldigesale
+     * Metode til at hente de forskellige sale fra databasen. Metoden bruges når
+     * der skal oprettes nye forestillinger, sådan at de kun kan vælge
+     * gyldigesale
+     *
      * @param rs ResultSet
      * @return fundende sal
      * @throws SQLException
-     * @throws ClassNotFoundException 
+     * @throws ClassNotFoundException
      */
     public Sal retrieveSal(ResultSet rs) throws SQLException, ClassNotFoundException {
 
@@ -193,32 +201,34 @@ public class DBHandler {
     /**
      * Metoden bruges til at bestemme hvilke pladser der allerede er optaget.
      * når man bestiller nye billetter
+     *
      * @param rs ResultSet
      * @return funden billet
      * @throws ClassNotFoundException
-     * @throws SQLException 
+     * @throws SQLException
      */
     public Billet retrieveBilleter(ResultSet rs) throws ClassNotFoundException, SQLException {
 
         int id = rs.getInt("id");
         int forestillings_id = rs.getInt("forestillings_id");
         int række = rs.getInt("række");
-        int sædde = rs.getInt("sædde");
+        int sæde = rs.getInt("sæde");
 
-        Billet billet = new Billet(id, forestillings_id, række, sædde);
+        Billet billet = new Billet(id, forestillings_id, række, sæde);
 
         return billet;
     }
 
     /**
-     * Metoden bruges til at fylde data i ArrayLists som der efter kan bruges af systemet.
-     * Metoden bruger alle de tidligere retriveSal, retriveFilm, osv.
+     * Metoden bruges til at fylde data i ArrayLists som der efter kan bruges af
+     * systemet. Metoden bruger alle de tidligere retriveSal, retriveFilm, osv.
+     *
      * @param sale ArrayList til sale
      * @param film ArrayList til film
      * @param forestillinger ArrayList til forestillinger
      * @param billetter ArrayList til bestilte billetter
      * @throws SQLException
-     * @throws ClassNotFoundException 
+     * @throws ClassNotFoundException
      */
     public void loadArrayLists(ArrayList<Sal> sale, ArrayList<Film> film, ArrayList<Forestilling> forestillinger, ArrayList<Billet> billetter) throws SQLException, ClassNotFoundException {
         sale.clear();
@@ -232,13 +242,14 @@ public class DBHandler {
             sale.add(retrieveSal(rs));
         }
 
-        mySQLStatement = "SELECT * FROM film";
+        mySQLStatement = "SELECT DISTINCT film.*, forestillinger.film_id, forestillinger.dato FROM forestillinger\n"
+                + "LEFT JOIN film ON film.id = forestillinger.film_id WHERE dato >= CURDATE() GROUP BY film.id;";
         rs = databaseRetrive(mySQLStatement);
         while (rs.next()) {
             film.add(retrieveFilm(rs));
         }
 
-        mySQLStatement = "SELECT * FROM forestillinger";
+        mySQLStatement = "SELECT * FROM forestillinger WHERE dato >= CURDATE();";
         rs = databaseRetrive(mySQLStatement);
         while (rs.next()) {
             Forestilling forestilling = retrieveForestillinger(rs);
@@ -255,7 +266,9 @@ public class DBHandler {
             forestillinger.add(forestilling);
         }
 
-        mySQLStatement = "SELECT * FROM billetter";
+        mySQLStatement = "SELECT billetter.*, forestillinger.id, forestillinger.dato FROM forestillinger\n"
+                + "RIGHT JOIN billetter ON forestillinger.id = billetter.forestillings_id \n"
+                + "WHERE forestillinger.dato >= CURDATE();";
         rs = databaseRetrive(mySQLStatement);
         while (rs.next()) {
             billetter.add(retrieveBilleter(rs));
@@ -268,10 +281,11 @@ public class DBHandler {
 
     /**
      * Metode til at tilføje ny film til databasen.
+     *
      * @param titel Filmtitlen
      * @param spilletid Spilletiden
      * @throws SQLException
-     * @throws ClassNotFoundException 
+     * @throws ClassNotFoundException
      */
     public void addFilm(String titel, int spilletid) throws SQLException, ClassNotFoundException {
         String mySQLStatement = "INSERT INTO film (titel, spilletid) VALUES ('"
@@ -283,10 +297,11 @@ public class DBHandler {
 
     /**
      * Metode til at finde film frem fra databasen
-     * @param filmtitel - Filmtitlen 
+     *
+     * @param filmtitel - Filmtitlen
      * @return ArrayList med fundende film
      * @throws SQLException
-     * @throws ClassNotFoundException 
+     * @throws ClassNotFoundException
      */
     public ArrayList searchForFilm(String filmtitel) throws SQLException, ClassNotFoundException {
         String mySQLStatement = "SELECT * FROM film WHERE (titel LIKE '%"
@@ -310,12 +325,13 @@ public class DBHandler {
 
     /**
      * Metode til at tilføje en ny forstilling til databasen.
+     *
      * @param dato Datoen for den nye forestilling
      * @param tidspunkt Tidspunktet for den nye forestilling
      * @param film_id Film_id på den film der bliver spillet
-     * @param sal_id Sal_id på den sal som forestillingen vises i 
+     * @param sal_id Sal_id på den sal som forestillingen vises i
      * @throws SQLException
-     * @throws ClassNotFoundException 
+     * @throws ClassNotFoundException
      */
     public void addForestilling(Date dato, String tidspunkt, int film_id, int sal_id) throws SQLException, ClassNotFoundException {
         String mySQLStatement = "INSERT INTO forestillinger (dato, tidspunkt, film_id, sal_id) VALUES ('"
@@ -328,11 +344,12 @@ public class DBHandler {
 
     /**
      * Metode til at tilføje en ny sal til systemet.
+     *
      * @param name Navnet på salen
      * @param rows antal rækker i salen
      * @param seats antal sæder på hver række
      * @throws SQLException
-     * @throws ClassNotFoundException 
+     * @throws ClassNotFoundException
      */
     public void addSal(String name, int rows, int seats) throws SQLException, ClassNotFoundException {
         String mySQLStatement = "INSERT INTO sale (navn, rækker, sæder) VALUES ('"
@@ -343,12 +360,14 @@ public class DBHandler {
     }
 
     /**
-     * Metode til at tilføje et nyt telefonnummer, hvis telefonnummeret ikke allerede eksistere.
-     * Metoden returnere det id som telefonnummeret har fået i databasen
+     * Metode til at tilføje et nyt telefonnummer, hvis telefonnummeret ikke
+     * allerede eksistere. Metoden returnere det id som telefonnummeret har fået
+     * i databasen
+     *
      * @param telefonNr Telefonnummer på den som bestiller billetter
      * @return Telefonnummer id
      * @throws SQLException
-     * @throws ClassNotFoundException 
+     * @throws ClassNotFoundException
      */
     public String addTelefonNr(int telefonNr) throws SQLException, ClassNotFoundException {
         String id = null;
@@ -374,22 +393,23 @@ public class DBHandler {
     }
 
     /**
-     * Metoden bruges til at tilføje bestilite billetter til databasen. 
+     * Metoden bruges til at tilføje bestilite billetter til databasen.
+     *
      * @param forestillingsId Id på den forestilling der bestilles billetter til
      * @param række Hvilken række billetten er til
-     * @param sædde Hvilket sædde billetten er til
+     * @param sæde Hvilket sæde billetten er til
      * @param telefonnummer Telefonnummeret som der bestilles billetter med
      * @throws SQLException
-     * @throws ClassNotFoundException 
+     * @throws ClassNotFoundException
      */
-    public void addBillet(int forestillingsId, int række, int sædde, int telefonnummer) throws SQLException, ClassNotFoundException {
+    public void addBillet(int forestillingsId, int række, int sæde, int telefonnummer) throws SQLException, ClassNotFoundException {
 
         String telefon_id = addTelefonNr(telefonnummer);
-        
-        String mySQLStatement = "INSERT INTO billetter (forestillings_id, række, sædde, telefon_id) VALUES ("
+
+        String mySQLStatement = "INSERT INTO billetter (forestillings_id, række, sæde, telefon_id) VALUES ("
                 + forestillingsId + ","
                 + række + ","
-                + sædde + ","
+                + sæde + ","
                 + telefon_id + ");";
 
         databaseExecute(mySQLStatement);

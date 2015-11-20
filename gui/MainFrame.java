@@ -1303,7 +1303,7 @@ public class MainFrame extends javax.swing.JFrame {
             errorLabel3.setText("");
             updateDialog(errorDialog);
         } catch (SQLException | ClassNotFoundException ex) {
-            errorLabelHeader.setText("Der skete en uventet fejæ");
+            errorLabelHeader.setText("Der skete en uventet fejl");
             errorLabel1.setText("Prøv venligst igen, eller kontakt systemadministratoren");
             errorLabel2.setText("Oplys følgende");
             errorLabel3.setText(ex.getMessage());
