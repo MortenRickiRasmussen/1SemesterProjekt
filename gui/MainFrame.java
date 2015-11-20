@@ -8,6 +8,7 @@ package gui;
 import handler.DBHandler;
 import handler.DrawHandler;
 import java.awt.Graphics;
+import java.awt.Point;
 import java.io.*;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -1245,7 +1246,8 @@ public class MainFrame extends javax.swing.JFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         updateArrays();
-
+        
+        jDateChooser1.setDate(null);
         filmUdvalgsPanel.setVisible(true);
         forsidePanel.setVisible(false);
         valgAfPladsPanel.setVisible(false);
@@ -1278,6 +1280,7 @@ public class MainFrame extends javax.swing.JFrame {
             forsidePanel.setVisible(true);
             pladsPanelAntalBilleterComboBox.setSelectedIndex(0);
             pladsPanelTelefonnummerField.setText("");
+            dh.setSeatsPoint(new Point(0, 0));
         }
         if (errorLabel2.getText() == "Klik på OK for at ændre database indstillingerne") {
             updateDialog(adminLoginDialog);
@@ -1496,7 +1499,7 @@ public class MainFrame extends javax.swing.JFrame {
     private void pladsPanelBestilButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pladsPanelBestilButtonActionPerformed
         updateArrays();
         drawLastSelectedForestilling(salPanel.getGraphics());
-        if (!pladsPanelTelefonnummerField.getText().isEmpty()) {
+        if (!pladsPanelTelefonnummerField.getText().isEmpty() && pladsPanelAntalBilleterComboBox.getSelectedIndex() != 0) {
             try {
                 boolean succeeded = dh.bestilBilletter(Integer.parseInt(pladsPanelTelefonnummerField.getText()));
                 if (succeeded == false) {
@@ -1520,7 +1523,7 @@ public class MainFrame extends javax.swing.JFrame {
             errorLabelHeader.setText("Bestilling fejlede");
             errorLabel1.setText("Indtast venligst et gyldigt telefonnumer.");
             errorLabel2.setText("Et gyldigt telefonnummer består af 8 tal.");
-            errorLabel3.setText("");
+            errorLabel3.setText("Har du husket at vælge pladser?");
         }
         updateDialog(errorDialog);
     }//GEN-LAST:event_pladsPanelBestilButtonActionPerformed
