@@ -242,7 +242,7 @@ public class DBHandler {
             sale.add(retrieveSal(rs));
         }
 
-        mySQLStatement = "SELECT DISTINCT film.*, forestillinger.film_id, forestillinger.dato FROM forestillinger\n"
+        mySQLStatement = "SELECT film.*, forestillinger.film_id, forestillinger.dato FROM forestillinger\n"
                 + "LEFT JOIN film ON film.id = forestillinger.film_id WHERE dato >= CURDATE() GROUP BY film.id;";
         rs = databaseRetrive(mySQLStatement);
         while (rs.next()) {
