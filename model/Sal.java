@@ -2,9 +2,9 @@ package model;
 
 /**
  * Objekt til at indholde informtion om en sal
- *
  * @author Morten Ricki Rasmussen
  */
+
 public class Sal {
 
     private int id;

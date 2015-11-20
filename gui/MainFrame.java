@@ -8,10 +8,7 @@ package gui;
 import handler.DBHandler;
 import handler.DrawHandler;
 import java.awt.Graphics;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
+import java.io.*;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.nio.file.Files;
@@ -19,13 +16,8 @@ import java.nio.file.StandardCopyOption;
 import java.util.Date;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import javax.swing.DefaultListModel;
-import javax.swing.JDialog;
-import javax.swing.ListModel;
-import model.Billet;
-import model.Film;
-import model.Forestilling;
-import model.Sal;
+import javax.swing.*;
+import model.*;
 
 /**
  *
@@ -43,7 +35,7 @@ public class MainFrame extends javax.swing.JFrame {
     private ListModel listModel;
 
     /**
-     * Creates new form MainFrame
+     * Updates the arrays which stores the information used by the system
      */
     private void updateArrays() {
         listModel = new DefaultListModel();
@@ -68,12 +60,20 @@ public class MainFrame extends javax.swing.JFrame {
         }
     }
 
+    /**
+     * Method for packing, setting location and visility for a JDialog
+     * @param dialog 
+     */
     public void updateDialog(JDialog dialog) {
         dialog.pack();
         dialog.setLocationRelativeTo(this);
         dialog.setVisible(true);
     }
 
+    /**
+     * Metod for updating which movies is shown.
+     * Also used when the user changes the date, og which movie
+     */
     public void updateForestillinger() {
         forestillingsPanel.removeAll();
 
@@ -118,6 +118,10 @@ public class MainFrame extends javax.swing.JFrame {
         forestillingsPanel.repaint();
     }
 
+    /**
+     * A method which calls a method from the DrawHandler. The DrawHander method draws the seats.
+     * @param g Graphics object
+     */
     public void drawLastSelectedForestilling(Graphics g) {
         dh.drawForestillingsSal(forestillinger.get(selectedForestilling.get(0)), sale.get(forestillinger.get(selectedForestilling.get(0)).getSalId() - 1), billetter, g, pladsPanelAntalBilleterComboBox.getSelectedIndex(), salPanel.getWidth());
     }

@@ -5,7 +5,6 @@
  */
 package gui;
 
-import handler.DrawHandler;
 import java.util.ArrayList;
 import javax.swing.JPanel;
 import model.Forestilling;

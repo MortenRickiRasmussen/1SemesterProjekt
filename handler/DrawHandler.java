@@ -1,13 +1,9 @@
 package handler;
 
-import java.awt.Color;
-import java.awt.Graphics;
-import java.awt.Point;
+import java.awt.*;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import model.Billet;
-import model.Forestilling;
-import model.Sal;
+import model.*;
 
 /**
  *
