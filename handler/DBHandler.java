@@ -29,7 +29,7 @@ public class DBHandler {
      * @throws SQLException
      */
     public DBHandler() throws IOException, ClassNotFoundException, SQLException {
-        settingsFil = new FileHandler("src/rescources/DatabaseIndstillinger.txt");
+        settingsFil = new FileHandler("DatabaseIndstillinger.txt");
         dbSettings = settingsFil.openFile();
         database_usr = dbSettings.get(1);
         database_pwd = dbSettings.get(3);

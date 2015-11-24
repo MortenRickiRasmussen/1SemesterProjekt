@@ -281,6 +281,8 @@ public class MainFrame extends javax.swing.JFrame {
         jLabel51 = new javax.swing.JLabel();
         jLabel52 = new javax.swing.JLabel();
 
+        adminDialog.setAlwaysOnTop(true);
+
         jLabel12.setText("IP/Hostname");
 
         dbPortField.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -844,7 +846,7 @@ public class MainFrame extends javax.swing.JFrame {
                         .addComponent(jLabel41)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel2)))
-                .addContainerGap(47, Short.MAX_VALUE))
+                .addContainerGap(76, Short.MAX_VALUE))
         );
 
         filmUdvalgsPanel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
@@ -1236,11 +1238,13 @@ public class MainFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        updateDialog(adminLoginDialog);
+        if (!adminDialog.isVisible()) {
+            updateDialog(adminLoginDialog);
 
-        salCombo.removeAll();
-        for (Sal sal1 : sale) {
-            salCombo.addItem(sal1);
+            salCombo.removeAll();
+            for (Sal sal1 : sale) {
+                salCombo.addItem(sal1);
+            }
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 
@@ -1282,7 +1286,7 @@ public class MainFrame extends javax.swing.JFrame {
             pladsPanelTelefonnummerField.setText("");
             dh.setSeatsPoint(new Point(0, 0));
         }
-        if (errorLabel2.getText() == "Klik på OK for at ændre database indstillingerne") {
+        if (errorLabel2.getText() == "Klik på OK for at ændre database indstillingerne" && !adminDialog.isVisible()) {
             updateDialog(adminLoginDialog);
         }
     }//GEN-LAST:event_errorDialogButtonActionPerformed

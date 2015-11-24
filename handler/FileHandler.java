@@ -64,7 +64,7 @@ public class FileHandler {
      * @throws UnsupportedEncodingException 
      */
     public void updateDBFile(String usr, String pwd, String url, String schema) throws FileNotFoundException, UnsupportedEncodingException{
-        PrintWriter writer = new PrintWriter("src/rescources/DatabaseIndstillinger.txt");
+        PrintWriter writer = new PrintWriter("DatabaseIndstillinger.txt");
         writer.println("//USERNAME");
         writer.println(usr);
         writer.println("//PASSWORD");
