@@ -20,10 +20,11 @@ public class FilmUdvalgPanel extends javax.swing.JPanel {
     private Forestilling forestilling;
 
     /**
-     * Creates new form Filmududvalg
+     * Creates new form Filmudvalg
      * @param forestilling
      * @param bestilBilleterPanel
-     * @param filmUdvalgsPanel
+     * @param forestillingsPanel
+     * @param selectedForestilling
      */
     public FilmUdvalgPanel(Forestilling forestilling, JPanel bestilBilleterPanel, JPanel forestillingsPanel, ArrayList<Integer> selectedForestilling) {
         initComponents();
