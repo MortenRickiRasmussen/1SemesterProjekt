@@ -64,7 +64,8 @@ public class MainFrame extends javax.swing.JFrame {
 
     /**
      * Method for packing, setting location and visility for a JDialog
-     * @param dialog 
+     *
+     * @param dialog
      */
     public void updateDialog(JDialog dialog) {
         dialog.pack();
@@ -73,8 +74,8 @@ public class MainFrame extends javax.swing.JFrame {
     }
 
     /**
-     * Metod for updating which movies is shown.
-     * Also used when the user changes the date, og which movie
+     * Metod for updating which movies is shown. Also used when the user changes
+     * the date, og which movie
      */
     public void updateForestillinger() {
         forestillingsPanel.removeAll();
@@ -121,7 +122,9 @@ public class MainFrame extends javax.swing.JFrame {
     }
 
     /**
-     * A method which calls a method from the DrawHandler. The DrawHander method draws the seats.
+     * A method which calls a method from the DrawHandler. The DrawHander method
+     * draws the seats.
+     *
      * @param g Graphics object
      */
     public void drawLastSelectedForestilling(Graphics g) {
@@ -141,7 +144,7 @@ public class MainFrame extends javax.swing.JFrame {
             updateDialog(errorDialog);
             errorDialog.isAlwaysOnTop();
         }
-        
+
         forsidePanel.setVisible(true);
         valgAfPladsPanel.setVisible(false);
         filmUdvalgsPanel.setVisible(false);
@@ -1250,7 +1253,7 @@ public class MainFrame extends javax.swing.JFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         updateArrays();
-        
+
         jDateChooser1.setDate(null);
         filmUdvalgsPanel.setVisible(true);
         forsidePanel.setVisible(false);
@@ -1278,13 +1281,6 @@ public class MainFrame extends javax.swing.JFrame {
         errorDialog.setVisible(false);
         if (errorLabelHeader.getText() == "Succes") {
             adminDialog.setVisible(false);
-        }
-        if (errorLabelHeader.getText().equals("Bestilling Fuldført")) {
-            valgAfPladsPanel.setVisible(false);
-            forsidePanel.setVisible(true);
-            pladsPanelAntalBilleterComboBox.setSelectedIndex(0);
-            pladsPanelTelefonnummerField.setText("");
-            dh.setSeatsPoint(new Point(0, 0));
         }
         if (errorLabel2.getText() == "Klik på OK for at ændre database indstillingerne" && !adminDialog.isVisible()) {
             updateDialog(adminLoginDialog);
@@ -1516,6 +1512,12 @@ public class MainFrame extends javax.swing.JFrame {
                     errorLabel1.setText("d. " + forestillinger.get(selectedForestilling.get(0)).getDato());
                     errorLabel2.setText("klokken: " + forestillinger.get(selectedForestilling.get(0)).getTidspunkt());
                     errorLabel3.setText("");
+                    valgAfPladsPanel.setVisible(false);
+                    forsidePanel.setVisible(true);
+                    pladsPanelAntalBilleterComboBox.setSelectedIndex(0);
+                    pladsPanelTelefonnummerField.setText("");
+                    dh.setSeatsPoint(new Point(0, 0));
+
                 }
             } catch (SQLException | ClassNotFoundException ex) {
                 errorLabelHeader.setText("Uventet fejl");
