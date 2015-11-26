@@ -247,7 +247,7 @@ public class DBHandler {
             film.add(retrieveFilm(rs));
         }
 
-        mySQLStatement = "SELECT * FROM forestillinger WHERE dato >= CURDATE();";
+        mySQLStatement = "SELECT * FROM forestillinger WHERE dato >= CURDATE() AND dato <= DATE_ADD(CURDATE(), INTERVAL + 4 WEEK);";
         rs = databaseRetrive(mySQLStatement);
         while (rs.next()) {
             Forestilling forestilling = retrieveForestillinger(rs);
