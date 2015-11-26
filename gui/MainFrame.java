@@ -54,7 +54,7 @@ public class MainFrame extends javax.swing.JFrame {
         }
 
         filmCombo.removeAllItems();
-        String alleForestillinger = "Alle forestillinger";
+        String alleForestillinger = "Alle film";
         filmCombo.addItem(alleForestillinger);
 
         for (Film film : film) {
@@ -357,7 +357,7 @@ public class MainFrame extends javax.swing.JFrame {
                 .addComponent(dbPasswordField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(dbIndstillingerButton)
-                .addContainerGap(58, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Database indstillinger", jPanel1);
@@ -585,7 +585,7 @@ public class MainFrame extends javax.swing.JFrame {
                 .addComponent(addSalSeatCountField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(addSalButton)
-                .addContainerGap(126, Short.MAX_VALUE))
+                .addContainerGap(138, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Tilføj sal", jPanel4);
@@ -1512,9 +1512,9 @@ public class MainFrame extends javax.swing.JFrame {
                     errorLabel2.setText("Har du indtastet et gyldigt telefonnummer?");
                     errorLabel3.setText("");
                 } else {
-                    errorLabelHeader.setText("Bestilling Fuldført");
-                    errorLabel1.setText("Dato: " + forestillinger.get(selectedForestilling.get(0)).getDato());
-                    errorLabel2.setText("Tidspunkt: " + forestillinger.get(selectedForestilling.get(0)).getTidspunkt());
+                    errorLabelHeader.setText("Du har nu bestilt " + pladsPanelAntalBilleterComboBox.getSelectedIndex() + " billetter til " + forestillinger.get(selectedForestilling.get(0)).getFilmTitel());
+                    errorLabel1.setText("d. " + forestillinger.get(selectedForestilling.get(0)).getDato());
+                    errorLabel2.setText("klokken: " + forestillinger.get(selectedForestilling.get(0)).getTidspunkt());
                     errorLabel3.setText("");
                 }
             } catch (SQLException | ClassNotFoundException ex) {
