@@ -20,8 +20,8 @@ public class FileHandler {
     }
     
     /**
-     * Metode som bruges til at åbne film og læsse antallet af linjer.
-     * @return Retunere antallat af linjer i filen
+     * Metoden bruges til at læse fra en fil. 
+     * @return Fildataen
      * @throws IOException 
      */
     public ArrayList<String> openFile() throws IOException {
@@ -37,8 +37,8 @@ public class FileHandler {
     }
 
     /**
-     * Metoden bruges til at læse fra en fil. 
-     * @return
+     * Metode som bruges til at åbne film og læsse antallet af linjer.
+     * @return Antallet af linjer i filen.
      * @throws IOException 
      */
     public int readLines() throws IOException {
