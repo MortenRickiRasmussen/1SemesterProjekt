@@ -57,8 +57,8 @@ public class MainFrame extends javax.swing.JFrame {
         String alleForestillinger = "Alle film";
         filmCombo.addItem(alleForestillinger);
 
-        for (Film film : film) {
-            filmCombo.addItem(film.getTitel());
+        for (Film film1 : film) {
+            filmCombo.addItem(film1.getTitel());
         }
     }
 
@@ -996,7 +996,7 @@ public class MainFrame extends javax.swing.JFrame {
                     .addComponent(jLabel45)
                     .addComponent(jLabel38)
                     .addGroup(valgAfPladsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addComponent(pladsPanelTelefonnummerField, javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(pladsPanelTelefonnummerField, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(pladsPanelBestilButton, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 356, Short.MAX_VALUE)
                 .addComponent(salPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -1524,6 +1524,11 @@ public class MainFrame extends javax.swing.JFrame {
                 errorLabel1.setText("Kontakt system administrator");
                 errorLabel2.setText("Oplys følgende til administratoren:");
                 errorLabel3.setText(ex.getMessage());
+            } catch (NumberFormatException ex) {
+                errorLabelHeader.setText("Bestilling fejlede");
+                errorLabel1.setText("Du har ikke indtastet et korrekt telefonnummer");
+                errorLabel2.setText("");
+                errorLabel3.setText("");
             }
         } else {
             errorLabelHeader.setText("Bestilling fejlede");
