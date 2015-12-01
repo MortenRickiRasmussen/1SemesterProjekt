@@ -12,8 +12,6 @@ import java.awt.Point;
 import java.io.*;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.nio.file.Files;
-import java.nio.file.StandardCopyOption;
 import java.util.Date;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -188,7 +186,6 @@ public class MainFrame extends javax.swing.JFrame {
         jLabel23 = new javax.swing.JLabel();
         spilletidField = new javax.swing.JTextField();
         dbIndstillingerButton1 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jLabel24 = new javax.swing.JLabel();
         jLabel25 = new javax.swing.JLabel();
@@ -382,13 +379,6 @@ public class MainFrame extends javax.swing.JFrame {
             }
         });
 
-        jButton3.setText("Tilføj plakat");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
@@ -401,9 +391,8 @@ public class MainFrame extends javax.swing.JFrame {
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel22)
-                            .addComponent(jLabel23)
-                            .addComponent(jButton3))
-                        .addGap(0, 319, Short.MAX_VALUE)))
+                            .addComponent(jLabel23))
+                        .addGap(0, 370, Short.MAX_VALUE)))
                 .addContainerGap())
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addGap(172, 172, 172)
@@ -421,11 +410,9 @@ public class MainFrame extends javax.swing.JFrame {
                 .addComponent(jLabel23)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(spilletidField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jButton3)
-                .addGap(18, 18, 18)
+                .addGap(59, 59, 59)
                 .addComponent(dbIndstillingerButton1)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(170, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Tilføj film", jPanel3);
@@ -1244,7 +1231,7 @@ public class MainFrame extends javax.swing.JFrame {
         if (!adminDialog.isVisible()) {
             updateDialog(adminLoginDialog);
 
-            salCombo.removeAll();
+            salCombo.removeAllItems();
             for (Sal sal1 : sale) {
                 salCombo.addItem(sal1);
             }
@@ -1296,18 +1283,9 @@ public class MainFrame extends javax.swing.JFrame {
             String titel = titelField.getText();
             int spileltid = Integer.parseInt(spilletidField.getText());
             db.addFilm(titel, spileltid);
-            File file = jFileChooser1.getSelectedFile();
-            File target = new File(System.getProperty("user.dir") + "/src/rescources", titel.toLowerCase() + ".jpg");
-            Files.copy(file.toPath(), target.toPath(), StandardCopyOption.REPLACE_EXISTING);
             errorLabelHeader.setText("Succes");
             errorLabel1.setText("Filmen " + titel + " blev succesfuldt tilføjet til databasen");
             errorLabel2.setText("Du kan nu tilføje forestillinger med den film");
-            errorLabel3.setText("");
-            updateDialog(errorDialog);
-        } catch (IOException ex) {
-            errorLabelHeader.setText("Filen blev ikke fundet");
-            errorLabel1.setText("Plakaten du prøvede at tilføje blev ikke fundet");
-            errorLabel2.setText("Prøv venligst igen, eller brug en anden fil");
             errorLabel3.setText("");
             updateDialog(errorDialog);
         } catch (SQLException | ClassNotFoundException ex) {
@@ -1365,10 +1343,6 @@ public class MainFrame extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_dbPortFieldKeyTyped
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        updateDialog(fileChooser);
-    }//GEN-LAST:event_jButton3ActionPerformed
-
     private void jFileChooser1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jFileChooser1ActionPerformed
         fileChooser.setVisible(false);
     }//GEN-LAST:event_jFileChooser1ActionPerformed
@@ -1391,7 +1365,7 @@ public class MainFrame extends javax.swing.JFrame {
         ArrayList<Film> fundendeFilm;
         try {
             fundendeFilm = db.searchForFilm(findFilmField.getText());
-            fundendeFilmCombo.removeAll();
+            fundendeFilmCombo.removeAllItems();
             for (Film fundendeFilm1 : fundendeFilm) {
                 fundendeFilmCombo.addItem(fundendeFilm1);
             }
@@ -1642,7 +1616,6 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JPanel headerPanel;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
