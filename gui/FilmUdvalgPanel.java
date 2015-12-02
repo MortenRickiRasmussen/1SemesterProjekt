@@ -16,7 +16,7 @@ import model.Forestilling;
 public class FilmUdvalgPanel extends javax.swing.JPanel {
     private JPanel bestilBilleterPanel;
     private JPanel filmUdvalgsPanel;
-    private ArrayList<Integer> selectedForestilling;
+    private ArrayList<Forestilling> selectedForestilling;
     private Forestilling forestilling;
 
     /**
@@ -26,7 +26,7 @@ public class FilmUdvalgPanel extends javax.swing.JPanel {
      * @param forestillingsPanel
      * @param selectedForestilling
      */
-    public FilmUdvalgPanel(Forestilling forestilling, JPanel bestilBilleterPanel, JPanel forestillingsPanel, ArrayList<Integer> selectedForestilling) {
+    public FilmUdvalgPanel(Forestilling forestilling, JPanel bestilBilleterPanel, JPanel forestillingsPanel, ArrayList<Forestilling> selectedForestilling) {
         initComponents();
         plaketLabel.setIcon(forestilling.getPlakat());
         titelLabel.setText(forestilling.getFilmTitel());
@@ -143,7 +143,7 @@ public class FilmUdvalgPanel extends javax.swing.JPanel {
         bestilBilleterPanel.setVisible(true);
         filmUdvalgsPanel.setVisible(false);
         selectedForestilling.clear();
-        selectedForestilling.add(forestilling.getId()-1);
+        selectedForestilling.add(forestilling);
     }//GEN-LAST:event_bestilBilleterButtonActionPerformed
 
 

@@ -27,7 +27,7 @@ public class MainFrame extends javax.swing.JFrame {
 
     private DBHandler db;
     private DrawHandler dh;
-    private ArrayList<Integer> selectedForestilling;
+    private ArrayList<Forestilling> selectedForestilling;
     private ArrayList<Film> film;
     private ArrayList<Sal> sale;
     private ArrayList<Forestilling> forestillinger;
@@ -126,7 +126,8 @@ public class MainFrame extends javax.swing.JFrame {
      * @param g Graphics object
      */
     public void drawLastSelectedForestilling(Graphics g) {
-        dh.drawForestillingsSal(forestillinger.get(selectedForestilling.get(0)), sale.get(forestillinger.get(selectedForestilling.get(0)).getSalId() - 1), billetter, g, pladsPanelAntalBilleterComboBox.getSelectedIndex(), salPanel.getWidth());
+        dh.drawForestillingsSal(selectedForestilling.get(0), sale.get(selectedForestilling.get(0).getSalId() - 1), billetter, g, pladsPanelAntalBilleterComboBox.getSelectedIndex(), salPanel.getWidth());
+        
     }
 
     public MainFrame() {
@@ -1460,9 +1461,9 @@ public class MainFrame extends javax.swing.JFrame {
 
     private void valgAfPladsPanelComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_valgAfPladsPanelComponentShown
         salPanel.repaint();
-        pladsPanelTitle.setText(forestillinger.get(selectedForestilling.get(0)).getFilmTitel());
-        pladsPanelDato.setText(forestillinger.get(selectedForestilling.get(0)).getDato());
-        pladsPanelTidspunkt.setText(forestillinger.get(selectedForestilling.get(0)).getTidspunkt());
+        pladsPanelTitle.setText(selectedForestilling.get(0).getFilmTitel());
+        pladsPanelDato.setText(selectedForestilling.get(0).getDato());
+        pladsPanelTidspunkt.setText(selectedForestilling.get(0).getTidspunkt());
     }//GEN-LAST:event_valgAfPladsPanelComponentShown
 
     private void salPanelMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_salPanelMousePressed
@@ -1482,9 +1483,9 @@ public class MainFrame extends javax.swing.JFrame {
                     errorLabel2.setText("Har du indtastet et gyldigt telefonnummer?");
                     errorLabel3.setText("");
                 } else {
-                    errorLabelHeader.setText("Du har nu bestilt " + pladsPanelAntalBilleterComboBox.getSelectedIndex() + " billetter til " + forestillinger.get(selectedForestilling.get(0)).getFilmTitel());
-                    errorLabel1.setText("d. " + forestillinger.get(selectedForestilling.get(0)).getDato());
-                    errorLabel2.setText("klokken: " + forestillinger.get(selectedForestilling.get(0)).getTidspunkt());
+                    errorLabelHeader.setText("Du har nu bestilt " + pladsPanelAntalBilleterComboBox.getSelectedIndex() + " billetter til " + selectedForestilling.get(0).getFilmTitel());
+                    errorLabel1.setText("d. " + selectedForestilling.get(0).getDato());
+                    errorLabel2.setText("klokken: " + selectedForestilling.get(0).getTidspunkt());
                     errorLabel3.setText("");
                     valgAfPladsPanel.setVisible(false);
                     forsidePanel.setVisible(true);
